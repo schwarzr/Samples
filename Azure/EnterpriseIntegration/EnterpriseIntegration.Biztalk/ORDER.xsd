@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.bmd.at/xsd/ORDER/2.0/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:bmd="http://www.bmd.at/xsd/COMMONTYPES/2.0/" targetNamespace="http://www.bmd.at/xsd/ORDER/2.0/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xs:import namespace="http://www.bmd.at/xsd/COMMONTYPES/2.0/" schemaLocation="COMMONTYPES.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+            schema version: 2.0
+            last update: 2013-10-01
+            documentation: http://www.bmd.at/xsd/ORDER/2.0/ORDER.xsd
+        </xs:documentation>
+	</xs:annotation>
+	<!-- === Root  Element === -->
+	<xs:element name="Order" type="OrderType"/>
+	<!-- === Element Declarations === -->
+	<xs:element name="MessageHeader" type="bmd:MessageHeaderType"/>
+	<xs:element name="OrderDate" type="xs:date"/>
+	<xs:element name="DeliveryDateRequested" type="xs:date"/>
+	<xs:element name="DeliveryDateConfirmed" type="xs:date"/>
+	<xs:element name="DeliveryTimeFrom" type="xs:time"/>
+	<xs:element name="DeliveryTimeTo" type="xs:time"/>
+	<xs:element name="DeliveryDate" type="xs:date"/>
+	<xs:element name="Distributor" type="bmd:DistributorType"/>
+	<xs:element name="OrderingParty" type="bmd:OrderingPartyType"/>
+	<xs:element name="InvoiceRecipient" type="bmd:InvoiceRecipientType"/>
+	<xs:element name="DeliveryRecipient" type="bmd:DeliveryRecipientType"/>
+	<xs:element name="Shipper" type="bmd:ShipperType"/>
+	<xs:element name="EANCode" type="xs:string"/>
+	<xs:element name="CustomersArticleNo" type="xs:string"/>
+	<xs:element name="DistributorsArticleNo" type="xs:string"/>
+	<xs:element name="Colour" type="xs:int"/>
+	<xs:element name="Size" type="xs:string"/>
+	<xs:element name="DistributorsArticleName" type="xs:string"/>
+	<xs:element name="OrderReference" type="xs:string"/>
+	<xs:element name="TermsOfDelivery" type="xs:string"/>
+	<xs:element name="OrderPosNumber" type="xs:int"/>
+	<xs:element name="OrderPosReferenceCustomer" type="xs:string"/>
+	<xs:element name="InfoFromCustomerToDistributor" type="xs:string"/>
+	<xs:element name="OrderQuantity" type="bmd:UnitType"/>
+	<xs:element name="OrderCount" type="bmd:Decimal4Type"/>
+	<xs:element name="OrderLength" type="bmd:Decimal4Type"/>
+	<xs:element name="OrderWidth" type="bmd:Decimal4Type"/>
+	<xs:element name="OrderHeight" type="bmd:Decimal4Type"/>
+	<xs:element name="ItemList" type="ItemListType"/>
+	<xs:element name="EmptyListLineItem" type="EmptyListLineItemType"/>
+	<xs:element name="ListLineGroup" type="ListLineGroupType"/>
+	<xs:element name="ListLineItem" type="ListLineItemType"/>
+	<xs:element name="Price" type="bmd:PriceType"/>
+	<xs:element name="RebateAmount" type="bmd:AmountType"/>
+	<xs:element name="GrossPrice" type="xs:boolean"/>
+	<xs:element name="PaymentReference" type="xs:string"/>
+	<xs:element name="ArticleDescription" type="bmd:TranslatableText"/>
+	<xs:element name="PieceListVariations" type="PieceListVariationsType"/>
+	<xs:element name="PieceListVariationItem" type="PieceListVariationItemType"/>
+	<xs:element name="ExtendedOrderFieldList" type="bmd:ExtendedFieldListType"/>
+	<xs:element name="ExtendedItemFieldList" type="bmd:ExtendedFieldListType"/>
+	<xs:element name="ListLineGroupText" type="xs:string"/>
+	<!-- === Attribute Deklarations === -->
+	<xs:attribute name="DocumentTitle" type="xs:string"/>
+	<xs:attribute name="DocumentType" type="DocumentTypeType"/>
+	<xs:attribute name="GeneratingSystem" type="xs:string"/>
+	<xs:attribute name="IdentificationType" type="xs:string"/>
+	<xs:attribute name="Language" type="bmd:LanguageType"/>
+	<xs:attribute name="TaxCode" type="xs:string"/>
+	<xs:attribute name="Unit" type="xs:string"/>
+	<xs:attribute name="ListLineGroupNumber" type="xs:int"/>
+	<xs:attribute name="ListLineGroupName" type="xs:string"/>
+	<!-- === Simple Types === -->
+	<xs:simpleType name="DocumentTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Order"/>
+			<xs:enumeration value="RequestForOffer"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- === Complex Types === -->
+	<!-- OrderType: information about customer orders; in NTCS data can be exported for arbitrary customer orders ("Bestellung"); Additionally XML-orders can be imported as sales order (Auftrag) -->
+	<xs:complexType name="OrderType">
+		<xs:sequence>
+			<xs:element ref="MessageHeader" minOccurs="0"/>
+			<!-- information about the distributor -->
+			<xs:element ref="Distributor" minOccurs="0"/>
+			<!-- information about the party ordering some goods -->
+			<xs:element ref="OrderingParty"/>
+			<!-- invoice recipient stated by the ordering party -->
+			<xs:element ref="InvoiceRecipient" minOccurs="0"/>
+			<!-- delivery recipient stated by the ordering party -->
+			<xs:element ref="DeliveryRecipient" minOccurs="0"/>
+			<!-- shipper who is ordered for the sales order -->
+			<xs:element ref="Shipper" minOccurs="0"/>
+			<!-- unique reference of the order within the sending information system -->
+			<xs:element ref="OrderReference" minOccurs="0"/>
+			<!-- info sent to the distributor by the customer -->
+			<xs:element ref="InfoFromCustomerToDistributor" minOccurs="0"/>
+			<!-- date of the order -->
+			<xs:element ref="OrderDate" minOccurs="0"/>
+			<!-- delivery date requested by the ordering party -->
+			<xs:element ref="DeliveryDateRequested" minOccurs="0"/>
+			<!-- delivery date confirmed by the distributor -->
+			<xs:element ref="DeliveryDateConfirmed" minOccurs="0"/>
+			<!-- delivery time: start of period -->
+			<xs:element ref="DeliveryTimeFrom" minOccurs="0"/>
+			<!-- delivery time: end of period -->
+			<xs:element ref="DeliveryTimeTo" minOccurs="0"/>
+			<!-- terms of delivery -->
+			<xs:element ref="TermsOfDelivery" minOccurs="0"/>
+			<!-- indicates, of prices are gross prices (true) or net prices (false) -->
+			<xs:element ref="GrossPrice" minOccurs="0"/>
+			<!-- refernce number for payment -->
+			<xs:element ref="PaymentReference" minOccurs="0"/>
+			<!-- Additional Fieldlist -->
+			<xs:element ref="ExtendedOrderFieldList" minOccurs="0"/>
+			<!-- List of ordered items -->
+			<xs:element ref="ItemList"/>
+			<!-- PresentationDetails -->
+			<xs:element ref="bmd:PresentationDetails" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute ref="GeneratingSystem" use="required"/>
+		<xs:attribute ref="DocumentType" use="required"/>
+		<xs:attribute ref="DocumentTitle" use="optional"/>
+		<xs:attribute ref="Language" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="ItemListType">
+		<xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element ref="ListLineItem"/>
+				<xs:element ref="ListLineGroup"/>
+				<xs:element ref="EmptyListLineItem"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EmptyListLineItemType"/>
+	<xs:complexType name="ListLineGroupType">
+		<xs:sequence>
+			<xs:element ref="ListLineGroupText" minOccurs="0"/>
+			<xs:element ref="ListLineGroup" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="ListLineItem" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="ListLineGroupNumber" use="required"/>
+		<xs:attribute ref="ListLineGroupName" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="ListLineItemType">
+		<xs:sequence>
+			<!-- consecutive number of the order position -->
+			<xs:element ref="OrderPosNumber" minOccurs="0"/>
+			<xs:element name="OrderPosReferenceCustomer" minOccurs="0"/>
+			<!-- at least one of CustomersArticleNo, DistributorsArticleNo or EANCode has to be declared -->
+			<xs:choice maxOccurs="3">
+				<!-- EAN Code of the ordered article -->
+				<xs:element ref="EANCode"/>
+				<!-- distributor's identification of the ordered article -->
+				<xs:element ref="DistributorsArticleNo"/>
+				<!-- customer's identification of the ordered article -->
+				<xs:element ref="CustomersArticleNo"/>
+			</xs:choice>
+			<!-- Distributor's reference of article colour and size -->
+			<xs:element ref="Colour" minOccurs="0"/>
+			<xs:element ref="Size" minOccurs="0"/>                       
+			<!-- customer's name of the ordered article -->
+			<xs:element ref="DistributorsArticleName" minOccurs="0"/>
+			<!-- desciption of the ordered article -->
+			<xs:element ref="ArticleDescription" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- quantity of the article, ordered by the ordering party -->
+			<xs:element ref="OrderQuantity"/>
+			<!-- count -->
+			<xs:element ref="OrderCount" minOccurs="0"/>
+			<!-- length -->
+			<xs:element ref="OrderLength" minOccurs="0"/>
+			<!-- width -->
+			<xs:element ref="OrderWidth" minOccurs="0"/>
+			<!-- height -->
+			<xs:element ref="OrderHeight" minOccurs="0"/>
+			<!-- appointed price -->
+			<xs:element ref="Price" minOccurs="0"/>
+			<!-- appointed rebate -->
+			<xs:element ref="RebateAmount" minOccurs="0"/>
+			<!-- date of delivery -->
+			<xs:element ref="DeliveryDate" minOccurs="0"/>
+			<!-- delivery time: start of period -->
+			<xs:element ref="DeliveryTimeFrom" minOccurs="0"/>
+			<!-- delivery time: end of period -->
+			<xs:element ref="DeliveryTimeTo" minOccurs="0"/>
+			<!-- extended item field list -->
+			<xs:element ref="ExtendedItemFieldList" minOccurs="0"/>
+			<!-- piece list variations -->
+			<xs:element ref="PieceListVariations" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PieceListVariationsType">
+		<xs:sequence>
+			<xs:element ref="PieceListVariationItem" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PieceListVariationItemType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="Key" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

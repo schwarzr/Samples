@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E7BD61E9-E41E-4285-B40C-2B65126D1EFA}</ProjectGuid>
+    <ProjectTypeGuids>{EF7E3281-CD33-11D4-8326-00C04FA0CE8D};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>EnterpriseIntegration.Biztalk</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Schema Include="COMMONTYPES.xsd">
+      <TypeName>COMMONTYPES</TypeName>
+      <Namespace>EnterpriseIntegration.Biztalk</Namespace>
+      <SubType>Designer</SubType>
+    </Schema>
+    <Schema Include="EFACT_D01B_ORDERS_EAN010.xsd">
+      <TypeName>EFACT_D01B_ORDERS_EAN010</TypeName>
+      <Namespace>EnterpriseIntegration.Biztalk</Namespace>
+      <SubType>Designer</SubType>
+    </Schema>
+    <Schema Include="ORDER.xsd">
+      <TypeName>ORDER</TypeName>
+      <Namespace>EnterpriseIntegration.Biztalk</Namespace>
+      <SubType>Designer</SubType>
+    </Schema>
+    <Schema Include="xmldsig-core-schema.xsd">
+      <TypeName>xmldsig_core_schema</TypeName>
+      <Namespace>EnterpriseIntegration.Biztalk</Namespace>
+      <SubType>Designer</SubType>
+    </Schema>
+  </ItemGroup>
+  <ItemGroup>
+    <Map Include="EdiToBmd.btm">
+      <TypeName>EdiToBmd</TypeName>
+      <Namespace>EnterpriseIntegration.Biztalk</Namespace>
+      <SubType>Task</SubType>
+    </Map>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.CurrentVersion.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Azure Integration SDK\IntegrationTasks.targets" />
+</Project>
