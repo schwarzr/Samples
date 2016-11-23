@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "test", "test\test.xproj", "{D3BD08FC-EDC1-456B-AE14-6CE0426CEDE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{86CE5F56-2997-46B8-9D68-C1EE931AD891}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86CE5F56-2997-46B8-9D68-C1EE931AD891}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86CE5F56-2997-46B8-9D68-C1EE931AD891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3BD08FC-EDC1-456B-AE14-6CE0426CEDE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3BD08FC-EDC1-456B-AE14-6CE0426CEDE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3BD08FC-EDC1-456B-AE14-6CE0426CEDE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3BD08FC-EDC1-456B-AE14-6CE0426CEDE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,5 +71,6 @@ Global
 		{F02B5927-4A8B-430E-BB4C-421F199B3118} = {B6F939D8-D6CC-418C-8D52-2F3E80F98DD3}
 		{6466C581-662D-4BB0-8C97-4DE0D29DC3CA} = {B6F939D8-D6CC-418C-8D52-2F3E80F98DD3}
 		{86CE5F56-2997-46B8-9D68-C1EE931AD891} = {B6F939D8-D6CC-418C-8D52-2F3E80F98DD3}
+		{D3BD08FC-EDC1-456B-AE14-6CE0426CEDE0} = {2D3B26DC-D3E0-4A73-91F6-E046D1D83BD8}
 	EndGlobalSection
 EndGlobal
