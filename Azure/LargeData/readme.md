@@ -30,16 +30,16 @@
 Deploy your local database to SQL Azure.
 
 ### ConnectionString
-Update the connectionStrings in the [LargData.UI\App.config](LargData.UI/App.config) and the [LargData.Web\appsettings.json](LargData.Web/appsettings.json).
+Update the connectionStrings in the [LargeData.UI\App.config](LargeData.UI/App.config) and the [LargeData.Web\appsettings.json](LargeData.Web/appsettings.json).
 
-[LargData.UI\App.config](LargData.UI/App.config)
+[LargeData.UI\App.config](LargeData.UI/App.config)
 ```xml
 <connectionStrings>
     <add name="AdventureWorksContext" connectionString="data source={localserver};initial catalog={localdb};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework" providerName="System.Data.SqlClient" />
     <add name="AzureAdventureWorksContext" connectionString="Data Source={remoteserver};Initial Catalog={remotedb};Persist Security Info=False;User ID={remoteuser};Password={remotepassword};Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;" providerName="System.Data.SqlClient" />
 </connectionStrings>
 ```
- [LargData.Web\appsettings.json](LargData.Web/appsettings.json)
+ [LargeData.Web\appsettings.json](LargeData.Web/appsettings.json)
 ```json
 {
     "ConnectionStrings": {
@@ -52,9 +52,9 @@ Update the connectionStrings in the [LargData.UI\App.config](LargData.UI/App.con
 > replace `{remoteserver}`,`{remotedb}`, `{remoteuser}` and `{remotepassword}` with your SQL Server address and credentials
 
 ## Deploy REST Service
-Publish the LargData.Web project as an Azure Web app.
+Publish the LargeData.Web project as an Azure Web app.
 
-Update the webservice url in the [LargData.UI/App.xaml.cs](LargData.UI/App.xaml.cs) file.
+Update the webservice url in the [LargeData.UI/App.xaml.cs](LargeData.UI/App.xaml.cs) file.
 ```csharp
 protected virtual void OnConfigure(IServiceCollection service)
 {
@@ -64,7 +64,7 @@ protected virtual void OnConfigure(IServiceCollection service)
 ```
 # Data Access - direct <> service
 ## direct access local or azure db
-[LargData.UI/App.xaml.cs](LargData.UI/App.xaml.cs)
+[LargeData.UI/App.xaml.cs](LargeData.UI/App.xaml.cs)
 ```csharp
 protected virtual void OnConfigure(IServiceCollection service)
 {
@@ -90,7 +90,7 @@ Start the LargeData.UI app with local and the azure db configuration and compare
 Switch to service communication.
 
 ## service access azure db
-[LargData.UI/App.xaml.cs](LargData.UI/App.xaml.cs)
+[LargeData.UI/App.xaml.cs](LargeData.UI/App.xaml.cs)
 ```csharp
 protected virtual void OnConfigure(IServiceCollection service)
 {
@@ -124,7 +124,7 @@ protected virtual void OnConfigure(IServiceCollection service)
 ## reduce payload.
 Step 2
 
-[LargData.UI/ViewModel/LargeDataViewModel.cs](LargData.UI/ViewModel/LargeDataViewModel.cs)
+[LargeData.UI/ViewModel/LargeDataViewModel.cs](LargeData.UI/ViewModel/LargeDataViewModel.cs)
 ```csharp
 protected async Task LoadDataAsync()
 {
@@ -149,7 +149,7 @@ protected async Task LoadDataAsync()
 }
 ```
 
-[LargData.UI/View/LargeDataView.xaml](LargData.UI/View/LargeDataView.xaml)
+[LargeData.UI/View/LargeDataView.xaml](LargeData.UI/View/LargeDataView.xaml)
 ```xml
 <!--Step 1-->
 <!--<DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Path=Items}" Name="grid">
@@ -164,7 +164,7 @@ protected async Task LoadDataAsync()
 
 ## try different serializer/compression settings
 
-[LargData.UI/App.xaml.cs](LargData.UI/App.xaml.cs)
+[LargeData.UI/App.xaml.cs](LargeData.UI/App.xaml.cs)
 ```csharp
 protected virtual void OnConfigure(IServiceCollection service)
 {
@@ -195,7 +195,7 @@ Depending on your latency and bandwidth you should see a huge difference compare
 # Streaming
 Step 3
 
-[LargData.UI/ViewModel/LargeDataViewModel.cs](LargData.UI/ViewModel/LargeDataViewModel.cs)
+[LargeData.UI/ViewModel/LargeDataViewModel.cs](LargeData.UI/ViewModel/LargeDataViewModel.cs)
 ```csharp
 protected async Task LoadDataAsync()
 {
