@@ -30,9 +30,9 @@
 Deploy your local database to SQL Azure.
 
 ### ConnectionString
-Update the connectionStrings in the [LargData.UI\app.config](LargData.UI/app.config) and the [LargData.Web\appsettings.json](LargData.Web/appsettings.json).
+Update the connectionStrings in the [LargData.UI\App.config](LargData.UI/App.config) and the [LargData.Web\appsettings.json](LargData.Web/appsettings.json).
 
-[LargData.UI\app.config](LargData.UI/app.config)
+[LargData.UI\App.config](LargData.UI/App.config)
 ```xml
 <connectionStrings>
     <add name="AdventureWorksContext" connectionString="data source={localserver};initial catalog={localdb};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework" providerName="System.Data.SqlClient" />
@@ -54,7 +54,7 @@ Update the connectionStrings in the [LargData.UI\app.config](LargData.UI/app.con
 ## Deploy REST Service
 Publish the LargData.Web project as an Azure Web app.
 
-Update the webservice url in the [LargData.UI/app.xaml.cs](LargData.UI/app.xaml.cs) file.
+Update the webservice url in the [LargData.UI/App.xaml.cs](LargData.UI/App.xaml.cs) file.
 ```csharp
 protected virtual void OnConfigure(IServiceCollection service)
 {
@@ -64,7 +64,7 @@ protected virtual void OnConfigure(IServiceCollection service)
 ```
 # Data Access - direct <> service
 ## direct access local or azure db
-[LargData.UI/app.xaml.cs](LargData.UI/app.xaml.cs)
+[LargData.UI/App.xaml.cs](LargData.UI/App.xaml.cs)
 ```csharp
 protected virtual void OnConfigure(IServiceCollection service)
 {
@@ -90,7 +90,7 @@ Start the LargeData.UI app with local and the azure db configuration and compare
 Switch to service communication.
 
 ## service access azure db
-[LargData.UI/app.xaml.cs](LargData.UI/app.xaml.cs)
+[LargData.UI/App.xaml.cs](LargData.UI/App.xaml.cs)
 ```csharp
 protected virtual void OnConfigure(IServiceCollection service)
 {
@@ -164,7 +164,7 @@ protected async Task LoadDataAsync()
 
 ## try different serializer/compression settings
 
-[LargData.UI/app.xaml.cs](LargData.UI/app.xaml.cs)
+[LargData.UI/App.xaml.cs](LargData.UI/App.xaml.cs)
 ```csharp
 protected virtual void OnConfigure(IServiceCollection service)
 {
