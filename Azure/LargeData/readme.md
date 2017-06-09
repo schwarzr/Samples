@@ -30,16 +30,16 @@
 Deploy your local database to SQL Azure.
 
 ### ConnectionString
-Update the connectionStrings in the [LargData.UI\app.config](LargData.UI/app.config) and the [LargData.Web\appsettings.json](LargData.Web/appsettings.json).
+Update the connectionStrings in the [LargData.UI\app.config](https://github.com/schwarzr/Samples/blob/master/Azure/LargeData/LargData.UI/app.config) and the [LargData.Web\appsettings.json](https://github.com/schwarzr/Samples/blob/master/Azure/LargeData/LargData.Web/appsettings.json).
 
-[LargData.UI\app.config](LargData.UI/app.config)
+[LargData.UI\app.config](https://github.com/schwarzr/Samples/blob/master/Azure/LargeData/LargeData.UI/app.config)
 ```xml
 <connectionStrings>
     <add name="AdventureWorksContext" connectionString="data source={localserver};initial catalog={localdb};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework" providerName="System.Data.SqlClient" />
     <add name="AzureAdventureWorksContext" connectionString="Data Source={remoteserver};Initial Catalog={remotedb};Persist Security Info=False;User ID={remoteuser};Password={remotepassword};Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;" providerName="System.Data.SqlClient" />
 </connectionStrings>
 ```
- [LargData.Web\appsettings.json](LargData.Web/appsettings.json)
+ [LargData.Web\appsettings.json](https://github.com/schwarzr/Samples/blob/master/Azure/LargeData/LargData.Web/appsettings.json)
 ```json
 {
     "ConnectionStrings": {
@@ -64,7 +64,7 @@ protected virtual void OnConfigure(IServiceCollection service)
 ```
 # Data Access - direct <> service
 ## direct access local or azure db
-[LargData.UI/app.xaml.cs](LargData.UI/app.xaml.cs)
+[LargData.UI/app.xaml.cs](https://github.com/schwarzr/Samples/blob/master/Azure/LargeData/LargData.UI/app.xaml.cs)
 ```csharp
 protected virtual void OnConfigure(IServiceCollection service)
 {
@@ -90,7 +90,7 @@ Start the LargeData.UI app with local and the azure db configuration and compare
 Switch to service communication.
 
 ## service access azure db
-[LargData.UI/app.xaml.cs](LargData.UI/app.xaml.cs)
+[LargData.UI/app.xaml.cs](https://github.com/schwarzr/Samples/blob/master/Azure/LargeData/LargData.UI/app.xaml.cs)
 ```csharp
 protected virtual void OnConfigure(IServiceCollection service)
 {
@@ -124,7 +124,7 @@ protected virtual void OnConfigure(IServiceCollection service)
 ## reduce payload.
 Step 2
 
-[LargData.UI/ViewModel/LargeDataViewModel.cs](LargData.UI/ViewModel/LargeDataViewModel.cs)
+[LargData.UI/ViewModel/LargeDataViewModel.cs](https://github.com/schwarzr/Samples/blob/master/Azure/LargeData/LargData.UI/ViewModel/LargeDataViewModel.cs)
 ```csharp
 protected async Task LoadDataAsync()
 {
@@ -149,7 +149,7 @@ protected async Task LoadDataAsync()
 }
 ```
 
-[LargData.UI/View/LargeDataView.xaml](LargData.UI/View/LargeDataView.xaml)
+[LargData.UI/View/LargeDataView.xaml](https://github.com/schwarzr/Samples/blob/master/Azure/LargeData/LargData.UI/View/LargeDataView.xaml)
 ```xml
 <!--Step 1-->
 <!--<DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Path=Items}" Name="grid">
@@ -164,7 +164,7 @@ protected async Task LoadDataAsync()
 
 ## try different serializer/compression settings
 
-[LargData.UI/app.xaml.cs](LargData.UI/app.xaml.cs)
+[LargData.UI/app.xaml.cs](https://github.com/schwarzr/Samples/blob/master/Azure/LargeData/LargData.UI/app.xaml.cs)
 ```csharp
 protected virtual void OnConfigure(IServiceCollection service)
 {
@@ -195,7 +195,7 @@ Depending on your latency and bandwidth you should see a huge difference compare
 # Streaming
 Step 3
 
-[LargData.UI/ViewModel/LargeDataViewModel.cs](LargData.UI/ViewModel/LargeDataViewModel.cs)
+[LargData.UI/ViewModel/LargeDataViewModel.cs](https://github.com/schwarzr/Samples/blob/master/Azure/LargeData/LargData.UI/ViewModel/LargeDataViewModel.cs)
 ```csharp
 protected async Task LoadDataAsync()
 {
