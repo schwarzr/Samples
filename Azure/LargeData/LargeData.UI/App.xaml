@@ -1,0 +1,14 @@
+﻿<Application x:Class="LargeData.UI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:LargeData.UI.ViewModel"
+             xmlns:v="clr-namespace:LargeData.UI.View"
+             xmlns:local="clr-namespace:LargeData.UI">
+    <Application.Resources>
+        <SolidColorBrush Color="Red" x:Key="RedBrush" />
+
+        <DataTemplate DataType="{x:Type vm:LargeDataViewModel}">
+            <v:LargeDataView />
+        </DataTemplate>
+    </Application.Resources>
+</Application>

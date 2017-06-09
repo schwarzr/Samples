@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="LargeData.UI.View.LargeDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:LargeData.UI.View"
+             xmlns:vm="clr-namespace:LargeData.UI.ViewModel"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:LargeDataViewModel}}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"  Orientation="Horizontal">
+            <Label Content="_From:" Target="{Binding ElementName=fromDate}" />
+            <DatePicker Name="fromDate" SelectedDate="{Binding Path=From}" />
+            <Label Content="_Until:" Target="{Binding ElementName=untilDate}" />
+            <DatePicker Name="untilDate" SelectedDate="{Binding Path=Until}" />
+        </StackPanel>
+        <!--Step 1-->
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Path=Items}" Name="grid">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=SalesOrderNumber}" Header="Order" />
+                <DataGridTextColumn Binding="{Binding Path=SalesOrderLineNumber}" Header="Pos" />
+                <DataGridTextColumn Header="Customer">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="Customer.FirstName" />
+                            <Binding Path="Customer.LastName" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Customer Location">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} ({1})">
+                            <Binding Path="Customer.Geography.City" />
+                            <Binding Path="Customer.Geography.EnglishCountryRegionName" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=OrderQuantity}" Header="Quantity" />
+                <DataGridTextColumn Binding="{Binding Path=UnitPrice}" Header="Price" />
+                <DataGridTextColumn Binding="{Binding Path=Currency.CurrencyName}" Header="" />
+                <DataGridTextColumn Binding="{Binding Path=SalesAmount}" Header="Total" />
+                <DataGridTextColumn Binding="{Binding Path=OrderDate, StringFormat=d}" Header="Date" />
+                <DataGridTextColumn Binding="{Binding Path=Promotion.EnglishPromotionName}" Header="Promotion" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--Step 2 + 3-->
+        <!--<DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Path=Items}" Name="grid">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Order}" Header="Order" />
+                <DataGridTextColumn Binding="{Binding Path=Pos}" Header="Pos" />
+                <DataGridTextColumn Binding="{Binding Path=Customer}" Header="Customer" />
+                <DataGridTextColumn Binding="{Binding Path=CustomerLocation}" Header="Customer Location" />
+                <DataGridTextColumn Binding="{Binding Path=Quantity}" Header="Quantity" />
+                <DataGridTextColumn Binding="{Binding Path=Price}" Header="Price" />
+                <DataGridTextColumn Binding="{Binding Path=Currency}" Header="" />
+                <DataGridTextColumn Binding="{Binding Path=Total}" Header="Total" />
+                <DataGridTextColumn Binding="{Binding Path=Date, StringFormat=d}" Header="Date" />
+                <DataGridTextColumn Binding="{Binding Path=Promotion}" Header="Promotion" />
+            </DataGrid.Columns>
+        </DataGrid>-->
+
+        <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock Text="Rows: " />
+            <TextBlock Text="{Binding Path=Items.Count}" />
+            <TextBlock Text=" Duration: " />
+            <TextBlock Text="{Binding Path=Service.LastRequestDuration}" />
+            <TextBlock Text=" Size: " />
+            <TextBlock Text="{Binding Path=Service.LastRequestSize}" />
+        </StackPanel>
+
+        <toolkit:BusyIndicator Grid.Row="3" IsBusy="{Binding Path=IsBusy}" BusyContent="{Binding Path=BusyMessage}">
+            <Button HorizontalAlignment="Right" Content="export Excel" Command="{Binding Path=ExportCommand}" CommandParameter="{Binding ElementName=grid}" />
+        </toolkit:BusyIndicator>
+    </Grid>
+</UserControl>
