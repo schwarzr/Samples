@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorks.Model", "AdventureWorks.Model\AdventureWorks.Model.csproj", "{D056AA0F-CB2E-4CEE-9893-7BFCCACB2D93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorks.OData", "AdventureWorks.OData\AdventureWorks.OData.csproj", "{54D3AB2C-4D38-4A49-B704-255E1FFD1772}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D056AA0F-CB2E-4CEE-9893-7BFCCACB2D93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D056AA0F-CB2E-4CEE-9893-7BFCCACB2D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D056AA0F-CB2E-4CEE-9893-7BFCCACB2D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D056AA0F-CB2E-4CEE-9893-7BFCCACB2D93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54D3AB2C-4D38-4A49-B704-255E1FFD1772}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54D3AB2C-4D38-4A49-B704-255E1FFD1772}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54D3AB2C-4D38-4A49-B704-255E1FFD1772}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54D3AB2C-4D38-4A49-B704-255E1FFD1772}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
