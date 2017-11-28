@@ -1,0 +1,71 @@
+<div *ngIf="item">
+    <h2>{{item.salesOrderNumber}}</h2>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="accountNumber">Account Number</label>
+                <input type="text" class="form-control" id="accountNumber" [(ngModel)]="item.accountNumber" />
+            </div>
+            <div class="form-group">
+                <label for="billingAddress">Billing Address</label>
+                <dx-select-box class="form-control" id="billingAddress" displayExpr="name" [items]="shippingaddresses" valueExpr="id" [placeholder]="item.billingAddress.name"
+                    [(value)]="item.billingAddress.id"></dx-select-box>
+            </div>
+            <div class="form-group" *ngIf="item.creditCard">
+                <label for="creditCard">Credit Card</label>
+                <dx-select-box class="form-control" id="creditCard" displayExpr="name" [items]="creditcards" valueExpr="id" [placeholder]="item.creditCard.name"
+                    [(value)]="item.creditCard.id"></dx-select-box>
+            </div>
+            <div class="form-group" *ngIf="item.currencyRate">
+                <label for="currencyRate">Currency Rage</label>
+                <input class="form-control" id="currencyRate" [(value)]="item.currencyRate.name" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <label for="customer">Customer</label>
+                <dx-select-box class="form-control" id="customer" displayExpr="name" [items]="customers" valueExpr="id" [placeholder]="item.customer.name"
+                    [(value)]="item.customer.id"></dx-select-box>
+            </div>
+            <div class="form-group" *ngIf="item.salesPerson">
+                <label for="salesPerson">Sales Person</label>
+                <dx-select-box class="form-control" id="salesPerson" displayExpr="name" [items]="salespeople" valueExpr="id" [placeholder]="item.salesPerson.name"
+                    [(value)]="item.salesPerson.id"></dx-select-box>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="salesOrderDate">Sales Order Date</label>
+                <input type="text" class="form-control" id="salesOrderDate" [(ngModel)]="item.salesOrderDate" />
+            </div>
+            <div class="form-group">
+                <label for="salesOrderNumber">Sales Order Number</label>
+                <input type="text" class="form-control" id="salesOrderNumber" [(ngModel)]="item.salesOrderNumber" />
+            </div>
+            <div class="form-group" *ngIf="item.salesTerritory">
+                <label for="salesTerritory">Sales Territory</label>
+                <dx-select-box class="form-control" id="salesTerritory" displayExpr="name" [items]="territories" valueExpr="id" [placeholder]="item.salesTerritory.name"
+                    [(value)]="item.salesTerritory.id"></dx-select-box>
+            </div>
+            <div class="form-group">
+                <label for="shipMethod">Ship Method</label>
+                <dx-select-box class="form-control" id="shipMethod" displayExpr="name" [items]="shippingmethods" valueExpr="id" [placeholder]="item.shipMethod.name"
+                    [(value)]="item.shipMethod.id"></dx-select-box>
+            </div>
+            <div class="form-group">
+                <label for="shippingAddress">Shipping Address</label>
+                <dx-select-box class="form-control" id="shippingAddress" displayExpr="name" [items]="shippingaddresses" valueExpr="id" [placeholder]="item.shippingAddress.name"
+                    [(value)]="item.shippingAddress.id"></dx-select-box>
+            </div>
+        </div>
+    </div>
+
+    <dx-data-grid id="gridContainer" [dataSource]="details">
+        <dxo-paging [pageSize]="10"></dxo-paging>
+        <dxi-column dataField="salesOrderDetailId" [width]="130" caption="Detail Id"></dxi-column>
+        <dxi-column dataField="carrierTrackingNumber" caption="Tracking Number"></dxi-column>
+        <dxi-column dataField="orderQty" caption="Quantity"></dxi-column>
+        <dxi-column dataField="product.name" caption="Product"></dxi-column>
+        <dxi-column dataField="unitPrice" caption="Price"></dxi-column>
+        <dxi-column dataField="lineTotal" caption="Total"></dxi-column>
+    </dx-data-grid>
+</div>

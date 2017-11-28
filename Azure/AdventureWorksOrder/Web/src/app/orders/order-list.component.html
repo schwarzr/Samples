@@ -1,0 +1,20 @@
+<dx-select-box style="max-width:300px;" [items]="territories" [(value)]="selectedTerritory" displayExpr="name"></dx-select-box>
+
+<dx-data-grid id="gridContainer" [dataSource]="orders">
+    <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <dxi-column dataField="salesOrderId" [width]="130" cellTemplate="cellTemplate" caption="Sales Order Id">
+        <dxo-header-filter [visible]="false"></dxo-header-filter>
+    </dxi-column>
+    <dxi-column dataField="customer" caption="Customer">
+        <dxo-header-filter [allowSearch]="true"></dxo-header-filter>
+    </dxi-column>
+    <dxi-column dataField="orderDate" dataType="date" caption="Order date">
+    </dxi-column>
+    <dxi-column dataField="orderNumber" caption="Sales Order Number">
+        <dxo-header-filter [allowSearch]="true"></dxo-header-filter>
+    </dxi-column>
+
+    <div *dxTemplate="let data of 'cellTemplate'">
+        <a [routerLink]="data.value">edit</a>
+    </div>
+</dx-data-grid>
