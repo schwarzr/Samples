@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConstructionDiary.Api.Contract\ConstructionDiary.Api.Contract.csproj" />
+    <ProjectReference Include="..\ConstructionDiary.Contract\ConstructionDiary.Contract.csproj" />
+  </ItemGroup>
+
+</Project>
