@@ -69,7 +69,8 @@ namespace ConstructionDiary.Web
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ICountryService, CountryService>();
 
-            services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ConstructionDiary; Integrated Security=True;"));
+            //services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ConstructionDiary; Integrated Security=True;"));
+            services.AddDbContext<DiaryContext>(builder => builder.UseSqlite("Filename=c:\\Temp\\whatever.sqlite"));
 
             //services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer("Data Source=.;Initial Catalog=ConstructionDiary; Integrated Security=True;"));
 

@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Internal;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 
@@ -35,14 +36,29 @@ namespace ConstructionDiary.AspNetCore.Mvc
 
                 foreach (var action in controller.Actions)
                 {
-                    var methodAtt = action.ActionMethod.GetCustomAttributes().OfType<RestOperationAttribute>().FirstOrDefault();
-                    methodAtt = methodAtt ?? serviceInterface?.GetTypeInfo().GetMethod(action.ActionMethod.Name, action.ActionMethod.GetParameters().Select(p => p.ParameterType).ToArray())?.GetCustomAttributes().OfType<RestOperationAttribute>().FirstOrDefault();
+                    var method = action.ActionMethod;
+
+                    var methodAtt = method.GetCustomAttributes().OfType<RestOperationAttribute>().FirstOrDefault();
+
+                    if (methodAtt == null)
+                    {
+                        method = serviceInterface?.GetTypeInfo().GetMethod(method.Name, method.GetParameters().Select(p => p.ParameterType).ToArray());
+                        methodAtt = method.GetCustomAttributes().OfType<RestOperationAttribute>().FirstOrDefault();
+                    }
 
                     if (methodAtt != null)
                     {
                         var targetAttribute = GetTargetAttribute(methodAtt.HttpMethod(), methodAtt.Template);
                         action.Selectors.Clear();
                         action.Selectors.Add(CreateSelectorModel(targetAttribute));
+
+                        for (int i = 0; i < action.Parameters.Count; i++)
+                        {
+                            if (method.GetParameters()[i].GetCustomAttribute<BodyMemberAttribute>() != null)
+                            {
+                                action.Parameters[i].BindingInfo = BindingInfo.GetBindingInfo(new object[] { new FromBodyAttribute() });
+                            }
+                        }
                     }
                 }
             }

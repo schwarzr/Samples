@@ -17,11 +17,11 @@
     },
     "ConstructionDiary.Web": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5001"
+      "applicationUrl": "http://0.0.0.0:5001"
     }
   }
 }

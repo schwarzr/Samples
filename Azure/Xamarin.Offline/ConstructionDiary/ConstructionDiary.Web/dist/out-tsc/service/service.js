@@ -12,29 +12,30 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 export var API_BASE_URL = new InjectionToken('API_BASE_URL');
-var UserClient = /** @class */ (function () {
-    function UserClient(http, baseUrl) {
+var CountryClient = /** @class */ (function () {
+    function CountryClient(http, baseUrl) {
         this.jsonParseReviver = undefined;
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
     }
-    UserClient.prototype.getAllUserInfos = function () {
+    CountryClient.prototype.deleteCountry = function (id) {
         var _this = this;
-        var url_ = this.baseUrl + "/api/User";
+        var url_ = this.baseUrl + "/api/country/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
         url_ = url_.replace(/[?&]$/, "");
         var options_ = {
             observe: "response",
             responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
+            headers: new HttpHeaders({})
         };
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
-            return _this.processGetAllUserInfos(response_);
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processDeleteCountry(response_);
         })).pipe(_observableCatch(function (response_) {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return _this.processGetAllUserInfos(response_);
+                    return _this.processDeleteCountry(response_);
                 }
                 catch (e) {
                     return _observableThrow(e);
@@ -44,7 +45,114 @@ var UserClient = /** @class */ (function () {
                 return _observableThrow(response_);
         }));
     };
-    UserClient.prototype.processGetAllUserInfos = function (response) {
+    CountryClient.prototype.processDeleteCountry = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return _observableOf(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    CountryClient.prototype.getCountry = function (id) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/country/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetCountry(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetCountry(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    CountryClient.prototype.processGetCountry = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                result200 = resultData200 ? CountryListItem.fromJS(resultData200) : null;
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    CountryClient.prototype.getCountryInfos = function () {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/country/infos";
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetCountryInfos(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetCountryInfos(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    CountryClient.prototype.processGetCountryInfos = function (response) {
         var _this = this;
         var status = response.status;
         var responseBlob = response instanceof HttpResponse ? response.body :
@@ -65,7 +173,7 @@ var UserClient = /** @class */ (function () {
                     result200 = [];
                     for (var _i = 0, resultData200_1 = resultData200; _i < resultData200_1.length; _i++) {
                         var item = resultData200_1[_i];
-                        result200.push(UserInfo.fromJS(item));
+                        result200.push(CountryInfo.fromJS(item));
                     }
                 }
                 return _observableOf(result200);
@@ -78,16 +186,257 @@ var UserClient = /** @class */ (function () {
         }
         return _observableOf(null);
     };
-    UserClient = tslib_1.__decorate([
+    CountryClient.prototype.getCountryListItems = function () {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/country/list";
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetCountryListItems(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetCountryListItems(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    CountryClient.prototype.processGetCountryListItems = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_2 = resultData200; _i < resultData200_2.length; _i++) {
+                        var item = resultData200_2[_i];
+                        result200.push(CountryListItem.fromJS(item));
+                    }
+                }
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    CountryClient.prototype.insertCountry = function (item) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/country";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(item);
+        var options_ = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processInsertCountry(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processInsertCountry(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    CountryClient.prototype.processInsertCountry = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return _observableOf(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    CountryClient.prototype.updateCountry = function (item) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/country";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(item);
+        var options_ = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processUpdateCountry(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processUpdateCountry(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    CountryClient.prototype.processUpdateCountry = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return _observableOf(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    CountryClient = tslib_1.__decorate([
         Injectable(),
         tslib_1.__param(0, Inject(HttpClient)), tslib_1.__param(1, Optional()), tslib_1.__param(1, Inject(API_BASE_URL)),
         tslib_1.__metadata("design:paramtypes", [HttpClient, String])
-    ], UserClient);
-    return UserClient;
+    ], CountryClient);
+    return CountryClient;
 }());
-export { UserClient };
-var UserInfo = /** @class */ (function () {
-    function UserInfo(data) {
+export { CountryClient };
+var EmployeeClient = /** @class */ (function () {
+    function EmployeeClient(http, baseUrl) {
+        this.jsonParseReviver = undefined;
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+    EmployeeClient.prototype.getEmployeeInfos = function (projectId) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/employee/{projectId}/all";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetEmployeeInfos(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetEmployeeInfos(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    EmployeeClient.prototype.processGetEmployeeInfos = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_3 = resultData200; _i < resultData200_3.length; _i++) {
+                        var item = resultData200_3[_i];
+                        result200.push(EmployeeInfo.fromJS(item));
+                    }
+                }
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    EmployeeClient = tslib_1.__decorate([
+        Injectable(),
+        tslib_1.__param(0, Inject(HttpClient)), tslib_1.__param(1, Optional()), tslib_1.__param(1, Inject(API_BASE_URL)),
+        tslib_1.__metadata("design:paramtypes", [HttpClient, String])
+    ], EmployeeClient);
+    return EmployeeClient;
+}());
+export { EmployeeClient };
+var CountryListItem = /** @class */ (function () {
+    function CountryListItem(data) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -95,27 +444,89 @@ var UserInfo = /** @class */ (function () {
             }
         }
     }
-    UserInfo.prototype.init = function (data) {
+    CountryListItem.prototype.init = function (data) {
+        if (data) {
+            this.id = data["id"];
+            this.isoTwo = data["isoTwo"];
+            this.name = data["name"];
+        }
+    };
+    CountryListItem.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new CountryListItem();
+        result.init(data);
+        return result;
+    };
+    CountryListItem.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["isoTwo"] = this.isoTwo;
+        data["name"] = this.name;
+        return data;
+    };
+    return CountryListItem;
+}());
+export { CountryListItem };
+var CountryInfo = /** @class */ (function () {
+    function CountryInfo(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    CountryInfo.prototype.init = function (data) {
+        if (data) {
+            this.displayString = data["displayString"];
+            this.id = data["id"];
+        }
+    };
+    CountryInfo.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new CountryInfo();
+        result.init(data);
+        return result;
+    };
+    CountryInfo.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["displayString"] = this.displayString;
+        data["id"] = this.id;
+        return data;
+    };
+    return CountryInfo;
+}());
+export { CountryInfo };
+var EmployeeInfo = /** @class */ (function () {
+    function EmployeeInfo(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    EmployeeInfo.prototype.init = function (data) {
         if (data) {
             this.displayName = data["displayName"];
             this.id = data["id"];
         }
     };
-    UserInfo.fromJS = function (data) {
+    EmployeeInfo.fromJS = function (data) {
         data = typeof data === 'object' ? data : {};
-        var result = new UserInfo();
+        var result = new EmployeeInfo();
         result.init(data);
         return result;
     };
-    UserInfo.prototype.toJSON = function (data) {
+    EmployeeInfo.prototype.toJSON = function (data) {
         data = typeof data === 'object' ? data : {};
         data["displayName"] = this.displayName;
         data["id"] = this.id;
         return data;
     };
-    return UserInfo;
+    return EmployeeInfo;
 }());
-export { UserInfo };
+export { EmployeeInfo };
 var SwaggerException = /** @class */ (function (_super) {
     tslib_1.__extends(SwaggerException, _super);
     function SwaggerException(message, status, response, headers, result) {

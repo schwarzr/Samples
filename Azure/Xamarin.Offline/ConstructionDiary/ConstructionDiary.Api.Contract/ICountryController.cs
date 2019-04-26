@@ -21,9 +21,9 @@ namespace ConstructionDiary.Api.Contract
         Task<IEnumerable<CountryListItem>> GetCountryListItemsAsync();
 
         [RestPost("")]
-        Task InsertCountryAsync(CountryListItem item);
+        Task InsertCountryAsync([BodyMember]CountryListItem item);
 
         [RestPut("")]
-        Task UpdateCountryAsync(CountryListItem item);
+        Task UpdateCountryAsync([BodyMember]CountryListItem item);
     }
 }

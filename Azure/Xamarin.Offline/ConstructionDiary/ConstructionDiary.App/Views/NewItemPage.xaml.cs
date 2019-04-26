@@ -6,6 +6,10 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using ConstructionDiary.App.Models;
+using ConstructionDiary.Api.Client;
+using ConstructionDiary.Api.Contract;
+using ConstructionDiary.AspNetCore.Client;
+using ConstructionDiary.Model;
 
 namespace ConstructionDiary.App.Views
 {
@@ -14,8 +18,6 @@ namespace ConstructionDiary.App.Views
     [DesignTimeVisible(true)]
     public partial class NewItemPage : ContentPage
     {
-        public Item Item { get; set; }
-
         public NewItemPage()
         {
             InitializeComponent();
@@ -29,14 +31,18 @@ namespace ConstructionDiary.App.Views
             BindingContext = this;
         }
 
-        async void Save_Clicked(object sender, EventArgs e)
+        public Item Item { get; set; }
+
+        private async void Cancel_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send(this, "AddItem", Item);
             await Navigation.PopModalAsync();
         }
 
-        async void Cancel_Clicked(object sender, EventArgs e)
+        private async void Save_Clicked(object sender, EventArgs e)
         {
+            var client = new CountryControllerClient(new RestOptions<ICountryController>("http://192.168.1.26:5001/"));
+
+            await client.InsertCountryAsync(new CountryListItem { IsoTwo = this.Item.Text, Name = this.Item.Description });
             await Navigation.PopModalAsync();
         }
     }

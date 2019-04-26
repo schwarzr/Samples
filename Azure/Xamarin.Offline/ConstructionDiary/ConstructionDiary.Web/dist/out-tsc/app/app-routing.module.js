@@ -2,6 +2,9 @@ import * as tslib_1 from "tslib";
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dasbhoard.component';
+import { CountriesListComponent } from './countries/countries-list.component';
+import { CountryEditComponent } from './countries/country-edit.component';
+import { CountryCreateComponent } from './countries/country-create.component';
 var routes = [{
         path: 'dashboard',
         component: DashboardComponent
@@ -11,12 +14,16 @@ var routes = [{
         children: [
             {
                 path: '',
-                component: DashboardComponent
+                component: CountriesListComponent
+            },
+            {
+                path: 'new',
+                component: CountryCreateComponent
             },
             {
                 path: ':id',
-                component: DashboardComponent
-            }
+                component: CountryEditComponent
+            },
         ]
     },
     {

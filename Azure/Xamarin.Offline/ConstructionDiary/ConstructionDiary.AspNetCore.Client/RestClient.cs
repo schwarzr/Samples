@@ -20,12 +20,43 @@ namespace ConstructionDiary.AspNetCore.Client
             this._options = options;
         }
 
-        public Task CallAsync(Expression<Func<TContract, Task>> opeationSelector)
+        public async Task CallAsync(Expression<Func<TContract, Task>> operationSelector)
         {
-            return Task.CompletedTask;
+            HttpResponseMessage response = await GetResponse(operationSelector);
+            if (response.IsSuccessStatusCode)
+            {
+                return;
+            }
+
+            throw new InvalidOperationException("Unexpected http status code.");
         }
 
         public async Task<TResult> CallAsync<TResult>(Expression<Func<TContract, Task<TResult>>> operationSelector)
+        {
+            HttpResponseMessage response = await GetResponse(operationSelector);
+            if (response.IsSuccessStatusCode)
+            {
+                JsonSerializer serializer = GetSerializer();
+
+                using (var stream = await response.Content.ReadAsStreamAsync())
+                using (var streamReader = new StreamReader(stream))
+                using (var jsonReader = new JsonTextReader(streamReader))
+                {
+                    var result = serializer.Deserialize<TResult>(jsonReader);
+
+                    return result;
+                }
+            }
+
+            throw new InvalidOperationException("Unexpected http status code.");
+        }
+
+        private static JsonSerializer GetSerializer()
+        {
+            return JsonSerializer.Create(new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+        }
+
+        private async Task<HttpResponseMessage> GetResponse(LambdaExpression operationSelector)
         {
             var methodCall = operationSelector.Body as MethodCallExpression;
 
@@ -47,7 +78,7 @@ namespace ConstructionDiary.AspNetCore.Client
 
             string requestUrl = null;
 
-            if (attribute.Template != null && new Uri(attribute.Template).IsAbsoluteUri)
+            if (attribute.Template != null && attribute.Template.StartsWith("/"))
             {
                 requestUrl = attribute.Template;
             }
@@ -58,33 +89,39 @@ namespace ConstructionDiary.AspNetCore.Client
 
             var httpMethod = attribute.HttpMethod();
 
-            for (int i = 0; i > methodCall.Arguments.Count; i++)
+            HttpContent content = null;
+
+            for (int i = 0; i < methodCall.Arguments.Count; i++)
             {
                 var data = Expression.Lambda<Func<object>>(methodCall.Arguments[0]).Compile()();
-                var stringValue = data.ToString();
 
-                requestUrl = requestUrl.Replace($"{{{methodCall.Method.GetParameters()[i].Name}}}", stringValue);
+                if (methodCall.Method.GetParameters()[i].GetCustomAttribute<BodyMemberAttribute>() != null)
+                {
+                    var ms = new MemoryStream();
+                    var serializer = GetSerializer();
+                    serializer.Serialize(new StreamWriter(ms), data);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    content = new StreamContent(ms);
+                    content.Headers.ContentType = MediaTypeWithQualityHeaderValue.Parse("application/json");
+                    content.Headers.ContentLength = ms.Length;
+                }
+                else
+                {
+                    var stringValue = data.ToString();
+
+                    requestUrl = requestUrl.Replace($"{{{methodCall.Method.GetParameters()[i].Name}}}", stringValue);
+                }
             }
 
             var request = new HttpRequestMessage(new HttpMethod(httpMethod), requestUrl);
             request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-            var response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+            if (content != null)
             {
-                var serializer = JsonSerializer.Create(new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
-
-                using (var stream = await response.Content.ReadAsStreamAsync())
-                using (var streamReader = new StreamReader(stream))
-                using (var jsonReader = new JsonTextReader(streamReader))
-                {
-                    var result = serializer.Deserialize<TResult>(jsonReader);
-
-                    return result;
-                }
+                request.Content = content;
             }
 
-            throw new InvalidOperationException("Unexpected http status code.");
+            var response = await client.SendAsync(request);
+            return response;
         }
     }
 }

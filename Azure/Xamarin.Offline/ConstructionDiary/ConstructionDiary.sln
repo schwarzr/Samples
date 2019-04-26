@@ -37,7 +37,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{79052522-2C8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{1FDB5827-AA78-4F90-98E1-3883AA63A11C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstructionDiary.AspNetCore.Client", "ConstructionDiary.AspNetCore.Client\ConstructionDiary.AspNetCore.Client.csproj", "{EB228F62-3FE1-4671-8CB4-E9B8D0E45C91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConstructionDiary.AspNetCore.Client", "ConstructionDiary.AspNetCore.Client\ConstructionDiary.AspNetCore.Client.csproj", "{EB228F62-3FE1-4671-8CB4-E9B8D0E45C91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstructionDiary.Api.Client", "ConstructionDiary.Api.Client\ConstructionDiary.Api.Client.csproj", "{A338A856-EC8E-4048-8356-9E0F2F72E336}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -271,6 +273,22 @@ Global
 		{EB228F62-3FE1-4671-8CB4-E9B8D0E45C91}.Release|x64.Build.0 = Release|Any CPU
 		{EB228F62-3FE1-4671-8CB4-E9B8D0E45C91}.Release|x86.ActiveCfg = Release|Any CPU
 		{EB228F62-3FE1-4671-8CB4-E9B8D0E45C91}.Release|x86.Build.0 = Release|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Debug|ARM.Build.0 = Debug|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Debug|x64.Build.0 = Debug|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Debug|x86.Build.0 = Debug|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Release|ARM.Build.0 = Release|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Release|x64.ActiveCfg = Release|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Release|x64.Build.0 = Release|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Release|x86.ActiveCfg = Release|Any CPU
+		{A338A856-EC8E-4048-8356-9E0F2F72E336}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -289,6 +307,7 @@ Global
 		{C5A9B539-8500-48C2-A15B-4B1E8AB974C2} = {79052522-2C87-4D4C-A0EA-10CB924E751D}
 		{51F559AF-7F82-4597-A002-DB911484ABA0} = {79052522-2C87-4D4C-A0EA-10CB924E751D}
 		{EB228F62-3FE1-4671-8CB4-E9B8D0E45C91} = {1FDB5827-AA78-4F90-98E1-3883AA63A11C}
+		{A338A856-EC8E-4048-8356-9E0F2F72E336} = {89A97290-27B2-4336-B023-5990B401A8A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FEC9FB91-E18A-4AA2-9F42-B5744D5BD2D0}

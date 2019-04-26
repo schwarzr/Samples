@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dasbhoard.component';
+import { CountriesListComponent } from './countries/countries-list.component';
+import { CountryEditComponent } from './countries/country-edit.component';
+import { CountryCreateComponent } from './countries/country-create.component';
 
 const routes: Routes = [{
   path: 'dashboard',
@@ -10,24 +13,29 @@ const routes: Routes = [{
   path: 'countries',
   children: [
     {
-      path:'',
-      component: DashboardComponent
+      path: '',
+      component: CountriesListComponent
     },
     {
-      path:':id',
-      component: DashboardComponent
-    }
+      path: 'new',
+      component: CountryCreateComponent
+    },
+    {
+      path: ':id',
+      component: CountryEditComponent
+    },
+
   ]
 },
 {
   path: 'issuetypes',
   children: [
     {
-      path:'',
+      path: '',
       component: DashboardComponent
     },
     {
-      path:':id',
+      path: ':id',
       component: DashboardComponent
     }
   ]
@@ -36,7 +44,7 @@ const routes: Routes = [{
   path: ':project',
   children: [
     {
-      path:'issues',
+      path: 'issues',
       children: [
         {
           path: '',
@@ -46,10 +54,10 @@ const routes: Routes = [{
           path: ':id',
           component: DashboardComponent
         }
-      ] 
+      ]
     },
     {
-      path:'employees',
+      path: 'employees',
       children: [
         {
           path: '',
@@ -59,7 +67,7 @@ const routes: Routes = [{
           path: ':id',
           component: DashboardComponent
         }
-      ] 
+      ]
     }
   ]
 },

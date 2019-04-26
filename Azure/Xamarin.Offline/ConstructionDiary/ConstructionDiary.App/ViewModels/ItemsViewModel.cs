@@ -10,6 +10,7 @@ using ConstructionDiary.App.Views;
 using ConstructionDiary.AspNetCore.Client;
 using ConstructionDiary.Api.Contract;
 using ConstructionDiary.Model;
+using ConstructionDiary.Api.Client;
 
 namespace ConstructionDiary.App.ViewModels
 {
@@ -18,7 +19,7 @@ namespace ConstructionDiary.App.ViewModels
         public ItemsViewModel()
         {
             Title = "Browse";
-            Items = new ObservableCollection<UserInfo>();
+            Items = new ObservableCollection<CountryInfo>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
@@ -29,7 +30,7 @@ namespace ConstructionDiary.App.ViewModels
             });
         }
 
-        public ObservableCollection<UserInfo> Items { get; set; }
+        public ObservableCollection<CountryInfo> Items { get; set; }
 
         public Command LoadItemsCommand { get; set; }
 
@@ -44,8 +45,8 @@ namespace ConstructionDiary.App.ViewModels
             {
                 Items.Clear();
 
-                var client = new RestClient<IUserController>(new RestOptions<IUserController>("http://10.41.8.22:5001/"));
-                var result = await client.CallAsync(p => p.GetAllUserInfosAsync());
+                var client = new CountryControllerClient(new RestOptions<ICountryController>("http://192.168.1.26:5001/"));
+                var result = await client.GetCountryInfosAsync();
 
                 foreach (var item in result)
                 {

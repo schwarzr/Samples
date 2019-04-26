@@ -227,22 +227,18 @@ export class CountryClient {
         return _observableOf<CountryListItem[] | null>(<any>null);
     }
 
-    insertCountry(id: string | undefined, isoTwo: string | null | undefined, name: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/country?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        if (isoTwo !== undefined)
-            url_ += "IsoTwo=" + encodeURIComponent("" + isoTwo) + "&"; 
-        if (name !== undefined)
-            url_ += "Name=" + encodeURIComponent("" + name) + "&"; 
+    insertCountry(item: CountryListItem): Observable<void> {
+        let url_ = this.baseUrl + "/api/country";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(item);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
             })
         };
 
@@ -279,22 +275,18 @@ export class CountryClient {
         return _observableOf<void>(<any>null);
     }
 
-    updateCountry(id: string | undefined, isoTwo: string | null | undefined, name: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/country?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        if (isoTwo !== undefined)
-            url_ += "IsoTwo=" + encodeURIComponent("" + isoTwo) + "&"; 
-        if (name !== undefined)
-            url_ += "Name=" + encodeURIComponent("" + name) + "&"; 
+    updateCountry(item: CountryListItem): Observable<void> {
+        let url_ = this.baseUrl + "/api/country";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(item);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
             })
         };
 

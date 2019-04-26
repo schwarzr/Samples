@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConstructionDiary.Api.Client\ConstructionDiary.Api.Client.csproj" />
     <ProjectReference Include="..\ConstructionDiary.Api.Contract\ConstructionDiary.Api.Contract.csproj" />
     <ProjectReference Include="..\ConstructionDiary.AspNetCore.Client\ConstructionDiary.AspNetCore.Client.csproj" />
   </ItemGroup>
