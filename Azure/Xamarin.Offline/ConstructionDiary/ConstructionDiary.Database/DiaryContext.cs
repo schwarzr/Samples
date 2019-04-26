@@ -9,6 +9,18 @@ namespace ConstructionDiary.Database
         {
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Area> Areas { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+
+        public DbSet<IssueAttachment> IssueAttachments { get; set; }
+
+        public DbSet<Issue> Issues { get; set; }
+
+        public DbSet<IssueType> IssueTypes { get; set; }
+
+        public DbSet<Project> Projects { get; set; }
     }
 }

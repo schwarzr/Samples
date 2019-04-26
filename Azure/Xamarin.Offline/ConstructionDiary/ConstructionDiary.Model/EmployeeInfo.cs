@@ -2,7 +2,7 @@
 
 namespace ConstructionDiary.Model
 {
-    public class UserInfo
+    public class EmployeeInfo
     {
         public string DisplayName { get; set; }
 

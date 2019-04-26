@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ConstructionDiary.Api.Contract\ConstructionDiary.Api.Contract.csproj" />
     <ProjectReference Include="..\ConstructionDiary.Contract\ConstructionDiary.Contract.csproj" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ConstructionDiary.Api;
 using ConstructionDiary.AspNetCore.Mvc;
 using ConstructionDiary.Contract;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
@@ -31,22 +33,45 @@ namespace ConstructionDiary.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
+            app.UseMvc();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseSwagger();
+            app.UseSwaggerUi3();
+
+            app.Use(next => async (ctx) =>
+            {
+                await next(ctx);
+                if (ctx.Response.StatusCode == StatusCodes.Status404NotFound)
+                {
+                    ctx.Request.Path = "/index.html";
+                    await next(ctx);
+                }
+            });
+
+            app.UseStaticFiles();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvcCore()
-                .AddApplicationPart(typeof(UserController).Assembly)
+                .AddApiExplorer()
+                .AddApplicationPart(typeof(EmployeeController).Assembly)
                 .AddJsonFormatters(options => options.ContractResolver = new CamelCasePropertyNamesContractResolver());
 
-            services.AddSingleton<IActionDescriptorProvider, ContractDescriptorProvider>();
+            //var toRemove = services.Where(p => p.ServiceType == typeof(IActionDescriptorProvider)).ToList();
+            //toRemove.ForEach(p => services.Remove(p));
+            services.AddSingleton<IApplicationModelProvider, ContractModelProvider>();
 
-            services.AddScoped<IUserService, UserService>();
-            services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer("Data Source=.;Initial Catalog=ConstructionDiary; Integrated Security=True;"));
+            //services.AddSingleton<IActionDescriptorProvider, ContractDescriptorProvider>();
+
+            services.AddSwaggerDocument();
+
+            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<ICountryService, CountryService>();
+
+            services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ConstructionDiary; Integrated Security=True;"));
+
+            //services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer("Data Source=.;Initial Catalog=ConstructionDiary; Integrated Security=True;"));
 
             if (_env.IsDevelopment())
             {
@@ -55,9 +80,7 @@ namespace ConstructionDiary.Web
                     var ctx = sp.GetRequiredService<DiaryContext>();
                     if (ctx.Database.EnsureCreated())
                     {
-                        ctx.Users.Add(new Database.Entities.User { Id = Guid.NewGuid(), FirstName = "Raphael", LastName = "Schwarz", Created = DateTime.Now, Login = "raphael@codeworx.at" });
-
-                        ctx.SaveChanges();
+                        DataHelper.InsertData(ctx);
                     }
                 }
             }

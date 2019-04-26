@@ -15,18 +15,68 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable()
-export class UserClient {
+export class CountryClient {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
     }
 
-    getAllUserInfos(): Observable<UserInfo[] | null> {
-        let url_ = this.baseUrl + "/api/User";
+    deleteCountry(id: string): Observable<void> {
+        let url_ = this.baseUrl + "/api/country/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteCountry(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteCountry(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteCountry(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    getCountry(id: string): Observable<CountryListItem | null> {
+        let url_ = this.baseUrl + "/api/country/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -38,20 +88,68 @@ export class UserClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllUserInfos(response_);
+            return this.processGetCountry(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllUserInfos(<any>response_);
+                    return this.processGetCountry(<any>response_);
                 } catch (e) {
-                    return <Observable<UserInfo[] | null>><any>_observableThrow(e);
+                    return <Observable<CountryListItem | null>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<UserInfo[] | null>><any>_observableThrow(response_);
+                return <Observable<CountryListItem | null>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAllUserInfos(response: HttpResponseBase): Observable<UserInfo[] | null> {
+    protected processGetCountry(response: HttpResponseBase): Observable<CountryListItem | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? CountryListItem.fromJS(resultData200) : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CountryListItem | null>(<any>null);
+    }
+
+    getCountryInfos(): Observable<CountryInfo[] | null> {
+        let url_ = this.baseUrl + "/api/country/infos";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCountryInfos(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCountryInfos(<any>response_);
+                } catch (e) {
+                    return <Observable<CountryInfo[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CountryInfo[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetCountryInfos(response: HttpResponseBase): Observable<CountryInfo[] | null> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -65,7 +163,7 @@ export class UserClient {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200.push(UserInfo.fromJS(item));
+                    result200.push(CountryInfo.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -74,15 +172,322 @@ export class UserClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<UserInfo[] | null>(<any>null);
+        return _observableOf<CountryInfo[] | null>(<any>null);
+    }
+
+    getCountryListItems(): Observable<CountryListItem[] | null> {
+        let url_ = this.baseUrl + "/api/country/list";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCountryListItems(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCountryListItems(<any>response_);
+                } catch (e) {
+                    return <Observable<CountryListItem[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CountryListItem[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetCountryListItems(response: HttpResponseBase): Observable<CountryListItem[] | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(CountryListItem.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CountryListItem[] | null>(<any>null);
+    }
+
+    insertCountry(id: string | undefined, isoTwo: string | null | undefined, name: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/country?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        if (isoTwo !== undefined)
+            url_ += "IsoTwo=" + encodeURIComponent("" + isoTwo) + "&"; 
+        if (name !== undefined)
+            url_ += "Name=" + encodeURIComponent("" + name) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertCountry(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertCountry(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertCountry(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    updateCountry(id: string | undefined, isoTwo: string | null | undefined, name: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/country?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        if (isoTwo !== undefined)
+            url_ += "IsoTwo=" + encodeURIComponent("" + isoTwo) + "&"; 
+        if (name !== undefined)
+            url_ += "Name=" + encodeURIComponent("" + name) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateCountry(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateCountry(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdateCountry(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 }
 
-export class UserInfo implements IUserInfo {
+@Injectable()
+export class EmployeeClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+
+    getEmployeeInfos(projectId: string): Observable<EmployeeInfo[] | null> {
+        let url_ = this.baseUrl + "/api/employee/{projectId}/all";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEmployeeInfos(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEmployeeInfos(<any>response_);
+                } catch (e) {
+                    return <Observable<EmployeeInfo[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<EmployeeInfo[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetEmployeeInfos(response: HttpResponseBase): Observable<EmployeeInfo[] | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(EmployeeInfo.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<EmployeeInfo[] | null>(<any>null);
+    }
+}
+
+export class CountryListItem implements ICountryListItem {
+    id: string;
+    isoTwo?: string | undefined;
+    name?: string | undefined;
+
+    constructor(data?: ICountryListItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.isoTwo = data["isoTwo"];
+            this.name = data["name"];
+        }
+    }
+
+    static fromJS(data: any): CountryListItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new CountryListItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["isoTwo"] = this.isoTwo;
+        data["name"] = this.name;
+        return data; 
+    }
+}
+
+export interface ICountryListItem {
+    id: string;
+    isoTwo?: string | undefined;
+    name?: string | undefined;
+}
+
+export class CountryInfo implements ICountryInfo {
+    displayString?: string | undefined;
+    id: string;
+
+    constructor(data?: ICountryInfo) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.displayString = data["displayString"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): CountryInfo {
+        data = typeof data === 'object' ? data : {};
+        let result = new CountryInfo();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["displayString"] = this.displayString;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface ICountryInfo {
+    displayString?: string | undefined;
+    id: string;
+}
+
+export class EmployeeInfo implements IEmployeeInfo {
     displayName?: string | undefined;
     id: string;
 
-    constructor(data?: IUserInfo) {
+    constructor(data?: IEmployeeInfo) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -98,9 +503,9 @@ export class UserInfo implements IUserInfo {
         }
     }
 
-    static fromJS(data: any): UserInfo {
+    static fromJS(data: any): EmployeeInfo {
         data = typeof data === 'object' ? data : {};
-        let result = new UserInfo();
+        let result = new EmployeeInfo();
         result.init(data);
         return result;
     }
@@ -113,7 +518,7 @@ export class UserInfo implements IUserInfo {
     }
 }
 
-export interface IUserInfo {
+export interface IEmployeeInfo {
     displayName?: string | undefined;
     id: string;
 }

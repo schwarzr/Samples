@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
 
 namespace ConstructionDiary.AspNetCore.Mvc
@@ -17,7 +18,9 @@ namespace ConstructionDiary.AspNetCore.Mvc
 
     {
         private readonly IApplicationModelProvider[] _applicationModelProviders;
+
         private readonly IEnumerable<IApplicationModelConvention> _conventions;
+
         private readonly ApplicationPartManager _partManager;
 
         public ContractDescriptorProvider(
@@ -133,14 +136,42 @@ namespace ConstructionDiary.AspNetCore.Mvc
                     if (methodAtt != null)
                     {
                         var targetAttribute = GetTargetAttribute(methodAtt.HttpMethod(), methodAtt.Template);
-                        action.Selectors.First().AttributeRouteModel = new AttributeRouteModel(targetAttribute);
+                        action.Selectors.Add(CreateSelectorModel(targetAttribute));
                     }
                 }
             }
 
             ApplicationModelConventions.ApplyConventions(applicationModel, _conventions);
 
-            return ControllerActionDescriptorBuilder.Build(applicationModel);
+            var result = ControllerActionDescriptorBuilder.Build(applicationModel);
+
+            return result;
+        }
+
+        private static SelectorModel CreateSelectorModel(IRouteTemplateProvider route)
+        {
+            var selectorModel = new SelectorModel();
+            if (route != null)
+            {
+                selectorModel.AttributeRouteModel = new AttributeRouteModel(route);
+            }
+
+            selectorModel.EndpointMetadata.Add(route);
+
+            // Simple case, all HTTP method attributes apply
+            var httpMethods = new[] { route }
+                .OfType<IActionHttpMethodProvider>()
+                .SelectMany(a => a.HttpMethods)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+
+            if (httpMethods.Length > 0)
+            {
+                selectorModel.ActionConstraints.Add(new HttpMethodActionConstraint(httpMethods));
+                selectorModel.EndpointMetadata.Add(new HttpMethodMetadata(httpMethods));
+            }
+
+            return selectorModel;
         }
 
         private IEnumerable<TypeInfo> GetControllerTypes()
@@ -151,7 +182,7 @@ namespace ConstructionDiary.AspNetCore.Mvc
                                     .Where(p => p.GetCustomAttribute<RestRouteAttribute>() != null ||
                                                     p.GetInterfaces().Any(x => x.GetTypeInfo().GetCustomAttribute<RestRouteAttribute>() != null));
 
-            return backendServices;
+            return backendServices.Distinct();
         }
 
         private IRouteTemplateProvider GetTargetAttribute(string method, string template)
