@@ -9,7 +9,7 @@ namespace ConstructionDiary.Api.Client
 {
     public class CountryControllerClient : RestClient<ICountryController>, ICountryController
     {
-        public CountryControllerClient(RestOptions<ICountryController> options)
+        public CountryControllerClient(RestOptions options)
             : base(options)
         {
         }

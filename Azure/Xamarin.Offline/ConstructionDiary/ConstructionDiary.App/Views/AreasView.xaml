@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionDiary.App.Views.AreasView"
+             x:Name="pg">
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <CollectionView ItemsSource="{Binding Areas}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                Span="2" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button HorizontalOptions="Fill"
+                                    VerticalOptions="Fill"
+                                    Text="{Binding Path=Item.AreaName}"
+                                    Command="{Binding Path=Command}"
+                                    CommandParameter="{Binding Path=Item}"
+                                    BackgroundColor="#FF5733"></Button>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

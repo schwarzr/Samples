@@ -13,9 +13,14 @@ namespace ConstructionDiary.AspNetCore.Client
 {
     public class RestClient<TContract>
     {
-        private readonly RestOptions<TContract> _options;
+        private readonly RestOptions _options;
 
         public RestClient(RestOptions<TContract> options)
+        {
+            this._options = options;
+        }
+
+        public RestClient(RestOptions options)
         {
             this._options = options;
         }
@@ -93,7 +98,7 @@ namespace ConstructionDiary.AspNetCore.Client
 
             for (int i = 0; i < methodCall.Arguments.Count; i++)
             {
-                var data = Expression.Lambda<Func<object>>(methodCall.Arguments[0]).Compile()();
+                var data = Expression.Lambda<Func<object>>(Expression.Convert(methodCall.Arguments[0], typeof(object))).Compile()();
 
                 if (methodCall.Method.GetParameters()[i].GetCustomAttribute<BodyMemberAttribute>() != null)
                 {

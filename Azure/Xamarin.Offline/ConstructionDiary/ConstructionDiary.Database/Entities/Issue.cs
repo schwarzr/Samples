@@ -6,6 +6,11 @@ namespace ConstructionDiary.Database.Entities
 {
     public class Issue
     {
+        public Issue()
+        {
+            this.Attachments = new HashSet<IssueAttachment>();
+        }
+
         public Area Area { get; set; }
 
         public Guid AreaId { get; set; }
@@ -22,6 +27,10 @@ namespace ConstructionDiary.Database.Entities
 
         [StringLength(2000)]
         public string IssueDescripton { get; set; }
+
+        public IssueType IssueType { get; set; }
+
+        public Guid IssueTypeId { get; set; }
 
         [StringLength(200)]
         [Required]

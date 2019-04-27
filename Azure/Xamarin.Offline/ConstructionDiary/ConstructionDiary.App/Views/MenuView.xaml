@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionDiary.App.Views.MenuView"
+             Title="Menu">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand">
+            <Label Text="Project"></Label>
+            <Picker ItemsSource="{Binding Path=Projects}"
+                    SelectedItem="{Binding Path=SelectedProject,Mode=TwoWay}"
+                    ItemDisplayBinding="{Binding Path=DisplayString}">
+            </Picker>
+
+            <ListView x:Name="ListViewMenu"
+                    HasUnevenRows="True"
+                    ItemsSource="{Binding Path=MenuItems}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Button Text="{Binding Title}" FontSize="20" Command="{Binding Path=Command}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Label Text="Current State:"></Label>
+            <Label Text="{Binding Path=StateViewModel.CurrentState}"></Label>
+
+            <Button Text="{Binding Path=StateViewModel.Label}" Command="{Binding Path=StateViewModel.SwitchCommand}">
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.4" />
     <ProjectReference Include="..\ConstructionDiary.Contract\ConstructionDiary.Contract.csproj" />
     <ProjectReference Include="..\ConstructionDiary.Database\ConstructionDiary.Database.csproj" />
   </ItemGroup>

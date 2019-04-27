@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage   xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="ConstructionDiary.App.Views.ShellView"
+                    xmlns:pages="clr-namespace:ConstructionDiary.App.Views"
+                    xmlns:att="clr-namespace:ConstructionDiary.App.Attached"
+                    att:BindableMasterDetail.Master="{Binding Path=Menu}"
+                    att:BindableMasterDetail.Detail="{Binding Path=SelectedDetail}"
+                    Title="Whatever">
+    <!--<MasterDetailPage.Master>
+        <Page Title="Whatever2" />
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <Page />
+    </MasterDetailPage.Detail>-->
+</MasterDetailPage>

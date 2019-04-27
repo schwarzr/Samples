@@ -4,7 +4,7 @@ using System.Net.Http;
 
 namespace ConstructionDiary.AspNetCore.Client
 {
-    public abstract class RestOptions
+    public class RestOptions
     {
         public RestOptions(string baseUrl)
         {
