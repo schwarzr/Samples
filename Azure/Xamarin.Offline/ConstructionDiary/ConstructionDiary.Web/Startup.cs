@@ -13,11 +13,15 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
+using Codeworx.Synchronization.Configuration;
+using Codeworx.Synchronization;
 
 namespace ConstructionDiary.Web
 {
     public class Startup
     {
+        public const string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ConstructionDiary; Integrated Security=True;";
+
         private readonly IHostingEnvironment _env;
 
         public Startup(IHostingEnvironment env)
@@ -66,6 +70,10 @@ namespace ConstructionDiary.Web
 
             services.AddSwaggerDocument();
 
+            services.AddSyncEndpoint((builder, sp) => builder
+            .AddEntityFrameworkCore<DiaryContext>().UseSqlServer(ConnectionString));
+            services.AddSyncScenario<ProjectFilterScenario>(Constants.ScenarioId, "Project Filter");
+
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ICountryService, CountryService>();
@@ -73,7 +81,7 @@ namespace ConstructionDiary.Web
             services.AddScoped<IIssueService, IssueService>();
             services.AddScoped<IOfflineService, OfflineService>();
 
-            services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ConstructionDiary; Integrated Security=True;"));
+            services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer(ConnectionString));
             //services.AddDbContext<DiaryContext>(builder => builder.UseSqlite("Filename=c:\\Temp\\whatever.sqlite"));
 
             //services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer("Data Source=.;Initial Catalog=ConstructionDiary; Integrated Security=True;"));

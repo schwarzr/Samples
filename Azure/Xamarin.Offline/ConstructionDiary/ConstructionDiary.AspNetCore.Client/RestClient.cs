@@ -98,17 +98,20 @@ namespace ConstructionDiary.AspNetCore.Client
 
             for (int i = 0; i < methodCall.Arguments.Count; i++)
             {
-                var data = Expression.Lambda<Func<object>>(Expression.Convert(methodCall.Arguments[0], typeof(object))).Compile()();
+                var data = Expression.Lambda<Func<object>>(Expression.Convert(methodCall.Arguments[i], typeof(object))).Compile()();
 
                 if (methodCall.Method.GetParameters()[i].GetCustomAttribute<BodyMemberAttribute>() != null)
                 {
-                    var ms = new MemoryStream();
-                    var serializer = GetSerializer();
-                    serializer.Serialize(new StreamWriter(ms), data);
-                    ms.Seek(0, SeekOrigin.Begin);
-                    content = new StreamContent(ms);
+                    using (var ms = new MemoryStream())
+                    {
+                        var serializer = GetSerializer();
+                        using (var jw = new JsonTextWriter(new StreamWriter(ms)))
+                        {
+                            serializer.Serialize(jw, data, methodCall.Arguments[i].Type);
+                        }
+                        content = new ByteArrayContent(ms.ToArray());
+                    }
                     content.Headers.ContentType = MediaTypeWithQualityHeaderValue.Parse("application/json");
-                    content.Headers.ContentLength = ms.Length;
                 }
                 else
                 {

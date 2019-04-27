@@ -17,6 +17,7 @@ namespace ConstructionDiary.App.ViewModels
         public OnlineStateViewModel(IOfflineController service, ICurrentProjectService currentProject)
         {
             SwitchCommand = new DelegateCommand(OnSwitch);
+            StartSyncCommand = new DelegateCommand(() => { }, () => false);
             this._service = service;
             this._currentProject = currentProject;
         }
@@ -25,7 +26,11 @@ namespace ConstructionDiary.App.ViewModels
 
         public string Label => "go offline";
 
+        public ICommand StartSyncCommand { get; }
+
         public ICommand SwitchCommand { get; }
+
+        public string SyncProgress => null;
 
         private async void OnSwitch()
         {

@@ -30,6 +30,11 @@
 
             <Button Text="{Binding Path=StateViewModel.Label}" Command="{Binding Path=StateViewModel.SwitchCommand}">
             </Button>
+
+            <Label Text="{Binding Path=StateViewModel.SynpProgress}"></Label>
+
+            <Button Text="Sync" Command="{Binding Path=StateViewModel.StartSyncCommand}">
+            </Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

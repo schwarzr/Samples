@@ -33,7 +33,7 @@ namespace ConstructionDiary.App.Bootstrap
                 .AddScoped<IEmployeeService, EmployeeService>()
                 .AddTransient<OfflineStateViewModel>()
                 .AddTransient<IStateViewModel>(p => p.GetRequiredService<OfflineStateViewModel>())
-                .AddDbContext<DiaryContext>(p => p.UseSqlite($"Filename={path}"));
+                .AddDbContext<DiaryContext>(p => p.UseSqlite($"Filename={path}", options => options.AddChangeTracking()));
         }
     }
 }

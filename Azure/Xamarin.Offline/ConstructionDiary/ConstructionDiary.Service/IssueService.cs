@@ -33,10 +33,13 @@ namespace ConstructionDiary.Service
                 IssueTypeId = item.IssueTypeId,
             };
 
-            foreach (var attachment in item.Attachments)
+            if (item.Attachments != null)
             {
-                var ia = new IssueAttachment { Id = Guid.NewGuid(), IssueId = issue.Id, Content = attachment };
-                issue.Attachments.Add(ia);
+                foreach (var attachment in item.Attachments)
+                {
+                    var ia = new IssueAttachment { Id = Guid.NewGuid(), IssueId = issue.Id, Content = attachment };
+                    issue.Attachments.Add(ia);
+                }
             }
             await _context.Issues.AddAsync(issue);
             await _context.SaveChangesAsync();

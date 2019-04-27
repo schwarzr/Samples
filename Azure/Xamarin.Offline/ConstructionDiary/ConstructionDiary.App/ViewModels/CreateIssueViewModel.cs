@@ -40,8 +40,8 @@ namespace ConstructionDiary.App.ViewModels
 
             Attachments = new ObservableCollection<byte[]>();
 
-            SaveCommmand = new DelegateCommand(DoSave);
-            CancelCommmand = new DelegateCommand(DoCancel);
+            SaveCommand = new DelegateCommand(DoSave);
+            CancelCommand = new DelegateCommand(DoCancel);
         }
 
         public AreaInfo Area
@@ -59,7 +59,7 @@ namespace ConstructionDiary.App.ViewModels
 
         public ObservableCollection<byte[]> Attachments { get; }
 
-        public ICommand CancelCommmand { get; }
+        public ICommand CancelCommand { get; }
 
         public string Description
         {
@@ -100,7 +100,7 @@ namespace ConstructionDiary.App.ViewModels
             }
         }
 
-        public ICommand SaveCommmand { get; }
+        public ICommand SaveCommand { get; }
 
         public EmployeeInfo SelectedEmployee
         {

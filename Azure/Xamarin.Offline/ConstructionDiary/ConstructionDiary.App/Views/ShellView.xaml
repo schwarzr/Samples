@@ -5,12 +5,12 @@
                     xmlns:pages="clr-namespace:ConstructionDiary.App.Views"
                     xmlns:att="clr-namespace:ConstructionDiary.App.Attached"
                     att:BindableMasterDetail.Master="{Binding Path=Menu}"
-                    att:BindableMasterDetail.Detail="{Binding Path=SelectedDetail}"
                     Title="Whatever">
     <!--<MasterDetailPage.Master>
         <Page Title="Whatever2" />
-    </MasterDetailPage.Master>
+    </MasterDetailPage.Master>-->
     <MasterDetailPage.Detail>
-        <Page />
-    </MasterDetailPage.Detail>-->
+        <NavigationPage att:BindableMasterDetail.Navigation="{Binding Path=Navigation}">
+        </NavigationPage>
+    </MasterDetailPage.Detail>
 </MasterDetailPage>

@@ -8,6 +8,12 @@ namespace ConstructionDiary.App
 {
     public interface INavigationController
     {
+        event Action<ViewModelBase> Added;
+
+        event Action<ViewModelBase> Removed;
+
+        IEnumerable<ViewModelBase> Stack { get; }
+
         Task CloseAsync(ViewModelBase viewModel);
 
         Task<TViewModel> ShowAsync<TViewModel>()

@@ -13,15 +13,12 @@ namespace ConstructionDiary.App.ViewModels
 
         private ViewModelBase _selectedDetail;
 
-        public ApplicationViewModel(MenuViewModel menu, DashboardViewModel dashboard)
+        public ApplicationViewModel(MenuViewModel menu, INavigationController navigation)
         {
-            this.DetailStack = new ObservableCollection<ViewModelBase>();
             this.Menu = menu;
-            this.DetailStack.Add(dashboard);
-            this.SelectedDetail = this.DetailStack.First();
+            this.Navigation = navigation;
+            this.Navigation.ShowAsync<DashboardViewModel>();
         }
-
-        public ObservableCollection<ViewModelBase> DetailStack { get; }
 
         public ViewModelBase Menu
         {
@@ -36,40 +33,12 @@ namespace ConstructionDiary.App.ViewModels
             }
         }
 
-        public ViewModelBase SelectedDetail
-        {
-            get { return _selectedDetail; }
-            private set
-            {
-                if (_selectedDetail != value)
-                {
-                    _selectedDetail = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        public void AddAndShowDetail(ViewModelBase viewModel)
-        {
-            this.DetailStack.Add(viewModel);
-            this.SelectedDetail = viewModel;
-        }
+        public INavigationController Navigation { get; }
 
         public override async Task InitializeAsync()
         {
             await base.InitializeAsync();
             await Menu.InitializeAsync();
-            await SelectedDetail.InitializeAsync();
-        }
-
-        public void RemoveDetail(ViewModelBase viewModel)
-        {
-            this.DetailStack.Remove(viewModel);
-
-            if (this.SelectedDetail == viewModel)
-            {
-                this.SelectedDetail = this.DetailStack.LastOrDefault();
-            }
         }
     }
 }

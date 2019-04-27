@@ -11,6 +11,10 @@ namespace ConstructionDiary.App.ViewModels
 
         string Label { get; }
 
+        ICommand StartSyncCommand { get; }
+
         ICommand SwitchCommand { get; }
+
+        string SyncProgress { get; }
     }
 }

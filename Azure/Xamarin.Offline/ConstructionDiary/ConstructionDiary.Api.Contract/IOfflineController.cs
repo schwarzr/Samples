@@ -8,7 +8,7 @@ namespace ConstructionDiary.Api.Contract
     [RestRoute("api/offline")]
     public interface IOfflineController
     {
-        [RestGet("db")]
+        [RestGet("db/{projectId}")]
         Task<byte[]> GetOfflineDBAsync(Guid projectId);
     }
 }

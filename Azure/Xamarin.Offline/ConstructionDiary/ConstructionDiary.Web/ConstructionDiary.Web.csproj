@@ -6,6 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Codeworx.Synchronization.EntityFrameworkCore.SqlServer"  Version="2.0.0-beta1-00012"/>
+    <PackageReference Include="Codeworx.Synchronization.EntityFrameworkCore.Sqlite"  Version="2.0.0-beta1-00012" />
+    <PackageReference Include="Codeworx.Synchronization.AspNetCore" Version="2.0.0-beta1-00012" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="NSwag.AspNetCore" Version="12.2.3" />
