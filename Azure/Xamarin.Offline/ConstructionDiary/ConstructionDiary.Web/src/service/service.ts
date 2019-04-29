@@ -15,6 +15,133 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable()
+export class OfflineClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+
+    getOfflineDB(projectId: string): Observable<string | null> {
+        let url_ = this.baseUrl + "/api/offline/db/{projectId}";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetOfflineDB(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetOfflineDB(<any>response_);
+                } catch (e) {
+                    return <Observable<string | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetOfflineDB(response: HttpResponseBase): Observable<string | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string | null>(<any>null);
+    }
+}
+
+@Injectable()
+export class AreaClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+
+    getAreaInfos(): Observable<AreaInfo[] | null> {
+        let url_ = this.baseUrl + "/api/area/infos";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAreaInfos(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAreaInfos(<any>response_);
+                } catch (e) {
+                    return <Observable<AreaInfo[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AreaInfo[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAreaInfos(response: HttpResponseBase): Observable<AreaInfo[] | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(AreaInfo.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AreaInfo[] | null>(<any>null);
+    }
+}
+
+@Injectable()
 export class CountryClient {
     private http: HttpClient;
     private baseUrl: string;
@@ -391,6 +518,379 @@ export class EmployeeClient {
     }
 }
 
+@Injectable()
+export class IssueClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+
+    getIssueCreate(projectId: string): Observable<IssueCreateData | null> {
+        let url_ = this.baseUrl + "/api/issue/{projectId}/create";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetIssueCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetIssueCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<IssueCreateData | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<IssueCreateData | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetIssueCreate(response: HttpResponseBase): Observable<IssueCreateData | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? IssueCreateData.fromJS(resultData200) : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<IssueCreateData | null>(<any>null);
+    }
+
+    getIssues(projectId: string): Observable<IssueListItem[] | null> {
+        let url_ = this.baseUrl + "/api/issue/{projectId}/list";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetIssues(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetIssues(<any>response_);
+                } catch (e) {
+                    return <Observable<IssueListItem[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<IssueListItem[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetIssues(response: HttpResponseBase): Observable<IssueListItem[] | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(IssueListItem.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<IssueListItem[] | null>(<any>null);
+    }
+
+    getIssueTypes(): Observable<IssueTypeInfo[] | null> {
+        let url_ = this.baseUrl + "/api/issue/types";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetIssueTypes(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetIssueTypes(<any>response_);
+                } catch (e) {
+                    return <Observable<IssueTypeInfo[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<IssueTypeInfo[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetIssueTypes(response: HttpResponseBase): Observable<IssueTypeInfo[] | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(IssueTypeInfo.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<IssueTypeInfo[] | null>(<any>null);
+    }
+
+    insertIssue(issue: IssueCreateItem): Observable<void> {
+        let url_ = this.baseUrl + "/api/issue";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(issue);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertIssue(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertIssue(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertIssue(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
+export class ProjectClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+
+    getProjectByName(name: string | null): Observable<ProjectInfo | null> {
+        let url_ = this.baseUrl + "/api/project/search/{name}";
+        if (name === undefined || name === null)
+            throw new Error("The parameter 'name' must be defined.");
+        url_ = url_.replace("{name}", encodeURIComponent("" + name)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetProjectByName(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetProjectByName(<any>response_);
+                } catch (e) {
+                    return <Observable<ProjectInfo | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProjectInfo | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetProjectByName(response: HttpResponseBase): Observable<ProjectInfo | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ProjectInfo.fromJS(resultData200) : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProjectInfo | null>(<any>null);
+    }
+
+    getProjects(): Observable<ProjectInfo[] | null> {
+        let url_ = this.baseUrl + "/api/project/all";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetProjects(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetProjects(<any>response_);
+                } catch (e) {
+                    return <Observable<ProjectInfo[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProjectInfo[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetProjects(response: HttpResponseBase): Observable<ProjectInfo[] | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ProjectInfo.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProjectInfo[] | null>(<any>null);
+    }
+}
+
+export class AreaInfo implements IAreaInfo {
+    areaName?: string | undefined;
+    id: string;
+
+    constructor(data?: IAreaInfo) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.areaName = data["areaName"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): AreaInfo {
+        data = typeof data === 'object' ? data : {};
+        let result = new AreaInfo();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["areaName"] = this.areaName;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IAreaInfo {
+    areaName?: string | undefined;
+    id: string;
+}
+
 export class CountryListItem implements ICountryListItem {
     id: string;
     isoTwo?: string | undefined;
@@ -512,6 +1012,266 @@ export class EmployeeInfo implements IEmployeeInfo {
 
 export interface IEmployeeInfo {
     displayName?: string | undefined;
+    id: string;
+}
+
+export class IssueCreateData implements IIssueCreateData {
+    employees?: EmployeeInfo[] | undefined;
+    issueTypes?: IssueTypeInfo[] | undefined;
+
+    constructor(data?: IIssueCreateData) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["employees"] && data["employees"].constructor === Array) {
+                this.employees = [] as any;
+                for (let item of data["employees"])
+                    this.employees.push(EmployeeInfo.fromJS(item));
+            }
+            if (data["issueTypes"] && data["issueTypes"].constructor === Array) {
+                this.issueTypes = [] as any;
+                for (let item of data["issueTypes"])
+                    this.issueTypes.push(IssueTypeInfo.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): IssueCreateData {
+        data = typeof data === 'object' ? data : {};
+        let result = new IssueCreateData();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.employees && this.employees.constructor === Array) {
+            data["employees"] = [];
+            for (let item of this.employees)
+                data["employees"].push(item.toJSON());
+        }
+        if (this.issueTypes && this.issueTypes.constructor === Array) {
+            data["issueTypes"] = [];
+            for (let item of this.issueTypes)
+                data["issueTypes"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IIssueCreateData {
+    employees?: EmployeeInfo[] | undefined;
+    issueTypes?: IssueTypeInfo[] | undefined;
+}
+
+export class IssueTypeInfo implements IIssueTypeInfo {
+    displayString?: string | undefined;
+    id: string;
+
+    constructor(data?: IIssueTypeInfo) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.displayString = data["displayString"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): IssueTypeInfo {
+        data = typeof data === 'object' ? data : {};
+        let result = new IssueTypeInfo();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["displayString"] = this.displayString;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IIssueTypeInfo {
+    displayString?: string | undefined;
+    id: string;
+}
+
+export class IssueListItem implements IIssueListItem {
+    assignedTo?: string | undefined;
+    createTime: Date;
+    description?: string | undefined;
+    id: string;
+    issueType?: string | undefined;
+    title?: string | undefined;
+
+    constructor(data?: IIssueListItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.assignedTo = data["assignedTo"];
+            this.createTime = data["createTime"] ? new Date(data["createTime"].toString()) : <any>undefined;
+            this.description = data["description"];
+            this.id = data["id"];
+            this.issueType = data["issueType"];
+            this.title = data["title"];
+        }
+    }
+
+    static fromJS(data: any): IssueListItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new IssueListItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["assignedTo"] = this.assignedTo;
+        data["createTime"] = this.createTime ? this.createTime.toISOString() : <any>undefined;
+        data["description"] = this.description;
+        data["id"] = this.id;
+        data["issueType"] = this.issueType;
+        data["title"] = this.title;
+        return data; 
+    }
+}
+
+export interface IIssueListItem {
+    assignedTo?: string | undefined;
+    createTime: Date;
+    description?: string | undefined;
+    id: string;
+    issueType?: string | undefined;
+    title?: string | undefined;
+}
+
+export class IssueCreateItem implements IIssueCreateItem {
+    areaId: string;
+    assignedToId?: string | undefined;
+    attachments?: string[] | undefined;
+    creationTime: Date;
+    descripton?: string | undefined;
+    issueTypeId: string;
+    title?: string | undefined;
+
+    constructor(data?: IIssueCreateItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.areaId = data["areaId"];
+            this.assignedToId = data["assignedToId"];
+            if (data["attachments"] && data["attachments"].constructor === Array) {
+                this.attachments = [] as any;
+                for (let item of data["attachments"])
+                    this.attachments.push(item);
+            }
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.descripton = data["descripton"];
+            this.issueTypeId = data["issueTypeId"];
+            this.title = data["title"];
+        }
+    }
+
+    static fromJS(data: any): IssueCreateItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new IssueCreateItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["areaId"] = this.areaId;
+        data["assignedToId"] = this.assignedToId;
+        if (this.attachments && this.attachments.constructor === Array) {
+            data["attachments"] = [];
+            for (let item of this.attachments)
+                data["attachments"].push(item);
+        }
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["descripton"] = this.descripton;
+        data["issueTypeId"] = this.issueTypeId;
+        data["title"] = this.title;
+        return data; 
+    }
+}
+
+export interface IIssueCreateItem {
+    areaId: string;
+    assignedToId?: string | undefined;
+    attachments?: string[] | undefined;
+    creationTime: Date;
+    descripton?: string | undefined;
+    issueTypeId: string;
+    title?: string | undefined;
+}
+
+export class ProjectInfo implements IProjectInfo {
+    displayString?: string | undefined;
+    id: string;
+
+    constructor(data?: IProjectInfo) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.displayString = data["displayString"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ProjectInfo {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectInfo();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["displayString"] = this.displayString;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IProjectInfo {
+    displayString?: string | undefined;
     id: string;
 }
 

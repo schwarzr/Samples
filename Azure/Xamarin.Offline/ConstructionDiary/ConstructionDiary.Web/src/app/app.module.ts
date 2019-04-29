@@ -11,12 +11,15 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { DashboardComponent } from './dashboard/dasbhoard.component';
 import { CountriesListComponent } from './countries/countries-list.component';
-import { CountryClient } from '../service/service';
+import { CountryClient, ProjectClient, IssueClient } from '../service/service';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CountryEditComponent } from './countries/country-edit.component';
 import { CountryCreateComponent } from './countries/country-create.component';
+import { ProjectService } from './project.service';
+import { ProjectIdResolver } from './project-id.resolver';
+import { IssueListComponent } from './issues/issue-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { CountryCreateComponent } from './countries/country-create.component';
     DashboardComponent,
     CountriesListComponent,
     CountryEditComponent,
-    CountryCreateComponent
+    CountryCreateComponent,
+    IssueListComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,13 @@ import { CountryCreateComponent } from './countries/country-create.component';
     TabsModule.forRoot(),
     CollapseModule.forRoot()
   ],
-  providers: [CountryClient],
+  providers: [
+    CountryClient,
+    ProjectClient,
+    IssueClient,
+    ProjectService, 
+    ProjectIdResolver
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

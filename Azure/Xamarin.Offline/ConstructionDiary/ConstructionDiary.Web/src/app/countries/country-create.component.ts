@@ -14,7 +14,6 @@ export class CountryCreateComponent {
         this.item = new CountryListItem();
     }
 
-
     public async save(): Promise<void> {
         await this.service.insertCountry(this.item).toPromise();
         const url = this.getNavUrl(this.route);

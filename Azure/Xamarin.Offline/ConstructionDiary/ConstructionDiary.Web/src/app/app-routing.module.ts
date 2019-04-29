@@ -4,6 +4,8 @@ import { DashboardComponent } from './dashboard/dasbhoard.component';
 import { CountriesListComponent } from './countries/countries-list.component';
 import { CountryEditComponent } from './countries/country-edit.component';
 import { CountryCreateComponent } from './countries/country-create.component';
+import { ProjectIdResolver } from './project-id.resolver';
+import { IssueListComponent } from './issues/issue-list.component';
 
 const routes: Routes = [{
   path: 'dashboard',
@@ -42,13 +44,16 @@ const routes: Routes = [{
 },
 {
   path: ':project',
+  resolve: {
+    project: ProjectIdResolver
+  },
   children: [
     {
       path: 'issues',
       children: [
         {
           path: '',
-          component: DashboardComponent
+          component: IssueListComponent
         },
         {
           path: ':id',

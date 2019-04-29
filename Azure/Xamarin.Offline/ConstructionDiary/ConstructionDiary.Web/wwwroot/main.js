@@ -40,6 +40,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _countries_countries_list_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./countries/countries-list.component */ "./src/app/countries/countries-list.component.ts");
 /* harmony import */ var _countries_country_edit_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./countries/country-edit.component */ "./src/app/countries/country-edit.component.ts");
 /* harmony import */ var _countries_country_create_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./countries/country-create.component */ "./src/app/countries/country-create.component.ts");
+/* harmony import */ var _project_id_resolver__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./project-id.resolver */ "./src/app/project-id.resolver.ts");
+/* harmony import */ var _issues_issue_list_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./issues/issue-list.component */ "./src/app/issues/issue-list.component.ts");
+
+
 
 
 
@@ -83,13 +87,16 @@ var routes = [{
     },
     {
         path: ':project',
+        resolve: {
+            project: _project_id_resolver__WEBPACK_IMPORTED_MODULE_7__["ProjectIdResolver"]
+        },
         children: [
             {
                 path: 'issues',
                 children: [
                     {
                         path: '',
-                        component: _dashboard_dasbhoard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"]
+                        component: _issues_issue_list_component__WEBPACK_IMPORTED_MODULE_8__["IssueListComponent"]
                     },
                     {
                         path: ':id',
@@ -139,7 +146,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n    <a class=\"navbar-brand\" href=\"#\">Construction Diary</a>\r\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" (click)=\"isCollapsed = !isCollapsed\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n        <span class=\"navbar-toggler-icon\"></span>\r\n    </button>\r\n    \r\n    <div class=\"collapse navbar-collapse\" [collapse]=\"isCollapsed\" id=\"navbarSupportedContent\">\r\n        <ul class=\"navbar-nav mr-auto\">\r\n        <li class=\"nav-item active\">\r\n            <a class=\"nav-link\" [routerLink]=\"['dashboard']\" routerLinkActive=\"active\">Dashboard</a>\r\n        </li>\r\n        <li class=\"nav-item active\">\r\n            <a class=\"nav-link\" [routerLink]=\"[selectedProject.name,'issues']\"  routerLinkActive=\"active\">Issues</a>\r\n        </li>\r\n        <li class=\"nav-item dropdown\" dropdown>\r\n            <div dropdownToggle class=\"nav-link dropdown-toggle\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n            Masterdata\r\n            </div>\r\n            <div *dropdownMenu class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\r\n                <a class=\"dropdown-item\" [routerLink]=\"['countries']\"  routerLinkActive=\"active\">Countries</a>\r\n                <a class=\"dropdown-item\" [routerLink]=\"['issuetypes']\"  routerLinkActive=\"active\">Issue types</a>\r\n                <div class=\"dropdown-divider\"></div>\r\n                <a class=\"dropdown-item\" [routerLink]=\"[selectedProject.name,'employees']\"  routerLinkActive=\"active\">Employees</a>\r\n            </div>\r\n        </li>\r\n        </ul>\r\n    </div>\r\n</nav>\r\n\r\n<router-outlet></router-outlet>"
+module.exports = "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n    <a class=\"navbar-brand\" href=\"#\">Construction Diary</a>\r\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" (click)=\"isCollapsed = !isCollapsed\"\r\n        data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\"\r\n        aria-label=\"Toggle navigation\">\r\n        <span class=\"navbar-toggler-icon\"></span>\r\n    </button>\r\n\r\n    <div class=\"collapse navbar-collapse\" [collapse]=\"isCollapsed\" id=\"navbarSupportedContent\">\r\n        <ul class=\"navbar-nav mr-auto\">\r\n            <li class=\"nav-item active\">\r\n                <a class=\"nav-link\" [routerLink]=\"['dashboard']\" routerLinkActive=\"active\">Dashboard</a>\r\n            </li>\r\n            <li class=\"nav-item active\" *ngIf=\"projectService.current\">\r\n                <a class=\"nav-link\" [routerLink]=\"[projectService.current.displayString,'issues']\"\r\n                    routerLinkActive=\"active\">Issues</a>\r\n            </li>\r\n            <li class=\"nav-item dropdown\" dropdown>\r\n                <div dropdownToggle class=\"nav-link dropdown-toggle\" id=\"navbarDropdown\" role=\"button\"\r\n                    data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n                    Masterdata\r\n                </div>\r\n                <div *dropdownMenu class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\r\n                    <a class=\"dropdown-item\" [routerLink]=\"['countries']\" routerLinkActive=\"active\">Countries</a>\r\n                    <a class=\"dropdown-item\" [routerLink]=\"['issuetypes']\" routerLinkActive=\"active\">Issue types</a>\r\n                    <div class=\"dropdown-divider\"></div>\r\n                    <a *ngIf=\"projectService.current\" class=\"dropdown-item\"\r\n                        [routerLink]=\"[projectService.current.displayString,'employees']\"\r\n                        routerLinkActive=\"active\">Employees</a>\r\n                </div>\r\n            </li>\r\n        </ul>\r\n\r\n        <form class=\"form-inline my-2 my-lg-0\">\r\n            <select class=\"form-control\" #p (change)=\"selectProject(p.value)\">\r\n                <option *ngFor=\"let item of projectService.projects\"\r\n                    [attr.selected]=\"projectService.current && projectService.current.id == item.id ? 'selected' : null\"\r\n                    [value]=\"item.id\">{{item.displayString}}</option>\r\n            </select>\r\n        </form>\r\n    </div>\r\n\r\n</nav>\r\n\r\n<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -155,21 +162,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _project_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./project.service */ "./src/app/project.service.ts");
+
 
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent() {
+    function AppComponent(projectService) {
+        this.projectService = projectService;
         this.isCollapsed = true;
-        this.selectedProject = {
-            name: 'Project 1'
-        };
     }
+    AppComponent.prototype.ngOnInit = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.projectService.initialize()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AppComponent.prototype.selectProject = function (projectid) {
+        this.projectService.current = this.projectService.projects.filter(function (p) { return p.id == projectid; })[0];
+    };
     AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html")
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_project_service__WEBPACK_IMPORTED_MODULE_2__["ProjectService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -206,6 +228,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _countries_country_edit_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./countries/country-edit.component */ "./src/app/countries/country-edit.component.ts");
 /* harmony import */ var _countries_country_create_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./countries/country-create.component */ "./src/app/countries/country-create.component.ts");
+/* harmony import */ var _project_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./project.service */ "./src/app/project.service.ts");
+/* harmony import */ var _project_id_resolver__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./project-id.resolver */ "./src/app/project-id.resolver.ts");
+/* harmony import */ var _issues_issue_list_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./issues/issue-list.component */ "./src/app/issues/issue-list.component.ts");
+
+
+
 
 
 
@@ -234,7 +262,8 @@ var AppModule = /** @class */ (function () {
                 _dashboard_dasbhoard_component__WEBPACK_IMPORTED_MODULE_10__["DashboardComponent"],
                 _countries_countries_list_component__WEBPACK_IMPORTED_MODULE_11__["CountriesListComponent"],
                 _countries_country_edit_component__WEBPACK_IMPORTED_MODULE_16__["CountryEditComponent"],
-                _countries_country_create_component__WEBPACK_IMPORTED_MODULE_17__["CountryCreateComponent"]
+                _countries_country_create_component__WEBPACK_IMPORTED_MODULE_17__["CountryCreateComponent"],
+                _issues_issue_list_component__WEBPACK_IMPORTED_MODULE_20__["IssueListComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -249,7 +278,13 @@ var AppModule = /** @class */ (function () {
                 ngx_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_8__["TabsModule"].forRoot(),
                 ngx_bootstrap_collapse__WEBPACK_IMPORTED_MODULE_9__["CollapseModule"].forRoot()
             ],
-            providers: [_service_service__WEBPACK_IMPORTED_MODULE_12__["CountryClient"]],
+            providers: [
+                _service_service__WEBPACK_IMPORTED_MODULE_12__["CountryClient"],
+                _service_service__WEBPACK_IMPORTED_MODULE_12__["ProjectClient"],
+                _service_service__WEBPACK_IMPORTED_MODULE_12__["IssueClient"],
+                _project_service__WEBPACK_IMPORTED_MODULE_18__["ProjectService"],
+                _project_id_resolver__WEBPACK_IMPORTED_MODULE_19__["ProjectIdResolver"]
+            ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
         })
     ], AppModule);
@@ -524,6 +559,173 @@ module.exports = "<h1>Dashboard</h1>"
 
 /***/ }),
 
+/***/ "./src/app/issues/issue-list.component.html":
+/*!**************************************************!*\
+  !*** ./src/app/issues/issue-list.component.html ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<h1>Country List</h1>\r\n<a class=\"btn btn-primary\" [routerLink]=\"['new']\">new item</a>\r\n\r\n<div class=\"table-responsive\" *ngIf=\"items\">\r\n    <table class=\"table table-striped table-hover\">\r\n        <thead>\r\n            <tr>\r\n                <th scope=\"col\">Title</th>\r\n                <th scope=\"col\">Description</th>\r\n                <th scope=\"col\">IssueType</th>\r\n                <th scope=\"col\">Assigned To</th>\r\n                <th scope=\"col\">Creation Time</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <tr *ngFor=\"let item of items\" (click)=\"select(item)\" [class.table-primary]=\"item == selectedItem\">\r\n                <td>{{item.title}}</td>\r\n                <td>{{item.description}}</td>\r\n                <td>{{item.issueType}}</td>\r\n                <td>{{item.assignedTo}}</td>\r\n                <td>{{item.createTime}}</td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/issues/issue-list.component.ts":
+/*!************************************************!*\
+  !*** ./src/app/issues/issue-list.component.ts ***!
+  \************************************************/
+/*! exports provided: IssueListComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueListComponent", function() { return IssueListComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _src_service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../src/service/service */ "./src/service/service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+
+
+
+var IssueListComponent = /** @class */ (function () {
+    function IssueListComponent(service, currentRoute) {
+        var _this = this;
+        this.service = service;
+        this.currentRoute = currentRoute;
+        currentRoute.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (p) { return p.project; }))
+            .subscribe(function (p) { return _this.loadData(p); });
+    }
+    IssueListComponent.prototype.loadData = function (project) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var data;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.service.getIssues(project.id).toPromise()];
+                    case 1:
+                        data = _a.sent();
+                        this.items = data;
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    IssueListComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'issue-list',
+            template: __webpack_require__(/*! ./issue-list.component.html */ "./src/app/issues/issue-list.component.html")
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_src_service_service__WEBPACK_IMPORTED_MODULE_2__["IssueClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]])
+    ], IssueListComponent);
+    return IssueListComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/project-id.resolver.ts":
+/*!****************************************!*\
+  !*** ./src/app/project-id.resolver.ts ***!
+  \****************************************/
+/*! exports provided: ProjectIdResolver */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectIdResolver", function() { return ProjectIdResolver; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _src_service_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../src/service/service */ "./src/service/service.ts");
+/* harmony import */ var _project_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./project.service */ "./src/app/project.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+
+
+var ProjectIdResolver = /** @class */ (function () {
+    function ProjectIdResolver(service, projectService) {
+        this.service = service;
+        this.projectService = projectService;
+    }
+    ProjectIdResolver.prototype.resolve = function (route, state) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var projectName, project;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        projectName = route.params.project;
+                        return [4 /*yield*/, this.service.getProjectByName(projectName).toPromise()];
+                    case 1:
+                        project = _a.sent();
+                        if (this.projectService.current.id != project.id) {
+                            this.projectService.current = project;
+                        }
+                        return [2 /*return*/, project];
+                }
+            });
+        });
+    };
+    ProjectIdResolver = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_src_service_service__WEBPACK_IMPORTED_MODULE_1__["ProjectClient"], _project_service__WEBPACK_IMPORTED_MODULE_2__["ProjectService"]])
+    ], ProjectIdResolver);
+    return ProjectIdResolver;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/project.service.ts":
+/*!************************************!*\
+  !*** ./src/app/project.service.ts ***!
+  \************************************/
+/*! exports provided: ProjectService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectService", function() { return ProjectService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _src_service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../src/service/service */ "./src/service/service.ts");
+
+
+
+var ProjectService = /** @class */ (function () {
+    function ProjectService(service) {
+        this.service = service;
+        this.projects = [];
+    }
+    ProjectService.prototype.initialize = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var _a;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = this;
+                        return [4 /*yield*/, this.service.getProjects().toPromise()];
+                    case 1:
+                        _a.projects = _b.sent();
+                        this.current = this.projects[0];
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProjectService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_src_service_service__WEBPACK_IMPORTED_MODULE_2__["ProjectClient"]])
+    ], ProjectService);
+    return ProjectService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/environments/environment.ts":
 /*!*****************************************!*\
   !*** ./src/environments/environment.ts ***!
@@ -582,17 +784,27 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*!********************************!*\
   !*** ./src/service/service.ts ***!
   \********************************/
-/*! exports provided: API_BASE_URL, CountryClient, EmployeeClient, CountryListItem, CountryInfo, EmployeeInfo, SwaggerException */
+/*! exports provided: API_BASE_URL, OfflineClient, AreaClient, CountryClient, EmployeeClient, IssueClient, ProjectClient, AreaInfo, CountryListItem, CountryInfo, EmployeeInfo, IssueCreateData, IssueTypeInfo, IssueListItem, IssueCreateItem, ProjectInfo, SwaggerException */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "API_BASE_URL", function() { return API_BASE_URL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OfflineClient", function() { return OfflineClient; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AreaClient", function() { return AreaClient; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CountryClient", function() { return CountryClient; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmployeeClient", function() { return EmployeeClient; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueClient", function() { return IssueClient; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectClient", function() { return ProjectClient; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AreaInfo", function() { return AreaInfo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CountryListItem", function() { return CountryListItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CountryInfo", function() { return CountryInfo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmployeeInfo", function() { return EmployeeInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueCreateData", function() { return IssueCreateData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueTypeInfo", function() { return IssueTypeInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueListItem", function() { return IssueListItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueCreateItem", function() { return IssueCreateItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectInfo", function() { return ProjectInfo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SwaggerException", function() { return SwaggerException; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
@@ -613,6 +825,151 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var API_BASE_URL = new _angular_core__WEBPACK_IMPORTED_MODULE_3__["InjectionToken"]('API_BASE_URL');
+var OfflineClient = /** @class */ (function () {
+    function OfflineClient(http, baseUrl) {
+        this.jsonParseReviver = undefined;
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+    OfflineClient.prototype.getOfflineDB = function (projectId) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/offline/db/{projectId}";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processGetOfflineDB(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processGetOfflineDB(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    OfflineClient.prototype.processGetOfflineDB = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null;
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    OfflineClient = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(API_BASE_URL)),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], String])
+    ], OfflineClient);
+    return OfflineClient;
+}());
+
+var AreaClient = /** @class */ (function () {
+    function AreaClient(http, baseUrl) {
+        this.jsonParseReviver = undefined;
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+    AreaClient.prototype.getAreaInfos = function () {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/area/infos";
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processGetAreaInfos(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processGetAreaInfos(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    AreaClient.prototype.processGetAreaInfos = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_1 = resultData200; _i < resultData200_1.length; _i++) {
+                        var item = resultData200_1[_i];
+                        result200.push(AreaInfo.fromJS(item));
+                    }
+                }
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    AreaClient = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(API_BASE_URL)),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], String])
+    ], AreaClient);
+    return AreaClient;
+}());
+
 var CountryClient = /** @class */ (function () {
     function CountryClient(http, baseUrl) {
         this.jsonParseReviver = undefined;
@@ -772,8 +1129,8 @@ var CountryClient = /** @class */ (function () {
                 var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_1 = resultData200; _i < resultData200_1.length; _i++) {
-                        var item = resultData200_1[_i];
+                    for (var _i = 0, resultData200_2 = resultData200; _i < resultData200_2.length; _i++) {
+                        var item = resultData200_2[_i];
                         result200.push(CountryInfo.fromJS(item));
                     }
                 }
@@ -832,8 +1189,8 @@ var CountryClient = /** @class */ (function () {
                 var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_2 = resultData200; _i < resultData200_2.length; _i++) {
-                        var item = resultData200_2[_i];
+                    for (var _i = 0, resultData200_3 = resultData200; _i < resultData200_3.length; _i++) {
+                        var item = resultData200_3[_i];
                         result200.push(CountryListItem.fromJS(item));
                     }
                 }
@@ -1013,8 +1370,8 @@ var EmployeeClient = /** @class */ (function () {
                 var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_3 = resultData200; _i < resultData200_3.length; _i++) {
-                        var item = resultData200_3[_i];
+                    for (var _i = 0, resultData200_4 = resultData200; _i < resultData200_4.length; _i++) {
+                        var item = resultData200_4[_i];
                         result200.push(EmployeeInfo.fromJS(item));
                     }
                 }
@@ -1034,6 +1391,413 @@ var EmployeeClient = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], String])
     ], EmployeeClient);
     return EmployeeClient;
+}());
+
+var IssueClient = /** @class */ (function () {
+    function IssueClient(http, baseUrl) {
+        this.jsonParseReviver = undefined;
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+    IssueClient.prototype.getIssueCreate = function (projectId) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/{projectId}/create";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processGetIssueCreate(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processGetIssueCreate(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    IssueClient.prototype.processGetIssueCreate = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                result200 = resultData200 ? IssueCreateData.fromJS(resultData200) : null;
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    IssueClient.prototype.getIssues = function (projectId) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/{projectId}/list";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processGetIssues(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processGetIssues(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    IssueClient.prototype.processGetIssues = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_5 = resultData200; _i < resultData200_5.length; _i++) {
+                        var item = resultData200_5[_i];
+                        result200.push(IssueListItem.fromJS(item));
+                    }
+                }
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    IssueClient.prototype.getIssueTypes = function () {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/types";
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processGetIssueTypes(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processGetIssueTypes(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    IssueClient.prototype.processGetIssueTypes = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_6 = resultData200; _i < resultData200_6.length; _i++) {
+                        var item = resultData200_6[_i];
+                        result200.push(IssueTypeInfo.fromJS(item));
+                    }
+                }
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    IssueClient.prototype.insertIssue = function (issue) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(issue);
+        var options_ = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Content-Type": "application/json",
+            })
+        };
+        return this.http.request("post", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processInsertIssue(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processInsertIssue(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    IssueClient.prototype.processInsertIssue = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    IssueClient = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(API_BASE_URL)),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], String])
+    ], IssueClient);
+    return IssueClient;
+}());
+
+var ProjectClient = /** @class */ (function () {
+    function ProjectClient(http, baseUrl) {
+        this.jsonParseReviver = undefined;
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+    ProjectClient.prototype.getProjectByName = function (name) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/project/search/{name}";
+        if (name === undefined || name === null)
+            throw new Error("The parameter 'name' must be defined.");
+        url_ = url_.replace("{name}", encodeURIComponent("" + name));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processGetProjectByName(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processGetProjectByName(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    ProjectClient.prototype.processGetProjectByName = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                result200 = resultData200 ? ProjectInfo.fromJS(resultData200) : null;
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    ProjectClient.prototype.getProjects = function () {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/project/all";
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processGetProjects(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processGetProjects(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    ProjectClient.prototype.processGetProjects = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_7 = resultData200; _i < resultData200_7.length; _i++) {
+                        var item = resultData200_7[_i];
+                        result200.push(ProjectInfo.fromJS(item));
+                    }
+                }
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    ProjectClient = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(API_BASE_URL)),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], String])
+    ], ProjectClient);
+    return ProjectClient;
+}());
+
+var AreaInfo = /** @class */ (function () {
+    function AreaInfo(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    AreaInfo.prototype.init = function (data) {
+        if (data) {
+            this.areaName = data["areaName"];
+            this.id = data["id"];
+        }
+    };
+    AreaInfo.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new AreaInfo();
+        result.init(data);
+        return result;
+    };
+    AreaInfo.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["areaName"] = this.areaName;
+        data["id"] = this.id;
+        return data;
+    };
+    return AreaInfo;
 }());
 
 var CountryListItem = /** @class */ (function () {
@@ -1126,6 +1890,210 @@ var EmployeeInfo = /** @class */ (function () {
         return data;
     };
     return EmployeeInfo;
+}());
+
+var IssueCreateData = /** @class */ (function () {
+    function IssueCreateData(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    IssueCreateData.prototype.init = function (data) {
+        if (data) {
+            if (data["employees"] && data["employees"].constructor === Array) {
+                this.employees = [];
+                for (var _i = 0, _a = data["employees"]; _i < _a.length; _i++) {
+                    var item = _a[_i];
+                    this.employees.push(EmployeeInfo.fromJS(item));
+                }
+            }
+            if (data["issueTypes"] && data["issueTypes"].constructor === Array) {
+                this.issueTypes = [];
+                for (var _b = 0, _c = data["issueTypes"]; _b < _c.length; _b++) {
+                    var item = _c[_b];
+                    this.issueTypes.push(IssueTypeInfo.fromJS(item));
+                }
+            }
+        }
+    };
+    IssueCreateData.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new IssueCreateData();
+        result.init(data);
+        return result;
+    };
+    IssueCreateData.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        if (this.employees && this.employees.constructor === Array) {
+            data["employees"] = [];
+            for (var _i = 0, _a = this.employees; _i < _a.length; _i++) {
+                var item = _a[_i];
+                data["employees"].push(item.toJSON());
+            }
+        }
+        if (this.issueTypes && this.issueTypes.constructor === Array) {
+            data["issueTypes"] = [];
+            for (var _b = 0, _c = this.issueTypes; _b < _c.length; _b++) {
+                var item = _c[_b];
+                data["issueTypes"].push(item.toJSON());
+            }
+        }
+        return data;
+    };
+    return IssueCreateData;
+}());
+
+var IssueTypeInfo = /** @class */ (function () {
+    function IssueTypeInfo(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    IssueTypeInfo.prototype.init = function (data) {
+        if (data) {
+            this.displayString = data["displayString"];
+            this.id = data["id"];
+        }
+    };
+    IssueTypeInfo.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new IssueTypeInfo();
+        result.init(data);
+        return result;
+    };
+    IssueTypeInfo.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["displayString"] = this.displayString;
+        data["id"] = this.id;
+        return data;
+    };
+    return IssueTypeInfo;
+}());
+
+var IssueListItem = /** @class */ (function () {
+    function IssueListItem(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    IssueListItem.prototype.init = function (data) {
+        if (data) {
+            this.assignedTo = data["assignedTo"];
+            this.createTime = data["createTime"] ? new Date(data["createTime"].toString()) : undefined;
+            this.description = data["description"];
+            this.id = data["id"];
+            this.issueType = data["issueType"];
+            this.title = data["title"];
+        }
+    };
+    IssueListItem.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new IssueListItem();
+        result.init(data);
+        return result;
+    };
+    IssueListItem.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["assignedTo"] = this.assignedTo;
+        data["createTime"] = this.createTime ? this.createTime.toISOString() : undefined;
+        data["description"] = this.description;
+        data["id"] = this.id;
+        data["issueType"] = this.issueType;
+        data["title"] = this.title;
+        return data;
+    };
+    return IssueListItem;
+}());
+
+var IssueCreateItem = /** @class */ (function () {
+    function IssueCreateItem(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    IssueCreateItem.prototype.init = function (data) {
+        if (data) {
+            this.areaId = data["areaId"];
+            this.assignedToId = data["assignedToId"];
+            if (data["attachments"] && data["attachments"].constructor === Array) {
+                this.attachments = [];
+                for (var _i = 0, _a = data["attachments"]; _i < _a.length; _i++) {
+                    var item = _a[_i];
+                    this.attachments.push(item);
+                }
+            }
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : undefined;
+            this.descripton = data["descripton"];
+            this.issueTypeId = data["issueTypeId"];
+            this.title = data["title"];
+        }
+    };
+    IssueCreateItem.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new IssueCreateItem();
+        result.init(data);
+        return result;
+    };
+    IssueCreateItem.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["areaId"] = this.areaId;
+        data["assignedToId"] = this.assignedToId;
+        if (this.attachments && this.attachments.constructor === Array) {
+            data["attachments"] = [];
+            for (var _i = 0, _a = this.attachments; _i < _a.length; _i++) {
+                var item = _a[_i];
+                data["attachments"].push(item);
+            }
+        }
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : undefined;
+        data["descripton"] = this.descripton;
+        data["issueTypeId"] = this.issueTypeId;
+        data["title"] = this.title;
+        return data;
+    };
+    return IssueCreateItem;
+}());
+
+var ProjectInfo = /** @class */ (function () {
+    function ProjectInfo(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    ProjectInfo.prototype.init = function (data) {
+        if (data) {
+            this.displayString = data["displayString"];
+            this.id = data["id"];
+        }
+    };
+    ProjectInfo.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new ProjectInfo();
+        result.init(data);
+        return result;
+    };
+    ProjectInfo.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["displayString"] = this.displayString;
+        data["id"] = this.id;
+        return data;
+    };
+    return ProjectInfo;
 }());
 
 var SwaggerException = /** @class */ (function (_super) {

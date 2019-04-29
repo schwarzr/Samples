@@ -1,30 +1,45 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Construction Diary</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="isCollapsed = !isCollapsed" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="isCollapsed = !isCollapsed"
+        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    
+
     <div class="collapse navbar-collapse" [collapse]="isCollapsed" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-            <a class="nav-link" [routerLink]="['dashboard']" routerLinkActive="active">Dashboard</a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" [routerLink]="[selectedProject.name,'issues']"  routerLinkActive="active">Issues</a>
-        </li>
-        <li class="nav-item dropdown" dropdown>
-            <div dropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Masterdata
-            </div>
-            <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" [routerLink]="['countries']"  routerLinkActive="active">Countries</a>
-                <a class="dropdown-item" [routerLink]="['issuetypes']"  routerLinkActive="active">Issue types</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" [routerLink]="[selectedProject.name,'employees']"  routerLinkActive="active">Employees</a>
-            </div>
-        </li>
+            <li class="nav-item active">
+                <a class="nav-link" [routerLink]="['dashboard']" routerLinkActive="active">Dashboard</a>
+            </li>
+            <li class="nav-item active" *ngIf="projectService.current">
+                <a class="nav-link" [routerLink]="[projectService.current.displayString,'issues']"
+                    routerLinkActive="active">Issues</a>
+            </li>
+            <li class="nav-item dropdown" dropdown>
+                <div dropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Masterdata
+                </div>
+                <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" [routerLink]="['countries']" routerLinkActive="active">Countries</a>
+                    <a class="dropdown-item" [routerLink]="['issuetypes']" routerLinkActive="active">Issue types</a>
+                    <div class="dropdown-divider"></div>
+                    <a *ngIf="projectService.current" class="dropdown-item"
+                        [routerLink]="[projectService.current.displayString,'employees']"
+                        routerLinkActive="active">Employees</a>
+                </div>
+            </li>
         </ul>
+
+        <form class="form-inline my-2 my-lg-0">
+            <select class="form-control" #p (change)="selectProject(p.value)">
+                <option *ngFor="let item of projectService.projects"
+                    [attr.selected]="projectService.current && projectService.current.id == item.id ? 'selected' : null"
+                    [value]="item.id">{{item.displayString}}</option>
+            </select>
+        </form>
     </div>
+
 </nav>
 
 <router-outlet></router-outlet>
