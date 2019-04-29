@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Codeworx.Synchronization.Configuration;
 using ConstructionDiary.Api;
 using ConstructionDiary.Api.Client;
 using ConstructionDiary.Api.Contract;
@@ -20,7 +21,9 @@ namespace ConstructionDiary.App.Bootstrap
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "diary.sqlite");
 
-            return Common.Register(services)
+            var connectionString = $"Filename={path}";
+
+            services = Common.Register(services)
                 .AddScoped<ICountryController, CountryController>()
                 .AddScoped<ICountryService, CountryService>()
                 .AddScoped<IProjectController, ProjectController>()
@@ -33,7 +36,15 @@ namespace ConstructionDiary.App.Bootstrap
                 .AddScoped<IEmployeeService, EmployeeService>()
                 .AddTransient<OfflineStateViewModel>()
                 .AddTransient<IStateViewModel>(p => p.GetRequiredService<OfflineStateViewModel>())
-                .AddDbContext<DiaryContext>(p => p.UseSqlite($"Filename={path}", options => options.AddChangeTracking()));
+                .AddDbContext<DiaryContext>(p => p.UseSqlite(connectionString, options => options.AddChangeTracking()))
+                ;
+
+            services
+                .AddSync()
+                .Source(p => p.AddEntityFrameworkCore<DiaryContext>().UseSqlite(connectionString, options => options.AddChangeTracking()))
+                .Target(p => p.AddRest("http://10.41.12.22:5001/sync"));
+
+            return services;
         }
     }
 }

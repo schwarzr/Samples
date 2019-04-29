@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows.Input;
+using Codeworx.Synchronization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ConstructionDiary.App.ViewModels
 {
-    public class OfflineStateViewModel : ViewModelBase, IStateViewModel
+    public class OfflineStateViewModel : ViewModelBase, IStateViewModel, IProgress<SyncProgress>
     {
         private readonly IServiceProvider _provider;
 
@@ -38,9 +39,16 @@ namespace ConstructionDiary.App.ViewModels
             }
         }
 
-        private void OnStartSync()
+        public void Report(SyncProgress value)
         {
-            //var sync = _provider.GetRequiredService<ISyncOrchtestration>();
+            this.SyncProgress = $"{value.Action} - {value.State}";
+        }
+
+        private async void OnStartSync()
+        {
+            var sync = _provider.GetRequiredService<ISyncOrchestration>();
+
+            await sync.RunAsync(this);
         }
 
         private void OnSwitch()

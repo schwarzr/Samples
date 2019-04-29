@@ -37,6 +37,8 @@ namespace ConstructionDiary.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSync();
+
             app.UseMvc();
 
             app.UseSwagger();
@@ -70,8 +72,7 @@ namespace ConstructionDiary.Web
 
             services.AddSwaggerDocument();
 
-            services.AddSyncEndpoint((builder, sp) => builder
-            .AddEntityFrameworkCore<DiaryContext>().UseSqlServer(ConnectionString));
+            services.AddSyncEndpoint((builder, sp) => builder.AddEntityFrameworkCore<SqlDiaryContext>().UseSqlServer(ConnectionString));
             services.AddSyncScenario<ProjectFilterScenario>(Constants.ScenarioId, "Project Filter");
 
             services.AddScoped<IEmployeeService, EmployeeService>();

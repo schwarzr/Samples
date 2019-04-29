@@ -14,6 +14,11 @@ namespace ConstructionDiary.Database
         {
         }
 
+        protected DiaryContext(DbContextOptions options)
+            : base(options)
+        {
+        }
+
         public DbSet<Area> Areas { get; set; }
 
         public DbSet<Country> Countries { get; set; }
