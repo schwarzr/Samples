@@ -20,7 +20,7 @@ namespace ConstructionDiary.App.Bootstrap
         public static IServiceCollection Register(IServiceCollection services)
         {
             return Common.Register(services)
-                            .AddSingleton(new RestOptions("http://192.168.8.100:5001/"))
+                            .AddSingleton(new RestOptions("http://10.41.12.22:5001/"))
                             .AddScoped<ICountryController, CountryControllerClient>()
                             .AddScoped<IProjectController, ProjectControllerClient>()
                             .AddScoped<IAreaController, AreaControllerClient>()
