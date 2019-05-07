@@ -12,6 +12,154 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 export var API_BASE_URL = new InjectionToken('API_BASE_URL');
+var OfflineClient = /** @class */ (function () {
+    function OfflineClient(http, baseUrl) {
+        this.jsonParseReviver = undefined;
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+    OfflineClient.prototype.getOfflineDB = function (projectId) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/offline/db/{projectId}";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetOfflineDB(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetOfflineDB(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    OfflineClient.prototype.processGetOfflineDB = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null;
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    OfflineClient = tslib_1.__decorate([
+        Injectable(),
+        tslib_1.__param(0, Inject(HttpClient)), tslib_1.__param(1, Optional()), tslib_1.__param(1, Inject(API_BASE_URL)),
+        tslib_1.__metadata("design:paramtypes", [HttpClient, String])
+    ], OfflineClient);
+    return OfflineClient;
+}());
+export { OfflineClient };
+var AreaClient = /** @class */ (function () {
+    function AreaClient(http, baseUrl) {
+        this.jsonParseReviver = undefined;
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+    AreaClient.prototype.getAreaInfos = function (projectId) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/area/{projectId}/infos";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetAreaInfos(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetAreaInfos(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    AreaClient.prototype.processGetAreaInfos = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_1 = resultData200; _i < resultData200_1.length; _i++) {
+                        var item = resultData200_1[_i];
+                        result200.push(AreaInfo.fromJS(item));
+                    }
+                }
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    AreaClient = tslib_1.__decorate([
+        Injectable(),
+        tslib_1.__param(0, Inject(HttpClient)), tslib_1.__param(1, Optional()), tslib_1.__param(1, Inject(API_BASE_URL)),
+        tslib_1.__metadata("design:paramtypes", [HttpClient, String])
+    ], AreaClient);
+    return AreaClient;
+}());
+export { AreaClient };
 var CountryClient = /** @class */ (function () {
     function CountryClient(http, baseUrl) {
         this.jsonParseReviver = undefined;
@@ -171,8 +319,8 @@ var CountryClient = /** @class */ (function () {
                 var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_1 = resultData200; _i < resultData200_1.length; _i++) {
-                        var item = resultData200_1[_i];
+                    for (var _i = 0, resultData200_2 = resultData200; _i < resultData200_2.length; _i++) {
+                        var item = resultData200_2[_i];
                         result200.push(CountryInfo.fromJS(item));
                     }
                 }
@@ -231,8 +379,8 @@ var CountryClient = /** @class */ (function () {
                 var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_2 = resultData200; _i < resultData200_2.length; _i++) {
-                        var item = resultData200_2[_i];
+                    for (var _i = 0, resultData200_3 = resultData200; _i < resultData200_3.length; _i++) {
+                        var item = resultData200_3[_i];
                         result200.push(CountryListItem.fromJS(item));
                     }
                 }
@@ -364,6 +512,114 @@ var EmployeeClient = /** @class */ (function () {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
     }
+    EmployeeClient.prototype.delete = function (id) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/employee/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({})
+        };
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processDelete(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processDelete(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    EmployeeClient.prototype.processDelete = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return _observableOf(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    EmployeeClient.prototype.getEmployeeListItem = function (id) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/employee/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetEmployeeListItem(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetEmployeeListItem(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    EmployeeClient.prototype.processGetEmployeeListItem = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                result200 = resultData200 ? EmployeeListItem.fromJS(resultData200) : null;
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
     EmployeeClient.prototype.getEmployeeInfos = function (projectId) {
         var _this = this;
         var url_ = this.baseUrl + "/api/employee/{projectId}/all";
@@ -412,12 +668,182 @@ var EmployeeClient = /** @class */ (function () {
                 var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_3 = resultData200; _i < resultData200_3.length; _i++) {
-                        var item = resultData200_3[_i];
+                    for (var _i = 0, resultData200_4 = resultData200; _i < resultData200_4.length; _i++) {
+                        var item = resultData200_4[_i];
                         result200.push(EmployeeInfo.fromJS(item));
                     }
                 }
                 return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    EmployeeClient.prototype.getEmployeeListItems = function (projectId) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/employee/{projectId}/list";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetEmployeeListItems(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetEmployeeListItems(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    EmployeeClient.prototype.processGetEmployeeListItems = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_5 = resultData200; _i < resultData200_5.length; _i++) {
+                        var item = resultData200_5[_i];
+                        result200.push(EmployeeListItem.fromJS(item));
+                    }
+                }
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    EmployeeClient.prototype.insert = function (projectId, item) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/employee/{projectId}";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(item);
+        var options_ = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processInsert(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processInsert(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    EmployeeClient.prototype.processInsert = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return _observableOf(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    EmployeeClient.prototype.update = function (item) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/employee";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(item);
+        var options_ = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processUpdate(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processUpdate(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    EmployeeClient.prototype.processUpdate = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return _observableOf(null);
             }));
         }
         else if (status !== 200 && status !== 204) {
@@ -435,6 +861,685 @@ var EmployeeClient = /** @class */ (function () {
     return EmployeeClient;
 }());
 export { EmployeeClient };
+var IssueClient = /** @class */ (function () {
+    function IssueClient(http, baseUrl) {
+        this.jsonParseReviver = undefined;
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+    IssueClient.prototype.deleteIssueType = function (id) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/type/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({})
+        };
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processDeleteIssueType(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processDeleteIssueType(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    IssueClient.prototype.processDeleteIssueType = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return _observableOf(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    IssueClient.prototype.getIssueCreate = function (projectId) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/{projectId}/create";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetIssueCreate(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetIssueCreate(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    IssueClient.prototype.processGetIssueCreate = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                result200 = resultData200 ? IssueCreateData.fromJS(resultData200) : null;
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    IssueClient.prototype.getIssues = function (projectId) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/{projectId}/list";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetIssues(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetIssues(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    IssueClient.prototype.processGetIssues = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_6 = resultData200; _i < resultData200_6.length; _i++) {
+                        var item = resultData200_6[_i];
+                        result200.push(IssueListItem.fromJS(item));
+                    }
+                }
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    IssueClient.prototype.getIssueType = function (id) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/types/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetIssueType(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetIssueType(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    IssueClient.prototype.processGetIssueType = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                result200 = resultData200 ? IssueTypeListItem.fromJS(resultData200) : null;
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    IssueClient.prototype.getIssueTypeListItems = function () {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/types/list";
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetIssueTypeListItems(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetIssueTypeListItems(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    IssueClient.prototype.processGetIssueTypeListItems = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_7 = resultData200; _i < resultData200_7.length; _i++) {
+                        var item = resultData200_7[_i];
+                        result200.push(IssueTypeListItem.fromJS(item));
+                    }
+                }
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    IssueClient.prototype.getIssueTypes = function () {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/types";
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetIssueTypes(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetIssueTypes(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    IssueClient.prototype.processGetIssueTypes = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_8 = resultData200; _i < resultData200_8.length; _i++) {
+                        var item = resultData200_8[_i];
+                        result200.push(IssueTypeInfo.fromJS(item));
+                    }
+                }
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    IssueClient.prototype.insertIssue = function (issue) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(issue);
+        var options_ = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processInsertIssue(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processInsertIssue(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    IssueClient.prototype.processInsertIssue = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return _observableOf(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    IssueClient.prototype.insertIssueType = function (issue) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/type";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(issue);
+        var options_ = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processInsertIssueType(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processInsertIssueType(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    IssueClient.prototype.processInsertIssueType = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return _observableOf(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    IssueClient.prototype.updateIssueType = function (issue) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/type";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(issue);
+        var options_ = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processUpdateIssueType(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processUpdateIssueType(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    IssueClient.prototype.processUpdateIssueType = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return _observableOf(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    IssueClient = tslib_1.__decorate([
+        Injectable(),
+        tslib_1.__param(0, Inject(HttpClient)), tslib_1.__param(1, Optional()), tslib_1.__param(1, Inject(API_BASE_URL)),
+        tslib_1.__metadata("design:paramtypes", [HttpClient, String])
+    ], IssueClient);
+    return IssueClient;
+}());
+export { IssueClient };
+var ProjectClient = /** @class */ (function () {
+    function ProjectClient(http, baseUrl) {
+        this.jsonParseReviver = undefined;
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
+    }
+    ProjectClient.prototype.getProjectByName = function (name) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/project/search/{name}";
+        if (name === undefined || name === null)
+            throw new Error("The parameter 'name' must be defined.");
+        url_ = url_.replace("{name}", encodeURIComponent("" + name));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetProjectByName(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetProjectByName(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    ProjectClient.prototype.processGetProjectByName = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                result200 = resultData200 ? ProjectInfo.fromJS(resultData200) : null;
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    ProjectClient.prototype.getProjects = function () {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/project/all";
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap(function (response_) {
+            return _this.processGetProjects(response_);
+        })).pipe(_observableCatch(function (response_) {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return _this.processGetProjects(response_);
+                }
+                catch (e) {
+                    return _observableThrow(e);
+                }
+            }
+            else
+                return _observableThrow(response_);
+        }));
+    };
+    ProjectClient.prototype.processGetProjects = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof HttpResponse ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_9 = resultData200; _i < resultData200_9.length; _i++) {
+                        var item = resultData200_9[_i];
+                        result200.push(ProjectInfo.fromJS(item));
+                    }
+                }
+                return _observableOf(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null);
+    };
+    ProjectClient = tslib_1.__decorate([
+        Injectable(),
+        tslib_1.__param(0, Inject(HttpClient)), tslib_1.__param(1, Optional()), tslib_1.__param(1, Inject(API_BASE_URL)),
+        tslib_1.__metadata("design:paramtypes", [HttpClient, String])
+    ], ProjectClient);
+    return ProjectClient;
+}());
+export { ProjectClient };
+var AreaInfo = /** @class */ (function () {
+    function AreaInfo(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    AreaInfo.prototype.init = function (data) {
+        if (data) {
+            this.areaName = data["areaName"];
+            this.id = data["id"];
+        }
+    };
+    AreaInfo.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new AreaInfo();
+        result.init(data);
+        return result;
+    };
+    AreaInfo.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["areaName"] = this.areaName;
+        data["id"] = this.id;
+        return data;
+    };
+    return AreaInfo;
+}());
+export { AreaInfo };
 var CountryListItem = /** @class */ (function () {
     function CountryListItem(data) {
         if (data) {
@@ -527,6 +1632,278 @@ var EmployeeInfo = /** @class */ (function () {
     return EmployeeInfo;
 }());
 export { EmployeeInfo };
+var EmployeeListItem = /** @class */ (function () {
+    function EmployeeListItem(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    EmployeeListItem.prototype.init = function (data) {
+        if (data) {
+            this.created = data["created"] ? new Date(data["created"].toString()) : undefined;
+            this.firstName = data["firstName"];
+            this.id = data["id"];
+            this.isDisabled = data["isDisabled"];
+            this.lastName = data["lastName"];
+        }
+    };
+    EmployeeListItem.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new EmployeeListItem();
+        result.init(data);
+        return result;
+    };
+    EmployeeListItem.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["created"] = this.created ? this.created.toISOString() : undefined;
+        data["firstName"] = this.firstName;
+        data["id"] = this.id;
+        data["isDisabled"] = this.isDisabled;
+        data["lastName"] = this.lastName;
+        return data;
+    };
+    return EmployeeListItem;
+}());
+export { EmployeeListItem };
+var IssueCreateData = /** @class */ (function () {
+    function IssueCreateData(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    IssueCreateData.prototype.init = function (data) {
+        if (data) {
+            if (data["employees"] && data["employees"].constructor === Array) {
+                this.employees = [];
+                for (var _i = 0, _a = data["employees"]; _i < _a.length; _i++) {
+                    var item = _a[_i];
+                    this.employees.push(EmployeeInfo.fromJS(item));
+                }
+            }
+            if (data["issueTypes"] && data["issueTypes"].constructor === Array) {
+                this.issueTypes = [];
+                for (var _b = 0, _c = data["issueTypes"]; _b < _c.length; _b++) {
+                    var item = _c[_b];
+                    this.issueTypes.push(IssueTypeInfo.fromJS(item));
+                }
+            }
+        }
+    };
+    IssueCreateData.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new IssueCreateData();
+        result.init(data);
+        return result;
+    };
+    IssueCreateData.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        if (this.employees && this.employees.constructor === Array) {
+            data["employees"] = [];
+            for (var _i = 0, _a = this.employees; _i < _a.length; _i++) {
+                var item = _a[_i];
+                data["employees"].push(item.toJSON());
+            }
+        }
+        if (this.issueTypes && this.issueTypes.constructor === Array) {
+            data["issueTypes"] = [];
+            for (var _b = 0, _c = this.issueTypes; _b < _c.length; _b++) {
+                var item = _c[_b];
+                data["issueTypes"].push(item.toJSON());
+            }
+        }
+        return data;
+    };
+    return IssueCreateData;
+}());
+export { IssueCreateData };
+var IssueTypeInfo = /** @class */ (function () {
+    function IssueTypeInfo(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    IssueTypeInfo.prototype.init = function (data) {
+        if (data) {
+            this.displayString = data["displayString"];
+            this.id = data["id"];
+        }
+    };
+    IssueTypeInfo.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new IssueTypeInfo();
+        result.init(data);
+        return result;
+    };
+    IssueTypeInfo.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["displayString"] = this.displayString;
+        data["id"] = this.id;
+        return data;
+    };
+    return IssueTypeInfo;
+}());
+export { IssueTypeInfo };
+var IssueListItem = /** @class */ (function () {
+    function IssueListItem(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    IssueListItem.prototype.init = function (data) {
+        if (data) {
+            this.assignedTo = data["assignedTo"];
+            this.createTime = data["createTime"] ? new Date(data["createTime"].toString()) : undefined;
+            this.description = data["description"];
+            this.id = data["id"];
+            this.issueType = data["issueType"];
+            this.title = data["title"];
+        }
+    };
+    IssueListItem.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new IssueListItem();
+        result.init(data);
+        return result;
+    };
+    IssueListItem.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["assignedTo"] = this.assignedTo;
+        data["createTime"] = this.createTime ? this.createTime.toISOString() : undefined;
+        data["description"] = this.description;
+        data["id"] = this.id;
+        data["issueType"] = this.issueType;
+        data["title"] = this.title;
+        return data;
+    };
+    return IssueListItem;
+}());
+export { IssueListItem };
+var IssueTypeListItem = /** @class */ (function () {
+    function IssueTypeListItem(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    IssueTypeListItem.prototype.init = function (data) {
+        if (data) {
+            this.description = data["description"];
+            this.id = data["id"];
+            this.title = data["title"];
+        }
+    };
+    IssueTypeListItem.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new IssueTypeListItem();
+        result.init(data);
+        return result;
+    };
+    IssueTypeListItem.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["description"] = this.description;
+        data["id"] = this.id;
+        data["title"] = this.title;
+        return data;
+    };
+    return IssueTypeListItem;
+}());
+export { IssueTypeListItem };
+var IssueCreateItem = /** @class */ (function () {
+    function IssueCreateItem(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    IssueCreateItem.prototype.init = function (data) {
+        if (data) {
+            this.areaId = data["areaId"];
+            this.assignedToId = data["assignedToId"];
+            if (data["attachments"] && data["attachments"].constructor === Array) {
+                this.attachments = [];
+                for (var _i = 0, _a = data["attachments"]; _i < _a.length; _i++) {
+                    var item = _a[_i];
+                    this.attachments.push(item);
+                }
+            }
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : undefined;
+            this.descripton = data["descripton"];
+            this.issueTypeId = data["issueTypeId"];
+            this.title = data["title"];
+        }
+    };
+    IssueCreateItem.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new IssueCreateItem();
+        result.init(data);
+        return result;
+    };
+    IssueCreateItem.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["areaId"] = this.areaId;
+        data["assignedToId"] = this.assignedToId;
+        if (this.attachments && this.attachments.constructor === Array) {
+            data["attachments"] = [];
+            for (var _i = 0, _a = this.attachments; _i < _a.length; _i++) {
+                var item = _a[_i];
+                data["attachments"].push(item);
+            }
+        }
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : undefined;
+        data["descripton"] = this.descripton;
+        data["issueTypeId"] = this.issueTypeId;
+        data["title"] = this.title;
+        return data;
+    };
+    return IssueCreateItem;
+}());
+export { IssueCreateItem };
+var ProjectInfo = /** @class */ (function () {
+    function ProjectInfo(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    ProjectInfo.prototype.init = function (data) {
+        if (data) {
+            this.displayString = data["displayString"];
+            this.id = data["id"];
+        }
+    };
+    ProjectInfo.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new ProjectInfo();
+        result.init(data);
+        return result;
+    };
+    ProjectInfo.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["displayString"] = this.displayString;
+        data["id"] = this.id;
+        return data;
+    };
+    return ProjectInfo;
+}());
+export { ProjectInfo };
 var SwaggerException = /** @class */ (function (_super) {
     tslib_1.__extends(SwaggerException, _super);
     function SwaggerException(message, status, response, headers, result) {

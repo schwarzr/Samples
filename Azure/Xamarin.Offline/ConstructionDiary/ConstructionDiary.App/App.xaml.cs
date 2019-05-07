@@ -5,6 +5,8 @@ using ConstructionDiary.App.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using ConstructionDiary.App.Bootstrap;
+using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace ConstructionDiary.App
 {
@@ -21,8 +23,24 @@ namespace ConstructionDiary.App
 
         internal void Initialize()
         {
+            var basePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var settingsPath = Path.Combine(basePath, "appsettings.json");
+
+            if (!File.Exists(settingsPath))
+            {
+                File.WriteAllText(settingsPath, "{}");
+            }
+
+            IConfigurationBuilder builder = new ConfigurationBuilder()
+                .SetBasePath(basePath)
+                .AddJsonFile("appsettings.json", false, false);
+            var config = builder.Build();
+
             var serviceCollection = new ServiceCollection();
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "diary.sqlite");
+            serviceCollection.AddSingleton<IConfiguration>(config);
+            serviceCollection.Configure<AppOptions>(config.GetSection("AppOptions"));
+
+            var path = Path.Combine(basePath, "diary.sqlite");
 
             if (File.Exists(path))
             {

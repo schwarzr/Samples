@@ -12,6 +12,7 @@ using ConstructionDiary.Database;
 using ConstructionDiary.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace ConstructionDiary.App.Bootstrap
 {
@@ -20,12 +21,17 @@ namespace ConstructionDiary.App.Bootstrap
         public static IServiceCollection Register(IServiceCollection services)
         {
             return Common.Register(services)
-                            .AddSingleton(new RestOptions("http://10.3.20.10:5001/"))
-                            .AddScoped<ICountryController, CountryControllerClient>()
-                            .AddScoped<IProjectController, ProjectControllerClient>()
-                            .AddScoped<IAreaController, AreaControllerClient>()
-                            .AddScoped<IIssueController, IssueControllerClient>()
-                            .AddScoped<IOfflineController, OfflineControllerClient>()
+                            .AddScoped(sp =>
+                            {
+                                var options = sp.GetRequiredService<IOptionsSnapshot<AppOptions>>();
+                                return new RestOptions(options.Value.ServerUrl);
+                            })
+                            .AddConnectedLocal<ICountryController, CountryControllerClient>()
+                            .AddConnectedLocal<IProjectController, ProjectControllerClient>()
+                            .AddConnectedLocal<IAreaController, AreaControllerClient>()
+                            .AddConnectedLocal<IIssueController, IssueControllerClient>()
+                            .AddConnectedService<IOfflineController>()
+                            .AddConnectedLocal<IOfflineController, OfflineControllerClient>()
                             .AddTransient<OnlineStateViewModel>()
                             .AddTransient<IStateViewModel>(p => p.GetRequiredService<OnlineStateViewModel>());
         }

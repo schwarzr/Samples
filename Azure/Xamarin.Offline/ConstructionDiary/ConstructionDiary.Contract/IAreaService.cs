@@ -8,6 +8,6 @@ namespace ConstructionDiary.Contract
 {
     public interface IAreaService
     {
-        Task<IEnumerable<AreaInfo>> GetAreaInfosAsync();
+        Task<IEnumerable<AreaInfo>> GetAreaInfosAsync(Guid projectId);
     }
 }

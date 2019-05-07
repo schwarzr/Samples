@@ -21,6 +21,10 @@
                 <v:MenuView />
             </DataTemplate>
 
+            <DataTemplate x:Key="Settings">
+                <v:SettingsView />
+            </DataTemplate>
+
             <DataTemplate x:Key="Dashboard">
                 <ContentPage Title="Dashboard">
                     <Label Text="Dashboard"></Label>

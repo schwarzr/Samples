@@ -11,7 +11,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { DashboardComponent } from './dashboard/dasbhoard.component';
 import { CountriesListComponent } from './countries/countries-list.component';
-import { CountryClient, ProjectClient, IssueClient } from '../service/service';
+import { CountryClient, ProjectClient, IssueClient, IssueTypeListItem, EmployeeClient } from '../service/service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -20,6 +20,12 @@ import { CountryCreateComponent } from './countries/country-create.component';
 import { ProjectService } from './project.service';
 import { ProjectIdResolver } from './project-id.resolver';
 import { IssueListComponent } from './issues/issue-list.component';
+import { IssueTypeCreateComponent } from './issue-types/issue-type-create.component';
+import { IssueTypeEditComponent } from './issue-types/issue-type-edit.component';
+import { IssueTypesListComponent } from './issue-types/issue-types-list.component';
+import { EmployeeCreateComponent } from './employees/employee-create.component';
+import { EmployeeEditComponent } from './employees/employee-edit.component';
+import { EmployeesListComponent } from './employees/employees-list.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +34,13 @@ import { IssueListComponent } from './issues/issue-list.component';
     CountriesListComponent,
     CountryEditComponent,
     CountryCreateComponent,
-    IssueListComponent
+    IssueListComponent,
+    IssueTypeCreateComponent,
+    IssueTypeEditComponent,
+    IssueTypesListComponent,
+    EmployeeCreateComponent,
+    EmployeeEditComponent,
+    EmployeesListComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +59,8 @@ import { IssueListComponent } from './issues/issue-list.component';
     CountryClient,
     ProjectClient,
     IssueClient,
-    ProjectService, 
+    EmployeeClient,
+    ProjectService,
     ProjectIdResolver
   ],
   bootstrap: [AppComponent]

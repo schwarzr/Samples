@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <div class="col align-self-center">
+            <h1>Issue Type</h1>
+            <form *ngIf="item">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" required placeholder="Title"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.title" />
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" class="form-control" placeholder="Description"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.description" />
+                </div>
+
+                <button type="submit" class="btn btn-primary" (click)="save()">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

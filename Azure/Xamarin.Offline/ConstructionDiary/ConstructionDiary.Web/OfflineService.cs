@@ -10,6 +10,7 @@ using ConstructionDiary.Contract;
 using ConstructionDiary.Database;
 using ConstructionDiary.Web;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ConstructionDiary.Service
@@ -17,11 +18,14 @@ namespace ConstructionDiary.Service
     public class OfflineService : IOfflineService
 
     {
+        private readonly IConfiguration _configuration;
+
         private readonly IServiceProvider _provider;
 
-        public OfflineService(IServiceProvider provider)
+        public OfflineService(IServiceProvider provider, IConfiguration configuration)
         {
             this._provider = provider;
+            this._configuration = configuration;
         }
 
         public async Task<byte[]> GetOfflineDBAsync(Guid projectId)
@@ -37,7 +41,7 @@ namespace ConstructionDiary.Service
             }
 
             var builder = new SyncBuilder();
-            builder.Target(p => p.AddEntityFrameworkCore<DiaryContext>().UseSqlServer(Startup.ConnectionString))
+            builder.Target(p => p.AddEntityFrameworkCore<DiaryContext>().UseSqlServer(_configuration.GetConnectionString("DiaryContext")))
                 .Source(p => p.AddEntityFrameworkCore<DiaryContext>().UseSqlite($"Filename={temp}"));
 
             using (var sync = builder.Build(_provider))

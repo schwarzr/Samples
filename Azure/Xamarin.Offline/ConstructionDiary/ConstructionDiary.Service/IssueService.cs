@@ -45,6 +45,13 @@ namespace ConstructionDiary.Service
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteIssueTypeAsync(Guid id)
+        {
+            var dbItem = await _context.IssueTypes.FirstAsync(p => p.Id == id);
+            _context.IssueTypes.Remove(dbItem);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<IssueListItem>> GetIssuesAsync(Guid projectId)
         {
             var query = _context.Issues
@@ -64,11 +71,41 @@ namespace ConstructionDiary.Service
             return data;
         }
 
+        public async Task<IssueTypeListItem> GetIssueTypeAsync(Guid id)
+        {
+            var data = await _context.IssueTypes.Where(p => p.Id == id).Select(p => new IssueTypeListItem { Id = p.Id, Title = p.Title, Description = p.Description }).ToListAsync();
+
+            return data.FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<IssueTypeListItem>> GetIssueTypeListItemsAsync()
+        {
+            var data = await _context.IssueTypes.Select(p => new IssueTypeListItem { Id = p.Id, Title = p.Title, Description = p.Description }).ToListAsync();
+
+            return data;
+        }
+
         public async Task<IEnumerable<IssueTypeInfo>> GetIssueTypesAsync()
         {
             var data = await _context.IssueTypes.Select(p => new IssueTypeInfo { Id = p.Id, DisplayString = p.Title }).ToListAsync();
 
             return data;
+        }
+
+        public async Task InsertIssueTypeAsync(IssueTypeListItem issue)
+        {
+            await _context.IssueTypes.AddAsync(new IssueType { Title = issue.Title, Description = issue.Description });
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateIssueTypeAsync(IssueTypeListItem issue)
+        {
+            var dbItem = await _context.IssueTypes.FirstAsync(p => p.Id == issue.Id);
+
+            dbItem.Title = issue.Title;
+            dbItem.Description = issue.Description;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

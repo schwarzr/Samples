@@ -9,7 +9,7 @@ namespace ConstructionDiary.Api.Contract
     [RestRoute("api/area")]
     public interface IAreaController
     {
-        [RestGet("infos")]
-        Task<IEnumerable<AreaInfo>> GetAreaInfosAsync();
+        [RestGet("{projectId}/infos")]
+        Task<IEnumerable<AreaInfo>> GetAreaInfosAsync(Guid projectId);
     }
 }

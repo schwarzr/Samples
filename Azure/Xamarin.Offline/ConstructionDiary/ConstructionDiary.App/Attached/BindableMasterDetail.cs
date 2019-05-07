@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using Xamarin.Forms;
 using static Xamarin.Forms.BindableProperty;
 
@@ -102,17 +103,23 @@ namespace ConstructionDiary.App.Attached
             {
                 newNav.Added += p =>
                 {
-                    Page page = GetNavigationPage(p);
-                    navigationPage.Navigation.PushAsync(page);
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        Page page = GetNavigationPage(p);
+                        navigationPage.Navigation.PushAsync(page);
+                    });
                 };
 
                 newNav.Removed += p =>
                 {
-                    var page = navigationPage.Navigation.NavigationStack.FirstOrDefault(x => x.BindingContext == p);
-                    if (page != null)
+                    Device.BeginInvokeOnMainThread(() =>
                     {
-                        navigationPage.Navigation.RemovePage(page);
-                    }
+                        var page = navigationPage.Navigation.NavigationStack.FirstOrDefault(x => x.BindingContext == p);
+                        if (page != null)
+                        {
+                            navigationPage.Navigation.RemovePage(page);
+                        }
+                    });
                 };
 
                 foreach (var item in newNav.Stack)

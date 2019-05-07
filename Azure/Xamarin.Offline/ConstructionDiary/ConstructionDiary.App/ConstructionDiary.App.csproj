@@ -11,12 +11,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Lucile.Dynamic.DependencyInjection" Version="1.0.0-beta2-00052" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
-    <PackageReference Include="Xamarin.Forms" Version="3.6.0.264807" />  
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
+    <PackageReference Include="Xamarin.Forms" Version="3.6.0.264807" />
     <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
-        <PackageReference Include="Codeworx.Synchronization.EntityFrameworkCore.Sqlite"  Version="2.0.0-beta1-00012" />
-            <PackageReference Include="Codeworx.Synchronization.Rest"  Version="2.0.0-beta1-00012" />
+    <PackageReference Include="Codeworx.Synchronization.EntityFrameworkCore.Sqlite" Version="2.0.0-beta1-00012" />
+    <PackageReference Include="Codeworx.Synchronization.Rest" Version="2.0.0-beta1-00012" />
   </ItemGroup>
 
   <ItemGroup>

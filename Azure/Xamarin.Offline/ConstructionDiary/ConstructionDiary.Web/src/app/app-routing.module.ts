@@ -6,6 +6,12 @@ import { CountryEditComponent } from './countries/country-edit.component';
 import { CountryCreateComponent } from './countries/country-create.component';
 import { ProjectIdResolver } from './project-id.resolver';
 import { IssueListComponent } from './issues/issue-list.component';
+import { IssueTypesListComponent } from './issue-types/issue-types-list.component';
+import { IssueTypeEditComponent } from './issue-types/issue-type-edit.component';
+import { IssueTypeCreateComponent } from './issue-types/issue-type-create.component';
+import { EmployeesListComponent } from './employees/employees-list.component';
+import { EmployeeEditComponent } from './employees/employee-edit.component';
+import { EmployeeCreateComponent } from './employees/employee-create.component';
 
 const routes: Routes = [{
   path: 'dashboard',
@@ -34,11 +40,15 @@ const routes: Routes = [{
   children: [
     {
       path: '',
-      component: DashboardComponent
+      component: IssueTypesListComponent
+    },
+    {
+      path: 'new',
+      component: IssueTypeCreateComponent
     },
     {
       path: ':id',
-      component: DashboardComponent
+      component: IssueTypeEditComponent
     }
   ]
 },
@@ -54,10 +64,6 @@ const routes: Routes = [{
         {
           path: '',
           component: IssueListComponent
-        },
-        {
-          path: ':id',
-          component: DashboardComponent
         }
       ]
     },
@@ -66,11 +72,15 @@ const routes: Routes = [{
       children: [
         {
           path: '',
-          component: DashboardComponent
+          component: EmployeesListComponent
+        },
+        {
+          path: 'new',
+          component: EmployeeCreateComponent
         },
         {
           path: ':id',
-          component: DashboardComponent
+          component: EmployeeEditComponent
         }
       ]
     }

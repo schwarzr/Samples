@@ -17,9 +17,9 @@ namespace ConstructionDiary.Api
             this._service = service;
         }
 
-        public Task<IEnumerable<AreaInfo>> GetAreaInfosAsync()
+        public Task<IEnumerable<AreaInfo>> GetAreaInfosAsync(Guid projectId)
         {
-            return _service.GetAreaInfosAsync();
+            return _service.GetAreaInfosAsync(projectId);
         }
     }
 }

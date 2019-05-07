@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ConstructionDiary.Api.Contract;
 using ConstructionDiary.App.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +18,14 @@ namespace ConstructionDiary.App.Bootstrap
                         .AddTransient<MenuViewModel>()
                         .AddTransient<DashboardViewModel>()
                         .AddTransient<AreasViewModel>()
-                        .AddTransient<CreateIssueViewModel>();
+                        .AddTransient<CreateIssueViewModel>()
+                        .AddTransient<SettingsViewModel>()
+                        .AddScopeProxy()
+                        .AddConnectedService<ICountryController>()
+                        .AddConnectedService<IProjectController>()
+                        .AddConnectedService<IAreaController>()
+                        .AddConnectedService<IIssueController>()
+                        .AddConnectedService<IEmployeeController>();
         }
     }
 }

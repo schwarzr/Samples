@@ -15,19 +15,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using Codeworx.Synchronization.Configuration;
 using Codeworx.Synchronization;
+using Microsoft.Extensions.Configuration;
 
 namespace ConstructionDiary.Web
 {
     public class Startup
     {
-        public const string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ConstructionDiary; Integrated Security=True;";
-
         private readonly IHostingEnvironment _env;
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, IConfiguration configuration)
         {
             _env = env;
+            Configuration = configuration;
         }
+
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
@@ -59,6 +61,8 @@ namespace ConstructionDiary.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(Configuration);
+
             services.AddMvcCore()
                 .AddApiExplorer()
                 .AddApplicationPart(typeof(EmployeeController).Assembly)
@@ -72,7 +76,7 @@ namespace ConstructionDiary.Web
 
             services.AddSwaggerDocument();
 
-            services.AddSyncEndpoint((builder, sp) => builder.AddEntityFrameworkCore<SqlDiaryContext>().UseSqlServer(ConnectionString));
+            services.AddSyncEndpoint((builder, sp) => builder.AddEntityFrameworkCore<SqlDiaryContext>().UseSqlServer(Configuration.GetConnectionString("DiaryContext")));
             services.AddSyncScenario<ProjectFilterScenario>(Constants.ScenarioId, "Project Filter");
 
             services.AddScoped<IEmployeeService, EmployeeService>();
@@ -82,7 +86,7 @@ namespace ConstructionDiary.Web
             services.AddScoped<IIssueService, IssueService>();
             services.AddScoped<IOfflineService, OfflineService>();
 
-            services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer(ConnectionString));
+            services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer(Configuration.GetConnectionString("DiaryContext")));
             //services.AddDbContext<DiaryContext>(builder => builder.UseSqlite("Filename=c:\\Temp\\whatever.sqlite"));
 
             //services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer("Data Source=.;Initial Catalog=ConstructionDiary; Integrated Security=True;"));
@@ -95,6 +99,9 @@ namespace ConstructionDiary.Web
                     if (ctx.Database.EnsureCreated())
                     {
                         DataHelper.InsertData(ctx);
+
+                        var statement = $"ALTER DATABASE [{ctx.Database.GetDbConnection().Database}] SET ALLOW_SNAPSHOT_ISOLATION ON";
+                        ctx.Database.ExecuteSqlCommand(statement);
                     }
                 }
             }

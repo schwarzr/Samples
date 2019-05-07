@@ -14,9 +14,9 @@ namespace ConstructionDiary.Api.Client
         {
         }
 
-        public Task<IEnumerable<AreaInfo>> GetAreaInfosAsync()
+        public Task<IEnumerable<AreaInfo>> GetAreaInfosAsync(Guid projectId)
         {
-            return CallAsync(p => p.GetAreaInfosAsync());
+            return CallAsync(p => p.GetAreaInfosAsync(projectId));
         }
     }
 }

@@ -65,7 +65,7 @@ namespace ConstructionDiary.App.ViewModels
 
         public async Task LoadDataAsync(Guid projectId)
         {
-            var data = await _areaController.GetAreaInfosAsync();
+            var data = await _areaController.GetAreaInfosAsync(projectId);
             Areas = new ObservableCollection<CommandWrapper>(data.Select(p => new CommandWrapper { Item = p, Command = CreateIssueCommand }));
         }
 

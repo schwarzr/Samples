@@ -12,6 +12,7 @@ using ConstructionDiary.Database;
 using ConstructionDiary.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace ConstructionDiary.App.Bootstrap
 {
@@ -24,15 +25,15 @@ namespace ConstructionDiary.App.Bootstrap
             var connectionString = $"Filename={path}";
 
             services = Common.Register(services)
-                .AddScoped<ICountryController, CountryController>()
+                .AddConnectedLocal<ICountryController, CountryController>()
                 .AddScoped<ICountryService, CountryService>()
-                .AddScoped<IProjectController, ProjectController>()
+                .AddConnectedLocal<IProjectController, ProjectController>()
                 .AddScoped<IProjectService, ProjectService>()
-                .AddScoped<IAreaController, AreaController>()
+                .AddConnectedLocal<IAreaController, AreaController>()
                 .AddScoped<IAreaService, AreaService>()
-                .AddScoped<IIssueController, IssueController>()
+                .AddConnectedLocal<IIssueController, IssueController>()
                 .AddScoped<IIssueService, IssueService>()
-                .AddScoped<IEmployeeController, EmployeeController>()
+                .AddConnectedLocal<IEmployeeController, EmployeeController>()
                 .AddScoped<IEmployeeService, EmployeeService>()
                 .AddTransient<OfflineStateViewModel>()
                 .AddTransient<IStateViewModel>(p => p.GetRequiredService<OfflineStateViewModel>())
@@ -42,7 +43,7 @@ namespace ConstructionDiary.App.Bootstrap
             services
                 .AddSync()
                 .Source(p => p.AddEntityFrameworkCore<DiaryContext>().UseSqlite(connectionString, options => options.AddChangeTracking()))
-                .Target(p => p.AddRest("http://10.41.12.22:5001/sync"));
+                .Target((p, sp) => p.AddRest(sp.GetRequiredService<IOptions<AppOptions>>().Value.ServerUrl + "sync"));
 
             return services;
         }

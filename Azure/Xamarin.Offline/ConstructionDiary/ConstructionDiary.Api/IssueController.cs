@@ -20,6 +20,11 @@ namespace ConstructionDiary.Api
             this._employeeService = employeeService;
         }
 
+        public Task DeleteIssueTypeAsync(Guid id)
+        {
+            return _service.DeleteIssueTypeAsync(id);
+        }
+
         public async Task<IssueCreateData> GetIssueCreateAsync(Guid projectId)
         {
             var result = new IssueCreateData();
@@ -34,6 +39,16 @@ namespace ConstructionDiary.Api
             return _service.GetIssuesAsync(projectId);
         }
 
+        public Task<IssueTypeListItem> GetIssueTypeAsync(Guid id)
+        {
+            return _service.GetIssueTypeAsync(id);
+        }
+
+        public Task<IEnumerable<IssueTypeListItem>> GetIssueTypeListItemsAsync()
+        {
+            return _service.GetIssueTypeListItemsAsync();
+        }
+
         public Task<IEnumerable<IssueTypeInfo>> GetIssueTypesAsync()
         {
             return _service.GetIssueTypesAsync();
@@ -42,6 +57,16 @@ namespace ConstructionDiary.Api
         public Task InsertIssueAsync(IssueCreateItem issue)
         {
             return _service.CreateIssueAsync(issue);
+        }
+
+        public Task InsertIssueTypeAsync([BodyMember] IssueTypeListItem issue)
+        {
+            return _service.InsertIssueTypeAsync(issue);
+        }
+
+        public Task UpdateIssueTypeAsync([BodyMember] IssueTypeListItem issue)
+        {
+            return _service.UpdateIssueTypeAsync(issue);
         }
     }
 }

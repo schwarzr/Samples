@@ -10,12 +10,21 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { DashboardComponent } from './dashboard/dasbhoard.component';
 import { CountriesListComponent } from './countries/countries-list.component';
-import { CountryClient } from '../service/service';
+import { CountryClient, ProjectClient, IssueClient, EmployeeClient } from '../service/service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CountryEditComponent } from './countries/country-edit.component';
 import { CountryCreateComponent } from './countries/country-create.component';
+import { ProjectService } from './project.service';
+import { ProjectIdResolver } from './project-id.resolver';
+import { IssueListComponent } from './issues/issue-list.component';
+import { IssueTypeCreateComponent } from './issue-types/issue-type-create.component';
+import { IssueTypeEditComponent } from './issue-types/issue-type-edit.component';
+import { IssueTypesListComponent } from './issue-types/issue-types-list.component';
+import { EmployeeCreateComponent } from './employees/employee-create.component';
+import { EmployeeEditComponent } from './employees/employee-edit.component';
+import { EmployeesListComponent } from './employees/employees-list.component';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -26,7 +35,14 @@ var AppModule = /** @class */ (function () {
                 DashboardComponent,
                 CountriesListComponent,
                 CountryEditComponent,
-                CountryCreateComponent
+                CountryCreateComponent,
+                IssueListComponent,
+                IssueTypeCreateComponent,
+                IssueTypeEditComponent,
+                IssueTypesListComponent,
+                EmployeeCreateComponent,
+                EmployeeEditComponent,
+                EmployeesListComponent
             ],
             imports: [
                 BrowserModule,
@@ -41,7 +57,14 @@ var AppModule = /** @class */ (function () {
                 TabsModule.forRoot(),
                 CollapseModule.forRoot()
             ],
-            providers: [CountryClient],
+            providers: [
+                CountryClient,
+                ProjectClient,
+                IssueClient,
+                EmployeeClient,
+                ProjectService,
+                ProjectIdResolver
+            ],
             bootstrap: [AppComponent]
         })
     ], AppModule);

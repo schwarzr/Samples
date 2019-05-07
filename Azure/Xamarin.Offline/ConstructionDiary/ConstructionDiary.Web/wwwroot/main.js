@@ -42,6 +42,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _countries_country_create_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./countries/country-create.component */ "./src/app/countries/country-create.component.ts");
 /* harmony import */ var _project_id_resolver__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./project-id.resolver */ "./src/app/project-id.resolver.ts");
 /* harmony import */ var _issues_issue_list_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./issues/issue-list.component */ "./src/app/issues/issue-list.component.ts");
+/* harmony import */ var _issue_types_issue_types_list_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./issue-types/issue-types-list.component */ "./src/app/issue-types/issue-types-list.component.ts");
+/* harmony import */ var _issue_types_issue_type_edit_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./issue-types/issue-type-edit.component */ "./src/app/issue-types/issue-type-edit.component.ts");
+/* harmony import */ var _issue_types_issue_type_create_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./issue-types/issue-type-create.component */ "./src/app/issue-types/issue-type-create.component.ts");
+/* harmony import */ var _employees_employees_list_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./employees/employees-list.component */ "./src/app/employees/employees-list.component.ts");
+/* harmony import */ var _employees_employee_edit_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./employees/employee-edit.component */ "./src/app/employees/employee-edit.component.ts");
+/* harmony import */ var _employees_employee_create_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./employees/employee-create.component */ "./src/app/employees/employee-create.component.ts");
+
+
+
+
+
+
 
 
 
@@ -77,11 +89,15 @@ var routes = [{
         children: [
             {
                 path: '',
-                component: _dashboard_dasbhoard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"]
+                component: _issue_types_issue_types_list_component__WEBPACK_IMPORTED_MODULE_9__["IssueTypesListComponent"]
+            },
+            {
+                path: 'new',
+                component: _issue_types_issue_type_create_component__WEBPACK_IMPORTED_MODULE_11__["IssueTypeCreateComponent"]
             },
             {
                 path: ':id',
-                component: _dashboard_dasbhoard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"]
+                component: _issue_types_issue_type_edit_component__WEBPACK_IMPORTED_MODULE_10__["IssueTypeEditComponent"]
             }
         ]
     },
@@ -97,10 +113,6 @@ var routes = [{
                     {
                         path: '',
                         component: _issues_issue_list_component__WEBPACK_IMPORTED_MODULE_8__["IssueListComponent"]
-                    },
-                    {
-                        path: ':id',
-                        component: _dashboard_dasbhoard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"]
                     }
                 ]
             },
@@ -109,11 +121,15 @@ var routes = [{
                 children: [
                     {
                         path: '',
-                        component: _dashboard_dasbhoard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"]
+                        component: _employees_employees_list_component__WEBPACK_IMPORTED_MODULE_12__["EmployeesListComponent"]
+                    },
+                    {
+                        path: 'new',
+                        component: _employees_employee_create_component__WEBPACK_IMPORTED_MODULE_14__["EmployeeCreateComponent"]
                     },
                     {
                         path: ':id',
-                        component: _dashboard_dasbhoard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"]
+                        component: _employees_employee_edit_component__WEBPACK_IMPORTED_MODULE_13__["EmployeeEditComponent"]
                     }
                 ]
             }
@@ -231,6 +247,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _project_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./project.service */ "./src/app/project.service.ts");
 /* harmony import */ var _project_id_resolver__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./project-id.resolver */ "./src/app/project-id.resolver.ts");
 /* harmony import */ var _issues_issue_list_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./issues/issue-list.component */ "./src/app/issues/issue-list.component.ts");
+/* harmony import */ var _issue_types_issue_type_create_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./issue-types/issue-type-create.component */ "./src/app/issue-types/issue-type-create.component.ts");
+/* harmony import */ var _issue_types_issue_type_edit_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./issue-types/issue-type-edit.component */ "./src/app/issue-types/issue-type-edit.component.ts");
+/* harmony import */ var _issue_types_issue_types_list_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./issue-types/issue-types-list.component */ "./src/app/issue-types/issue-types-list.component.ts");
+/* harmony import */ var _employees_employee_create_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./employees/employee-create.component */ "./src/app/employees/employee-create.component.ts");
+/* harmony import */ var _employees_employee_edit_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./employees/employee-edit.component */ "./src/app/employees/employee-edit.component.ts");
+/* harmony import */ var _employees_employees_list_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./employees/employees-list.component */ "./src/app/employees/employees-list.component.ts");
+
+
+
+
+
+
 
 
 
@@ -263,7 +291,13 @@ var AppModule = /** @class */ (function () {
                 _countries_countries_list_component__WEBPACK_IMPORTED_MODULE_11__["CountriesListComponent"],
                 _countries_country_edit_component__WEBPACK_IMPORTED_MODULE_16__["CountryEditComponent"],
                 _countries_country_create_component__WEBPACK_IMPORTED_MODULE_17__["CountryCreateComponent"],
-                _issues_issue_list_component__WEBPACK_IMPORTED_MODULE_20__["IssueListComponent"]
+                _issues_issue_list_component__WEBPACK_IMPORTED_MODULE_20__["IssueListComponent"],
+                _issue_types_issue_type_create_component__WEBPACK_IMPORTED_MODULE_21__["IssueTypeCreateComponent"],
+                _issue_types_issue_type_edit_component__WEBPACK_IMPORTED_MODULE_22__["IssueTypeEditComponent"],
+                _issue_types_issue_types_list_component__WEBPACK_IMPORTED_MODULE_23__["IssueTypesListComponent"],
+                _employees_employee_create_component__WEBPACK_IMPORTED_MODULE_24__["EmployeeCreateComponent"],
+                _employees_employee_edit_component__WEBPACK_IMPORTED_MODULE_25__["EmployeeEditComponent"],
+                _employees_employees_list_component__WEBPACK_IMPORTED_MODULE_26__["EmployeesListComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -282,6 +316,7 @@ var AppModule = /** @class */ (function () {
                 _service_service__WEBPACK_IMPORTED_MODULE_12__["CountryClient"],
                 _service_service__WEBPACK_IMPORTED_MODULE_12__["ProjectClient"],
                 _service_service__WEBPACK_IMPORTED_MODULE_12__["IssueClient"],
+                _service_service__WEBPACK_IMPORTED_MODULE_12__["EmployeeClient"],
                 _project_service__WEBPACK_IMPORTED_MODULE_18__["ProjectService"],
                 _project_id_resolver__WEBPACK_IMPORTED_MODULE_19__["ProjectIdResolver"]
             ],
@@ -559,6 +594,469 @@ module.exports = "<h1>Dashboard</h1>"
 
 /***/ }),
 
+/***/ "./src/app/employees/employee-create.component.ts":
+/*!********************************************************!*\
+  !*** ./src/app/employees/employee-create.component.ts ***!
+  \********************************************************/
+/*! exports provided: EmployeeCreateComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmployeeCreateComponent", function() { return EmployeeCreateComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../service/service */ "./src/service/service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+
+
+
+var EmployeeCreateComponent = /** @class */ (function () {
+    function EmployeeCreateComponent(service, route, router) {
+        var _this = this;
+        this.service = service;
+        this.route = route;
+        this.router = router;
+        this.item = new _service_service__WEBPACK_IMPORTED_MODULE_2__["EmployeeListItem"]();
+        route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (p) { return p.project; }))
+            .subscribe(function (p) { _this.project = p; });
+    }
+    EmployeeCreateComponent.prototype.save = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.service.insert(this.project.id, this.item).toPromise()];
+                    case 1:
+                        _a.sent();
+                        url = this.getNavUrl(this.route);
+                        return [4 /*yield*/, this.router.navigateByUrl(url)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    EmployeeCreateComponent.prototype.getNavUrl = function (route) {
+        var items = route.parent.snapshot.pathFromRoot;
+        return items.map(function (p) { return p.url.join('/'); }).join('/');
+    };
+    EmployeeCreateComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'employee-create',
+            template: __webpack_require__(/*! ./employee-edit.component.html */ "./src/app/employees/employee-edit.component.html")
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_service_service__WEBPACK_IMPORTED_MODULE_2__["EmployeeClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+    ], EmployeeCreateComponent);
+    return EmployeeCreateComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/employees/employee-edit.component.html":
+/*!********************************************************!*\
+  !*** ./src/app/employees/employee-edit.component.html ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col align-self-center\">\r\n            <h1>Employee</h1>\r\n            <form *ngIf=\"item\">\r\n                <div class=\"form-group\">\r\n                    <label>Firstname</label>\r\n                    <input type=\"text\" class=\"form-control\" required placeholder=\"Firstname\"\r\n                        [ngModelOptions]=\"{standalone: true}\" [(ngModel)]=\"item.firstName\" />\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label>Lastname</label>\r\n                    <input type=\"text\" class=\"form-control\" placeholder=\"Lastname\"\r\n                        [ngModelOptions]=\"{standalone: true}\" [(ngModel)]=\"item.lastName\" />\r\n                </div>\r\n\r\n                <button type=\"submit\" class=\"btn btn-primary\" (click)=\"save()\">Submit</button>\r\n            </form>\r\n        </div>\r\n    </div>\r\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/employees/employee-edit.component.ts":
+/*!******************************************************!*\
+  !*** ./src/app/employees/employee-edit.component.ts ***!
+  \******************************************************/
+/*! exports provided: EmployeeEditComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmployeeEditComponent", function() { return EmployeeEditComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../service/service */ "./src/service/service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+
+
+
+var EmployeeEditComponent = /** @class */ (function () {
+    function EmployeeEditComponent(service, route, router) {
+        var _this = this;
+        this.service = service;
+        this.route = route;
+        this.router = router;
+        route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (p) { return p.project; }))
+            .subscribe(function (p) { _this.project = p; _this.loadData(); });
+    }
+    EmployeeEditComponent.prototype.loadData = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var id, data;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        id = this.route.snapshot.params['id'];
+                        return [4 /*yield*/, this.service.getEmployeeListItem(id).toPromise()];
+                    case 1:
+                        data = _a.sent();
+                        this.item = data;
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    EmployeeEditComponent.prototype.save = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.service.update(this.item).toPromise()];
+                    case 1:
+                        _a.sent();
+                        url = this.getNavUrl(this.route);
+                        return [4 /*yield*/, this.router.navigateByUrl(url)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    EmployeeEditComponent.prototype.getNavUrl = function (route) {
+        var items = route.parent.snapshot.pathFromRoot;
+        return items.map(function (p) { return p.url.join('/'); }).join('/');
+    };
+    EmployeeEditComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'employee-edit',
+            template: __webpack_require__(/*! ./employee-edit.component.html */ "./src/app/employees/employee-edit.component.html")
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_service_service__WEBPACK_IMPORTED_MODULE_2__["EmployeeClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+    ], EmployeeEditComponent);
+    return EmployeeEditComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/employees/employees-list.component.html":
+/*!*********************************************************!*\
+  !*** ./src/app/employees/employees-list.component.html ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<h1>Employee List</h1>\r\n<a class=\"btn btn-primary\" [routerLink]=\"['new']\">new item</a>\r\n\r\n<div class=\"table-responsive\" *ngIf=\"items\">\r\n    <table class=\"table table-striped table-hover\">\r\n        <thead>\r\n            <tr>\r\n                <th scope=\"col\">Firstname</th>\r\n                <th scope=\"col\">Lastname</th>\r\n                <th scope=\"col\">Created</th>\r\n                <th scope=\"col\">Disabled</th>\r\n                <th scope=\"col\"></th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <tr *ngFor=\"let item of items\" (click)=\"select(item)\" [class.table-primary]=\"item == selectedItem\">\r\n                <td>{{item.firstName}}</td>\r\n                <td>{{item.lastName}}</td>\r\n                <td>{{item.created}}</td>\r\n                <td>{{item.isDisabled}}</td>\r\n                <td>\r\n                    <a class=\"btn btn-primary\" [routerLink]=\"[item.id]\" role=\"button\">edit</a>\r\n                    &nbsp;\r\n                    <button class=\"btn btn-primary\" (click)=\"delete(item)\" role=\"button\">delete</button>\r\n                </td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/employees/employees-list.component.ts":
+/*!*******************************************************!*\
+  !*** ./src/app/employees/employees-list.component.ts ***!
+  \*******************************************************/
+/*! exports provided: EmployeesListComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmployeesListComponent", function() { return EmployeesListComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../service/service */ "./src/service/service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+
+
+
+var EmployeesListComponent = /** @class */ (function () {
+    function EmployeesListComponent(service, currentRoute) {
+        var _this = this;
+        this.service = service;
+        currentRoute.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (p) { return p.project; }))
+            .subscribe(function (p) { _this.project = p; _this.loadData(); });
+    }
+    EmployeesListComponent.prototype.loadData = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var data;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.service.getEmployeeListItems(this.project.id).toPromise()];
+                    case 1:
+                        data = _a.sent();
+                        this.items = data;
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    EmployeesListComponent.prototype.select = function (item) {
+        this.selectedItem = item;
+    };
+    EmployeesListComponent.prototype.delete = function (item) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.service.delete(item.id).toPromise()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.loadData()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    EmployeesListComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'employees-list',
+            template: __webpack_require__(/*! ./employees-list.component.html */ "./src/app/employees/employees-list.component.html")
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_service_service__WEBPACK_IMPORTED_MODULE_2__["EmployeeClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]])
+    ], EmployeesListComponent);
+    return EmployeesListComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/issue-types/issue-type-create.component.ts":
+/*!************************************************************!*\
+  !*** ./src/app/issue-types/issue-type-create.component.ts ***!
+  \************************************************************/
+/*! exports provided: IssueTypeCreateComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueTypeCreateComponent", function() { return IssueTypeCreateComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../service/service */ "./src/service/service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
+
+
+
+var IssueTypeCreateComponent = /** @class */ (function () {
+    function IssueTypeCreateComponent(service, route, router) {
+        this.service = service;
+        this.route = route;
+        this.router = router;
+        this.item = new _service_service__WEBPACK_IMPORTED_MODULE_2__["IssueTypeListItem"]();
+    }
+    IssueTypeCreateComponent.prototype.save = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.service.insertIssueType(this.item).toPromise()];
+                    case 1:
+                        _a.sent();
+                        url = this.getNavUrl(this.route);
+                        return [4 /*yield*/, this.router.navigateByUrl(url)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    IssueTypeCreateComponent.prototype.getNavUrl = function (route) {
+        var items = route.parent.snapshot.pathFromRoot;
+        return items.map(function (p) { return p.url.join('/'); }).join('/');
+    };
+    IssueTypeCreateComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'issue-type-create',
+            template: __webpack_require__(/*! ./issue-type-edit.component.html */ "./src/app/issue-types/issue-type-edit.component.html")
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_service_service__WEBPACK_IMPORTED_MODULE_2__["IssueClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+    ], IssueTypeCreateComponent);
+    return IssueTypeCreateComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/issue-types/issue-type-edit.component.html":
+/*!************************************************************!*\
+  !*** ./src/app/issue-types/issue-type-edit.component.html ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col align-self-center\">\r\n            <h1>Issue Type</h1>\r\n            <form *ngIf=\"item\">\r\n                <div class=\"form-group\">\r\n                    <label>Title</label>\r\n                    <input type=\"text\" class=\"form-control\" required placeholder=\"Title\"\r\n                        [ngModelOptions]=\"{standalone: true}\" [(ngModel)]=\"item.title\" />\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label>Description</label>\r\n                    <input type=\"text\" class=\"form-control\" placeholder=\"Description\"\r\n                        [ngModelOptions]=\"{standalone: true}\" [(ngModel)]=\"item.description\" />\r\n                </div>\r\n\r\n                <button type=\"submit\" class=\"btn btn-primary\" (click)=\"save()\">Submit</button>\r\n            </form>\r\n        </div>\r\n    </div>\r\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/issue-types/issue-type-edit.component.ts":
+/*!**********************************************************!*\
+  !*** ./src/app/issue-types/issue-type-edit.component.ts ***!
+  \**********************************************************/
+/*! exports provided: IssueTypeEditComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueTypeEditComponent", function() { return IssueTypeEditComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../service/service */ "./src/service/service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
+
+
+
+var IssueTypeEditComponent = /** @class */ (function () {
+    function IssueTypeEditComponent(service, route, router) {
+        this.service = service;
+        this.route = route;
+        this.router = router;
+    }
+    IssueTypeEditComponent.prototype.ngOnInit = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var id, data;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        id = this.route.snapshot.params['id'];
+                        return [4 /*yield*/, this.service.getIssueType(id).toPromise()];
+                    case 1:
+                        data = _a.sent();
+                        this.item = data;
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    IssueTypeEditComponent.prototype.save = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.service.updateIssueType(this.item).toPromise()];
+                    case 1:
+                        _a.sent();
+                        url = this.getNavUrl(this.route);
+                        return [4 /*yield*/, this.router.navigateByUrl(url)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    IssueTypeEditComponent.prototype.getNavUrl = function (route) {
+        var items = route.parent.snapshot.pathFromRoot;
+        return items.map(function (p) { return p.url.join('/'); }).join('/');
+    };
+    IssueTypeEditComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'country-edit',
+            template: __webpack_require__(/*! ./issue-type-edit.component.html */ "./src/app/issue-types/issue-type-edit.component.html")
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_service_service__WEBPACK_IMPORTED_MODULE_2__["IssueClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+    ], IssueTypeEditComponent);
+    return IssueTypeEditComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/issue-types/issue-types-list.component.html":
+/*!*************************************************************!*\
+  !*** ./src/app/issue-types/issue-types-list.component.html ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<h1>Issue Type List</h1>\r\n<a  class=\"btn btn-primary\" [routerLink]=\"['new']\">new item</a>\r\n\r\n<div class=\"table-responsive\" *ngIf=\"items\">\r\n    <table class=\"table table-striped table-hover\">\r\n        <thead>\r\n            <tr>\r\n                <th scope=\"col\">Title</th>\r\n                <th scope=\"col\">Description</th>\r\n                <th scope=\"col\"></th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <tr *ngFor=\"let item of items\" (click)=\"select(item)\" [class.table-primary]=\"item == selectedItem\">\r\n                <td>{{item.title}}</td>\r\n                <td>{{item.description}}</td>\r\n                <td>\r\n                    <a class=\"btn btn-primary\" [routerLink]=\"[item.id]\" role=\"button\">edit</a>\r\n                    &nbsp;\r\n                    <button class=\"btn btn-primary\" (click)=\"delete(item)\" role=\"button\">delete</button>\r\n                </td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/issue-types/issue-types-list.component.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/issue-types/issue-types-list.component.ts ***!
+  \***********************************************************/
+/*! exports provided: IssueTypesListComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueTypesListComponent", function() { return IssueTypesListComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../service/service */ "./src/service/service.ts");
+
+
+
+var IssueTypesListComponent = /** @class */ (function () {
+    function IssueTypesListComponent(service) {
+        this.service = service;
+    }
+    IssueTypesListComponent.prototype.ngOnInit = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var data;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.service.getIssueTypeListItems().toPromise()];
+                    case 1:
+                        data = _a.sent();
+                        this.items = data;
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    IssueTypesListComponent.prototype.select = function (item) {
+        this.selectedItem = item;
+    };
+    IssueTypesListComponent.prototype.delete = function (item) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.service.deleteIssueType(item.id).toPromise()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.ngOnInit()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    IssueTypesListComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'issue-types-list',
+            template: __webpack_require__(/*! ./issue-types-list.component.html */ "./src/app/issue-types/issue-types-list.component.html")
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_service_service__WEBPACK_IMPORTED_MODULE_2__["IssueClient"]])
+    ], IssueTypesListComponent);
+    return IssueTypesListComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/issues/issue-list.component.html":
 /*!**************************************************!*\
   !*** ./src/app/issues/issue-list.component.html ***!
@@ -566,7 +1064,7 @@ module.exports = "<h1>Dashboard</h1>"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Country List</h1>\r\n<a class=\"btn btn-primary\" [routerLink]=\"['new']\">new item</a>\r\n\r\n<div class=\"table-responsive\" *ngIf=\"items\">\r\n    <table class=\"table table-striped table-hover\">\r\n        <thead>\r\n            <tr>\r\n                <th scope=\"col\">Title</th>\r\n                <th scope=\"col\">Description</th>\r\n                <th scope=\"col\">IssueType</th>\r\n                <th scope=\"col\">Assigned To</th>\r\n                <th scope=\"col\">Creation Time</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <tr *ngFor=\"let item of items\" (click)=\"select(item)\" [class.table-primary]=\"item == selectedItem\">\r\n                <td>{{item.title}}</td>\r\n                <td>{{item.description}}</td>\r\n                <td>{{item.issueType}}</td>\r\n                <td>{{item.assignedTo}}</td>\r\n                <td>{{item.createTime}}</td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n</div>"
+module.exports = "<h1>Issues List</h1>\r\n<div class=\"table-responsive\" *ngIf=\"items\">\r\n    <table class=\"table table-striped table-hover\">\r\n        <thead>\r\n            <tr>\r\n                <th scope=\"col\">Title</th>\r\n                <th scope=\"col\">Description</th>\r\n                <th scope=\"col\">IssueType</th>\r\n                <th scope=\"col\">Assigned To</th>\r\n                <th scope=\"col\">Creation Time</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <tr *ngFor=\"let item of items\" (click)=\"select(item)\" [class.table-primary]=\"item == selectedItem\">\r\n                <td>{{item.title}}</td>\r\n                <td>{{item.description}}</td>\r\n                <td>{{item.issueType}}</td>\r\n                <td>{{item.assignedTo}}</td>\r\n                <td>{{item.createTime}}</td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n</div>"
 
 /***/ }),
 
@@ -691,14 +1189,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _src_service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../src/service/service */ "./src/service/service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
 
 
 
 var ProjectService = /** @class */ (function () {
-    function ProjectService(service) {
+    function ProjectService(service, route, router) {
         this.service = service;
+        this.route = route;
+        this.router = router;
         this.projects = [];
+        router.events
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["filter"])(function (e) { return e instanceof _angular_router__WEBPACK_IMPORTED_MODULE_3__["NavigationEnd"]; }))
+            .subscribe(function (p) {
+            return console.log('title', p.url);
+        });
     }
+    Object.defineProperty(ProjectService.prototype, "current", {
+        get: function () {
+            return this._current;
+        },
+        set: function (value) {
+            this._current = value;
+            var url = this.getNavUrl(value.displayString);
+            this.router.navigateByUrl('/' + url);
+        },
+        enumerable: true,
+        configurable: true
+    });
     ProjectService.prototype.initialize = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var _a;
@@ -715,9 +1236,17 @@ var ProjectService = /** @class */ (function () {
             });
         });
     };
+    ProjectService.prototype.getNavUrl = function (newProject) {
+        var root = this.router.routerState.snapshot.root;
+        while (root.firstChild) {
+            root = root.firstChild;
+        }
+        var items = root.pathFromRoot;
+        return items.map(function (p) { return (p.routeConfig && p.routeConfig.path == ':project') ? newProject : p.url.join('/'); }).filter(function (p) { return p; }).join('/');
+    };
     ProjectService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_src_service_service__WEBPACK_IMPORTED_MODULE_2__["ProjectClient"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_src_service_service__WEBPACK_IMPORTED_MODULE_2__["ProjectClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], ProjectService);
     return ProjectService;
 }());
@@ -784,7 +1313,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*!********************************!*\
   !*** ./src/service/service.ts ***!
   \********************************/
-/*! exports provided: API_BASE_URL, OfflineClient, AreaClient, CountryClient, EmployeeClient, IssueClient, ProjectClient, AreaInfo, CountryListItem, CountryInfo, EmployeeInfo, IssueCreateData, IssueTypeInfo, IssueListItem, IssueCreateItem, ProjectInfo, SwaggerException */
+/*! exports provided: API_BASE_URL, OfflineClient, AreaClient, CountryClient, EmployeeClient, IssueClient, ProjectClient, AreaInfo, CountryListItem, CountryInfo, EmployeeInfo, EmployeeListItem, IssueCreateData, IssueTypeInfo, IssueListItem, IssueTypeListItem, IssueCreateItem, ProjectInfo, SwaggerException */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -800,9 +1329,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CountryListItem", function() { return CountryListItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CountryInfo", function() { return CountryInfo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmployeeInfo", function() { return EmployeeInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmployeeListItem", function() { return EmployeeListItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueCreateData", function() { return IssueCreateData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueTypeInfo", function() { return IssueTypeInfo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueListItem", function() { return IssueListItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueTypeListItem", function() { return IssueTypeListItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IssueCreateItem", function() { return IssueCreateItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectInfo", function() { return ProjectInfo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SwaggerException", function() { return SwaggerException; });
@@ -902,9 +1433,12 @@ var AreaClient = /** @class */ (function () {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
     }
-    AreaClient.prototype.getAreaInfos = function () {
+    AreaClient.prototype.getAreaInfos = function (projectId) {
         var _this = this;
-        var url_ = this.baseUrl + "/api/area/infos";
+        var url_ = this.baseUrl + "/api/area/{projectId}/infos";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
         url_ = url_.replace(/[?&]$/, "");
         var options_ = {
             observe: "response",
@@ -1322,6 +1856,114 @@ var EmployeeClient = /** @class */ (function () {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
     }
+    EmployeeClient.prototype.delete = function (id) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/employee/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({})
+        };
+        return this.http.request("delete", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processDelete(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processDelete(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    EmployeeClient.prototype.processDelete = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    EmployeeClient.prototype.getEmployeeListItem = function (id) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/employee/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processGetEmployeeListItem(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processGetEmployeeListItem(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    EmployeeClient.prototype.processGetEmployeeListItem = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                result200 = resultData200 ? EmployeeListItem.fromJS(resultData200) : null;
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
     EmployeeClient.prototype.getEmployeeInfos = function (projectId) {
         var _this = this;
         var url_ = this.baseUrl + "/api/employee/{projectId}/all";
@@ -1385,6 +2027,176 @@ var EmployeeClient = /** @class */ (function () {
         }
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
     };
+    EmployeeClient.prototype.getEmployeeListItems = function (projectId) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/employee/{projectId}/list";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processGetEmployeeListItems(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processGetEmployeeListItems(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    EmployeeClient.prototype.processGetEmployeeListItems = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_5 = resultData200; _i < resultData200_5.length; _i++) {
+                        var item = resultData200_5[_i];
+                        result200.push(EmployeeListItem.fromJS(item));
+                    }
+                }
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    EmployeeClient.prototype.insert = function (projectId, item) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/employee/{projectId}";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(item);
+        var options_ = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Content-Type": "application/json",
+            })
+        };
+        return this.http.request("post", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processInsert(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processInsert(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    EmployeeClient.prototype.processInsert = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    EmployeeClient.prototype.update = function (item) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/employee";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(item);
+        var options_ = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Content-Type": "application/json",
+            })
+        };
+        return this.http.request("put", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processUpdate(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processUpdate(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    EmployeeClient.prototype.processUpdate = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
     EmployeeClient = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(API_BASE_URL)),
@@ -1399,6 +2211,57 @@ var IssueClient = /** @class */ (function () {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:5001";
     }
+    IssueClient.prototype.deleteIssueType = function (id) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/type/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({})
+        };
+        return this.http.request("delete", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processDeleteIssueType(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processDeleteIssueType(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    IssueClient.prototype.processDeleteIssueType = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
     IssueClient.prototype.getIssueCreate = function (projectId) {
         var _this = this;
         var url_ = this.baseUrl + "/api/issue/{projectId}/create";
@@ -1504,9 +2367,126 @@ var IssueClient = /** @class */ (function () {
                 var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_5 = resultData200; _i < resultData200_5.length; _i++) {
-                        var item = resultData200_5[_i];
+                    for (var _i = 0, resultData200_6 = resultData200; _i < resultData200_6.length; _i++) {
+                        var item = resultData200_6[_i];
                         result200.push(IssueListItem.fromJS(item));
+                    }
+                }
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    IssueClient.prototype.getIssueType = function (id) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/types/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processGetIssueType(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processGetIssueType(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    IssueClient.prototype.processGetIssueType = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                result200 = resultData200 ? IssueTypeListItem.fromJS(resultData200) : null;
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result200);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    IssueClient.prototype.getIssueTypeListItems = function () {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/types/list";
+        url_ = url_.replace(/[?&]$/, "");
+        var options_ = {
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Accept": "application/json"
+            })
+        };
+        return this.http.request("get", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processGetIssueTypeListItems(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processGetIssueTypeListItems(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    IssueClient.prototype.processGetIssueTypeListItems = function (response) {
+        var _this = this;
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                var result200 = null;
+                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (var _i = 0, resultData200_7 = resultData200; _i < resultData200_7.length; _i++) {
+                        var item = resultData200_7[_i];
+                        result200.push(IssueTypeListItem.fromJS(item));
                     }
                 }
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result200);
@@ -1564,8 +2544,8 @@ var IssueClient = /** @class */ (function () {
                 var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_6 = resultData200; _i < resultData200_6.length; _i++) {
-                        var item = resultData200_6[_i];
+                    for (var _i = 0, resultData200_8 = resultData200; _i < resultData200_8.length; _i++) {
+                        var item = resultData200_8[_i];
                         result200.push(IssueTypeInfo.fromJS(item));
                     }
                 }
@@ -1608,6 +2588,110 @@ var IssueClient = /** @class */ (function () {
         }));
     };
     IssueClient.prototype.processInsertIssue = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    IssueClient.prototype.insertIssueType = function (issue) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/type";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(issue);
+        var options_ = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Content-Type": "application/json",
+            })
+        };
+        return this.http.request("post", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processInsertIssueType(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processInsertIssueType(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    IssueClient.prototype.processInsertIssueType = function (response) {
+        var status = response.status;
+        var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
+            response.error instanceof Blob ? response.error : undefined;
+        var _headers = {};
+        if (response.headers) {
+            for (var _i = 0, _a = response.headers.keys(); _i < _a.length; _i++) {
+                var key = _a[_i];
+                _headers[key] = response.headers.get(key);
+            }
+        }
+        ;
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+            }));
+        }
+        else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (_responseText) {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+    };
+    IssueClient.prototype.updateIssueType = function (issue) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/issue/type";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(issue);
+        var options_ = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                "Content-Type": "application/json",
+            })
+        };
+        return this.http.request("put", url_, options_).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (response_) {
+            return _this.processUpdateIssueType(response_);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (response_) {
+            if (response_ instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponseBase"]) {
+                try {
+                    return _this.processUpdateIssueType(response_);
+                }
+                catch (e) {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(e);
+                }
+            }
+            else
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(response_);
+        }));
+    };
+    IssueClient.prototype.processUpdateIssueType = function (response) {
         var status = response.status;
         var responseBlob = response instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? response.body :
             response.error instanceof Blob ? response.error : undefined;
@@ -1747,8 +2831,8 @@ var ProjectClient = /** @class */ (function () {
                 var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, _this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_7 = resultData200; _i < resultData200_7.length; _i++) {
-                        var item = resultData200_7[_i];
+                    for (var _i = 0, resultData200_9 = resultData200; _i < resultData200_9.length; _i++) {
+                        var item = resultData200_9[_i];
                         result200.push(ProjectInfo.fromJS(item));
                     }
                 }
@@ -1892,6 +2976,42 @@ var EmployeeInfo = /** @class */ (function () {
     return EmployeeInfo;
 }());
 
+var EmployeeListItem = /** @class */ (function () {
+    function EmployeeListItem(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    EmployeeListItem.prototype.init = function (data) {
+        if (data) {
+            this.created = data["created"] ? new Date(data["created"].toString()) : undefined;
+            this.firstName = data["firstName"];
+            this.id = data["id"];
+            this.isDisabled = data["isDisabled"];
+            this.lastName = data["lastName"];
+        }
+    };
+    EmployeeListItem.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new EmployeeListItem();
+        result.init(data);
+        return result;
+    };
+    EmployeeListItem.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["created"] = this.created ? this.created.toISOString() : undefined;
+        data["firstName"] = this.firstName;
+        data["id"] = this.id;
+        data["isDisabled"] = this.isDisabled;
+        data["lastName"] = this.lastName;
+        return data;
+    };
+    return EmployeeListItem;
+}());
+
 var IssueCreateData = /** @class */ (function () {
     function IssueCreateData(data) {
         if (data) {
@@ -2012,6 +3132,38 @@ var IssueListItem = /** @class */ (function () {
         return data;
     };
     return IssueListItem;
+}());
+
+var IssueTypeListItem = /** @class */ (function () {
+    function IssueTypeListItem(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    IssueTypeListItem.prototype.init = function (data) {
+        if (data) {
+            this.description = data["description"];
+            this.id = data["id"];
+            this.title = data["title"];
+        }
+    };
+    IssueTypeListItem.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new IssueTypeListItem();
+        result.init(data);
+        return result;
+    };
+    IssueTypeListItem.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["description"] = this.description;
+        data["id"] = this.id;
+        data["title"] = this.title;
+        return data;
+    };
+    return IssueTypeListItem;
 }());
 
 var IssueCreateItem = /** @class */ (function () {

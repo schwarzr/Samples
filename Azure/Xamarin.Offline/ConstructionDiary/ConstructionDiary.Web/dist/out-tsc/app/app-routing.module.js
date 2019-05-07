@@ -5,6 +5,14 @@ import { DashboardComponent } from './dashboard/dasbhoard.component';
 import { CountriesListComponent } from './countries/countries-list.component';
 import { CountryEditComponent } from './countries/country-edit.component';
 import { CountryCreateComponent } from './countries/country-create.component';
+import { ProjectIdResolver } from './project-id.resolver';
+import { IssueListComponent } from './issues/issue-list.component';
+import { IssueTypesListComponent } from './issue-types/issue-types-list.component';
+import { IssueTypeEditComponent } from './issue-types/issue-type-edit.component';
+import { IssueTypeCreateComponent } from './issue-types/issue-type-create.component';
+import { EmployeesListComponent } from './employees/employees-list.component';
+import { EmployeeEditComponent } from './employees/employee-edit.component';
+import { EmployeeCreateComponent } from './employees/employee-create.component';
 var routes = [{
         path: 'dashboard',
         component: DashboardComponent
@@ -31,27 +39,30 @@ var routes = [{
         children: [
             {
                 path: '',
-                component: DashboardComponent
+                component: IssueTypesListComponent
+            },
+            {
+                path: 'new',
+                component: IssueTypeCreateComponent
             },
             {
                 path: ':id',
-                component: DashboardComponent
+                component: IssueTypeEditComponent
             }
         ]
     },
     {
         path: ':project',
+        resolve: {
+            project: ProjectIdResolver
+        },
         children: [
             {
                 path: 'issues',
                 children: [
                     {
                         path: '',
-                        component: DashboardComponent
-                    },
-                    {
-                        path: ':id',
-                        component: DashboardComponent
+                        component: IssueListComponent
                     }
                 ]
             },
@@ -60,11 +71,15 @@ var routes = [{
                 children: [
                     {
                         path: '',
-                        component: DashboardComponent
+                        component: EmployeesListComponent
+                    },
+                    {
+                        path: 'new',
+                        component: EmployeeCreateComponent
                     },
                     {
                         path: ':id',
-                        component: DashboardComponent
+                        component: EmployeeEditComponent
                     }
                 ]
             }

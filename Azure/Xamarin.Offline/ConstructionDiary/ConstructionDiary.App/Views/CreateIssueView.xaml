@@ -4,23 +4,25 @@
              x:Class="ConstructionDiary.App.Views.CreateIssueView"
              x:Name="me">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Save" Command="{Binding Path=SaveCommand}" />
-        <ToolbarItem Text="Cancel" Command="{Binding Path=CancelCommand}" />
+        <ToolbarItem Icon="add.png" Text="Save" Command="{Binding Path=SaveCommand}" />
+        <ToolbarItem Icon="cancel.png" Text="Cancel" Command="{Binding Path=CancelCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15">
-            <Label Text="create issue" FontSize="Large" Margin="0,0,0,20" />
-            <Label Text="area:" FontSize="Medium" />
-            <Label Text="{Binding Path=Area.AreaName}" FontSize="Medium" />
+        <ScrollView HorizontalScrollBarVisibility="Never">
+            <StackLayout Spacing="20" Padding="15">
+                <Label Text="create issue" FontSize="Large" Margin="0,0,0,20" />
+                <Label Text="area:" FontSize="Medium" />
+                <Label Text="{Binding Path=Area.AreaName}" FontSize="Medium" />
 
-            <Label Text="issue type:" FontSize="Medium" />
-            <Picker SelectedItem="{Binding Path=SelectedIssueType, Mode=TwoWay}" ItemsSource="{Binding Path=IssueTypes}" ItemDisplayBinding="{Binding Path=DisplayString}" Margin="0" />
-            <Label Text="Title" FontSize="Medium" />
-            <Entry Text="{Binding Path=Title, Mode=TwoWay}" FontSize="Small" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor MinimumHeightRequest="50" Text="{Binding Path=Description, Mode=TwoWay}" FontSize="Small" Margin="0" />
-            <Label Text="assign to:" FontSize="Medium" />
-            <Picker SelectedItem="{Binding Path=SelectedEmployee, Mode=TwoWay}" ItemsSource="{Binding Path=Employees}" ItemDisplayBinding="{Binding Path=DisplayName}" Margin="0" />
-        </StackLayout>
+                <Label Text="issue type:" FontSize="Medium" />
+                <Picker SelectedItem="{Binding Path=SelectedIssueType, Mode=TwoWay}" ItemsSource="{Binding Path=IssueTypes}" ItemDisplayBinding="{Binding Path=DisplayString}" Margin="0" />
+                <Label Text="Title" FontSize="Medium" />
+                <Entry Text="{Binding Path=Title, Mode=TwoWay}" FontSize="Small" />
+                <Label Text="Description" FontSize="Medium" />
+                <Editor AutoSize="TextChanges" MinimumHeightRequest="50" Text="{Binding Path=Description, Mode=TwoWay}" FontSize="Small" Margin="0" />
+                <Label Text="assign to:" FontSize="Medium" />
+                <Picker SelectedItem="{Binding Path=SelectedEmployee, Mode=TwoWay}" ItemsSource="{Binding Path=Employees}" ItemDisplayBinding="{Binding Path=DisplayName}" Margin="0" />
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

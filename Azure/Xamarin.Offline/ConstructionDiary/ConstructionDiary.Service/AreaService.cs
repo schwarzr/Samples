@@ -19,9 +19,9 @@ namespace ConstructionDiary.Service
             this._context = context;
         }
 
-        public async Task<IEnumerable<AreaInfo>> GetAreaInfosAsync()
+        public async Task<IEnumerable<AreaInfo>> GetAreaInfosAsync(Guid projectId)
         {
-            var data = await _context.Areas.Select(p => new AreaInfo { Id = p.Id, AreaName = p.AreaName }).ToListAsync();
+            var data = await _context.Areas.Where(p => p.ProjectId == projectId).Select(p => new AreaInfo { Id = p.Id, AreaName = p.AreaName }).ToListAsync();
 
             return data;
         }

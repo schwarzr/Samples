@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <div class="col align-self-center">
+            <h1>Employee</h1>
+            <form *ngIf="item">
+                <div class="form-group">
+                    <label>Firstname</label>
+                    <input type="text" class="form-control" required placeholder="Firstname"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.firstName" />
+                </div>
+                <div class="form-group">
+                    <label>Lastname</label>
+                    <input type="text" class="form-control" placeholder="Lastname"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.lastName" />
+                </div>
+
+                <button type="submit" class="btn btn-primary" (click)="save()">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
