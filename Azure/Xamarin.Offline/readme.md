@@ -3,7 +3,7 @@
 
 This sample contains a contract based reference architecture for modern dotnet core  /Angular / Xamarin applications with online and offline capabilities.
 
-The applications base architecure is built on top of the dotnet core dependency inject api and the following base components:
+The applications base architecure is built on top of the dotnet core dependency injection apis and and is composed with the following components:
 
 ## online :
 * EntityFramework Core -> MSSQL Server 
