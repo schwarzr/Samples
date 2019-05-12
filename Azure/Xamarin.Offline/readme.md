@@ -1,3 +1,22 @@
+
+# Architecture for online Web and On-/Offline Xamarin App Frontend 
+
+This sample contains a contract based reference architecture for modern dotnet core  /Angular / Xamarin applications with online and offline capabilities.
+
+The applications base architecure is built on top of the dotnet core dependency inject api and the following base components:
+
+## online :
+* EntityFramework Core -> MSSQL Server 
+* Asp.NET Core Api Services
+* Angular 7 Frontend
+* Xamarin.Forms app in online mode
+
+## offline:
+* EntityFramework Core -> Sqlite
+* Directly injected service implementations
+* Xamarin.Forms app in offline mode
+* Custom made sync framework based on MsSQL ChangeTracking and a custom sqlite column level change tracker.
+
 # Requirements
 * Visual Studio 2017 or later
 * latest Xamarin.Forms
