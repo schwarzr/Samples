@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using ConstructionDiary.Api.Contract;
 using ConstructionDiary.Contract;
 using ConstructionDiary.Model;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ConstructionDiary.Api
 {

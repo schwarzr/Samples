@@ -1,0 +1,1 @@
+alert(AppSettings.configuration.prop2);
