@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    
+    <PackageReference Include="Codeworx.Identity.AspNetcore" Version="1.0.0-beta1-00056" />
+    <PackageReference Include="Codeworx.Identity.EntityFrameworkCore.Migrations.Sqlite" Version="1.5000.0-beta1-15004" />
+  </ItemGroup>
+
+</Project>
