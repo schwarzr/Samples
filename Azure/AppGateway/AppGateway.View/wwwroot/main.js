@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Projects\gh_rschwarzr\Samples\Azure\AppGateway\AppGateway.View\src\main.ts */"zUnb");
+module.exports = __webpack_require__(/*! C:\Projects\github-rs\Samples\Azure\AppGateway\AppGateway.View\src\main.ts */"zUnb");
 
 
 /***/ }),
@@ -39,7 +39,8 @@ class HelloComponent {
     }
     getResponse() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            var response = yield this.client.get("https://localhost:5003/Hello", {
+            let serviceUrl = AppSettings.getValue("ServiceUrl");
+            let response = yield this.client.get(serviceUrl + "/Hello", {
                 responseType: "text",
                 headers: { Authorization: "BEARER " + this.oauthService.getAccessToken() }
             }).toPromise();
@@ -158,9 +159,10 @@ __webpack_require__.r(__webpack_exports__);
 
 const AUTHCONFIG = {
     clientId: "e43d7097-55e4-4369-9650-124601197dc6",
-    issuer: "https://localhost:5002",
+    issuer: AppSettings.getValue("IdentityUrl"),
     scope: "openid",
     disableAtHashCheck: true,
+    requireHttps: false,
 };
 class AppModule {
     constructor(oauthService, locationStrategy) {

@@ -29,6 +29,7 @@ namespace AppGateway.Api
                 {
                     p.Audience = Configuration.GetValue<string>("Authentication:ClientId");
                     p.Authority = Configuration.GetValue<string>("Authentication:Authority");
+                    p.RequireHttpsMetadata = false;
                 });
 
             services.AddAuthorization(p =>
@@ -47,7 +48,6 @@ namespace AppGateway.Api
             else
             {
                 app.UseExceptionHandler("/Error");
-                app.UseHsts();
             }
 
             app.UseAuthentication();

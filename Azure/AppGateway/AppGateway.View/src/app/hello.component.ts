@@ -14,7 +14,9 @@ export class HelloComponent{
     public serviceResponse?: string;
 
     public async getResponse(): Promise<void>{
-        var response = await this.client.get("https://localhost:5003/Hello",
+        let serviceUrl = AppSettings.getValue("ServiceUrl");
+
+        let response = await this.client.get(serviceUrl + "/Hello",
             {
                 responseType: "text",
                 headers: {Authorization: "BEARER " + this.oauthService.getAccessToken() }

@@ -29,12 +29,14 @@ namespace AppGateway.Identity
         {
             services.AddCors();
             services.AddCodeworxIdentity(Configuration)
-                .UseDbContext(p => p.UseSqlite("Data Source=identity.sqlite",
+                .UseDbContext(p => p.UseSqlite("Data Source=identity-database.sqlite",
                                         x => x.MigrationsAssembly("Codeworx.Identity.EntityFrameworkCore.Migrations.Sqlite")));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptions<IdentityOptions> identityOptions)
         {
+            app.UseMiddleware<ReverseProxyMiddleware>();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -44,7 +46,6 @@ namespace AppGateway.Identity
             else
             {
                 app.UseExceptionHandler("/Error");
-                app.UseHsts();
             }
 
             app.UseCodeworxIdentity(identityOptions.Value);

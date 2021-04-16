@@ -32,6 +32,10 @@ namespace AppGateway.Identity.Extensions
                         ValidRedirectUrls = {
                             new ValidRedirectUrl { Url = "https://localhost:5001/" },
                             new ValidRedirectUrl { Url = "https://demo.codeworx.eu/" },
+                            new ValidRedirectUrl { Url = "http://demo.codeworx.eu/" },
+                            new ValidRedirectUrl { Url = "https://demo2.codeworx.eu/" },
+                            new ValidRedirectUrl { Url = "http://demo2.codeworx.eu/" },
+                            new ValidRedirectUrl { Url = "https://codeworx-demo-view.azurewebsites.net/"}
                         }
                     });
 

@@ -23,6 +23,8 @@ namespace AppGateway.View
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddClientSettings()
+                .WithConfiguration(Configuration.GetSection("Web"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -34,8 +36,9 @@ namespace AppGateway.View
             else
             {
                 app.UseExceptionHandler("/Error");
-                app.UseHsts();
             }
+
+            app.UseClientSettings("/settings.js");
 
             app.UseStaticFiles();
 
