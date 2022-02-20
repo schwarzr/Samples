@@ -15,9 +15,12 @@ namespace ConstructionDiary.Service
     {
         private readonly DiaryContext _context;
 
-        public IssueService(DiaryContext context)
+        private readonly IEmployeeService _employeeService;
+
+        public IssueService(DiaryContext context, IEmployeeService employeeService)
         {
             this._context = context;
+            _employeeService = employeeService;
         }
 
         public async Task CreateIssueAsync(IssueCreateItem item)
@@ -50,6 +53,15 @@ namespace ConstructionDiary.Service
             var dbItem = await _context.IssueTypes.FirstAsync(p => p.Id == id);
             _context.IssueTypes.Remove(dbItem);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IssueCreateData> GetIssueCreateAsync(Guid projectId)
+        {
+            return new IssueCreateData
+            {
+                Employees = await _employeeService.GetEmployeeInfos(projectId),
+                IssueTypes = await GetIssueTypesAsync(),
+            };
         }
 
         public async Task<IEnumerable<IssueListItem>> GetIssuesAsync(Guid projectId)

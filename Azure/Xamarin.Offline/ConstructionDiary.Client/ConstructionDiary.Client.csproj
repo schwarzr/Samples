@@ -1,11 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConstructionDiary.Api.Contract\ConstructionDiary.Api.Contract.csproj" />
+    <PackageReference Include="Codeworx.Rest.Client" Version="1.0.0" />
+    <PackageReference Include="Lucile.Primitives" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ConstructionDiary.Contract\ConstructionDiary.Contract.csproj" />
   </ItemGroup>
 

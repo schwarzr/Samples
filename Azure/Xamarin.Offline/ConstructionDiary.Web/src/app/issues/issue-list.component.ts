@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { IssueClient, ProjectInfo, IssueListItem } from '../../../src/service/service';
+import { Component, OnInit, Provider } from "@angular/core";
+import { IssueServiceClient, ProjectInfo, IssueListItem } from '../../../src/service/service';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 
@@ -8,17 +8,26 @@ import { map } from 'rxjs/operators';
     templateUrl: './issue-list.component.html'
 })
 export class IssueListComponent {
+    public items: IssueListItem[] = [];
 
-    public items: IssueListItem[];
+    public selectedItem?: IssueListItem;
 
-    constructor(private service: IssueClient, private currentRoute: ActivatedRoute) {
-        currentRoute.data.pipe(map(p => <ProjectInfo>p.project))
+    constructor(private service: IssueServiceClient, private currentRoute: ActivatedRoute) {
+        currentRoute.data.pipe(map(p => <ProjectInfo>p['project']))
             .subscribe(p => this.loadData(p));
     }
 
-    private async loadData(project: ProjectInfo): Promise<void> {
-        let data = await this.service.getIssues(project.id).toPromise();
+    public select(item: ProjectInfo) : void{
+        this.selectedItem = item;
+    }
 
-        this.items = data;
+    private async loadData(project: ProjectInfo): Promise<void> {
+        if(project.id){
+            let data = await this.service.getIssues(project.id).toPromise();
+
+            if (data) {
+                this.items = data;
+            }
+        }
     }
 }

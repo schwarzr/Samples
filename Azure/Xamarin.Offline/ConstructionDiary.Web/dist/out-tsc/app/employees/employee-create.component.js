@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __decorate, __generator, __metadata } from "tslib";
 import { Component } from "@angular/core";
 import { EmployeeClient, EmployeeListItem } from '../../service/service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,9 +14,9 @@ var EmployeeCreateComponent = /** @class */ (function () {
             .subscribe(function (p) { _this.project = p; });
     }
     EmployeeCreateComponent.prototype.save = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var url;
-            return tslib_1.__generator(this, function (_a) {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.service.insert(this.project.id, this.item).toPromise()];
                     case 1:
@@ -34,12 +34,12 @@ var EmployeeCreateComponent = /** @class */ (function () {
         var items = route.parent.snapshot.pathFromRoot;
         return items.map(function (p) { return p.url.join('/'); }).join('/');
     };
-    EmployeeCreateComponent = tslib_1.__decorate([
+    EmployeeCreateComponent = __decorate([
         Component({
             selector: 'employee-create',
             templateUrl: './employee-edit.component.html'
         }),
-        tslib_1.__metadata("design:paramtypes", [EmployeeClient, ActivatedRoute, Router])
+        __metadata("design:paramtypes", [EmployeeClient, ActivatedRoute, Router])
     ], EmployeeCreateComponent);
     return EmployeeCreateComponent;
 }());

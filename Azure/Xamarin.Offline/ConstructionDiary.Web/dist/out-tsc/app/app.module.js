@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __decorate } from "tslib";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -28,7 +28,7 @@ import { EmployeesListComponent } from './employees/employees-list.component';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
-    AppModule = tslib_1.__decorate([
+    AppModule = __decorate([
         NgModule({
             declarations: [
                 AppComponent,

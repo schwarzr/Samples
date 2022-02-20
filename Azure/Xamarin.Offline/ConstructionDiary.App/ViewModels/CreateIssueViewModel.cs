@@ -4,8 +4,8 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ConstructionDiary.Api.Contract;
 using ConstructionDiary.App.Attached;
+using ConstructionDiary.Contract;
 using ConstructionDiary.Model;
 
 namespace ConstructionDiary.App.ViewModels
@@ -13,9 +13,9 @@ namespace ConstructionDiary.App.ViewModels
     [TemplateKey("CreateIssue")]
     public class CreateIssueViewModel : ViewModelBase
     {
-        private readonly IIssueController _controller;
-
         private readonly INavigationController _navigation;
+
+        private readonly IIssueService _service;
 
         private AreaInfo _area;
 
@@ -31,9 +31,9 @@ namespace ConstructionDiary.App.ViewModels
 
         private string _title;
 
-        public CreateIssueViewModel(IIssueController controller, INavigationController navigation)
+        public CreateIssueViewModel(IIssueService controller, INavigationController navigation)
         {
-            this._controller = controller;
+            this._service = controller;
             this._navigation = navigation;
             IssueTypes = new ObservableCollection<IssueTypeInfo>();
             Employees = new ObservableCollection<EmployeeInfo>();
@@ -144,7 +144,7 @@ namespace ConstructionDiary.App.ViewModels
         public async Task SetAreaAsync(AreaInfo value, ProjectInfo current)
         {
             Area = value;
-            var data = await _controller.GetIssueCreateAsync(current.Id);
+            var data = await _service.GetIssueCreateAsync(current.Id);
             Employees = new ObservableCollection<EmployeeInfo>(data.Employees);
             IssueTypes = new ObservableCollection<IssueTypeInfo>(data.IssueTypes);
         }
@@ -166,7 +166,7 @@ namespace ConstructionDiary.App.ViewModels
                 IssueTypeId = SelectedIssueType.Id
             };
 
-            await _controller.InsertIssueAsync(issueData);
+            await _service.CreateIssueAsync(issueData);
 
             await _navigation.CloseAsync(this);
         }

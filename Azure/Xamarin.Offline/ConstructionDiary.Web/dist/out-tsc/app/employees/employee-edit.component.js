@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __decorate, __generator, __metadata } from "tslib";
 import { Component } from "@angular/core";
 import { EmployeeClient } from '../../service/service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,9 +13,9 @@ var EmployeeEditComponent = /** @class */ (function () {
             .subscribe(function (p) { _this.project = p; _this.loadData(); });
     }
     EmployeeEditComponent.prototype.loadData = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var id, data;
-            return tslib_1.__generator(this, function (_a) {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         id = this.route.snapshot.params['id'];
@@ -29,9 +29,9 @@ var EmployeeEditComponent = /** @class */ (function () {
         });
     };
     EmployeeEditComponent.prototype.save = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var url;
-            return tslib_1.__generator(this, function (_a) {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.service.update(this.item).toPromise()];
                     case 1:
@@ -49,12 +49,12 @@ var EmployeeEditComponent = /** @class */ (function () {
         var items = route.parent.snapshot.pathFromRoot;
         return items.map(function (p) { return p.url.join('/'); }).join('/');
     };
-    EmployeeEditComponent = tslib_1.__decorate([
+    EmployeeEditComponent = __decorate([
         Component({
             selector: 'employee-edit',
             templateUrl: './employee-edit.component.html'
         }),
-        tslib_1.__metadata("design:paramtypes", [EmployeeClient, ActivatedRoute, Router])
+        __metadata("design:paramtypes", [EmployeeClient, ActivatedRoute, Router])
     ], EmployeeEditComponent);
     return EmployeeEditComponent;
 }());

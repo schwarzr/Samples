@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __decorate, __generator, __metadata } from "tslib";
 import { Component } from "@angular/core";
 import { IssueClient } from '../../service/service';
 var IssueTypesListComponent = /** @class */ (function () {
@@ -6,9 +6,9 @@ var IssueTypesListComponent = /** @class */ (function () {
         this.service = service;
     }
     IssueTypesListComponent.prototype.ngOnInit = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var data;
-            return tslib_1.__generator(this, function (_a) {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.service.getIssueTypeListItems().toPromise()];
                     case 1:
@@ -23,8 +23,8 @@ var IssueTypesListComponent = /** @class */ (function () {
         this.selectedItem = item;
     };
     IssueTypesListComponent.prototype.delete = function (item) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
-            return tslib_1.__generator(this, function (_a) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.service.deleteIssueType(item.id).toPromise()];
                     case 1:
@@ -37,12 +37,12 @@ var IssueTypesListComponent = /** @class */ (function () {
             });
         });
     };
-    IssueTypesListComponent = tslib_1.__decorate([
+    IssueTypesListComponent = __decorate([
         Component({
             selector: 'issue-types-list',
             templateUrl: './issue-types-list.component.html'
         }),
-        tslib_1.__metadata("design:paramtypes", [IssueClient])
+        __metadata("design:paramtypes", [IssueClient])
     ], IssueTypesListComponent);
     return IssueTypesListComponent;
 }());

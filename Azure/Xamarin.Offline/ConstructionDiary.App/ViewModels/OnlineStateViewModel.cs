@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows.Input;
-using ConstructionDiary.Api.Contract;
 using ConstructionDiary.Contract;
 
 namespace ConstructionDiary.App.ViewModels
@@ -12,9 +11,9 @@ namespace ConstructionDiary.App.ViewModels
     {
         private readonly ICurrentProjectService _currentProject;
 
-        private readonly IOfflineController _service;
+        private readonly IOfflineService _service;
 
-        public OnlineStateViewModel(IOfflineController service, ICurrentProjectService currentProject)
+        public OnlineStateViewModel(IOfflineService service, ICurrentProjectService currentProject)
         {
             SwitchCommand = new DelegateCommand(OnSwitch);
             StartSyncCommand = new DelegateCommand(() => { }, () => false);

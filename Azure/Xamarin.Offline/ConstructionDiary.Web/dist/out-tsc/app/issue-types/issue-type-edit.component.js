@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __decorate, __generator, __metadata } from "tslib";
 import { Component } from "@angular/core";
 import { IssueClient } from '../../service/service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,9 +9,9 @@ var IssueTypeEditComponent = /** @class */ (function () {
         this.router = router;
     }
     IssueTypeEditComponent.prototype.ngOnInit = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var id, data;
-            return tslib_1.__generator(this, function (_a) {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         id = this.route.snapshot.params['id'];
@@ -25,9 +25,9 @@ var IssueTypeEditComponent = /** @class */ (function () {
         });
     };
     IssueTypeEditComponent.prototype.save = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var url;
-            return tslib_1.__generator(this, function (_a) {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.service.updateIssueType(this.item).toPromise()];
                     case 1:
@@ -45,12 +45,12 @@ var IssueTypeEditComponent = /** @class */ (function () {
         var items = route.parent.snapshot.pathFromRoot;
         return items.map(function (p) { return p.url.join('/'); }).join('/');
     };
-    IssueTypeEditComponent = tslib_1.__decorate([
+    IssueTypeEditComponent = __decorate([
         Component({
             selector: 'country-edit',
             templateUrl: './issue-type-edit.component.html'
         }),
-        tslib_1.__metadata("design:paramtypes", [IssueClient, ActivatedRoute, Router])
+        __metadata("design:paramtypes", [IssueClient, ActivatedRoute, Router])
     ], IssueTypeEditComponent);
     return IssueTypeEditComponent;
 }());
