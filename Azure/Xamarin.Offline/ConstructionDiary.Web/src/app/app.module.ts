@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { PaginationModule } from 'ngx-bootstrap/pagination'
 import { AccordionModule } from 'ngx-bootstrap/accordion'
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -53,6 +54,7 @@ import { EmployeesListComponent } from './employees/employees-list.component';
     ReactiveFormsModule,
     AccordionModule.forRoot(),
     BsDropdownModule.forRoot(),
+    PaginationModule.forRoot(),
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     CollapseModule.forRoot()

@@ -801,34 +801,18 @@ export class IssueServiceClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://localhost:5001";
     }
 
-    createIssue(areaId: string | undefined, assignedToId: string | null | undefined, attachments: string[] | null | undefined, creationTime: Date | undefined, descripton: string | null | undefined, issueTypeId: string | undefined, title: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/issue?";
-        if (areaId === null)
-            throw new Error("The parameter 'areaId' cannot be null.");
-        else if (areaId !== undefined)
-            url_ += "AreaId=" + encodeURIComponent("" + areaId) + "&";
-        if (assignedToId !== undefined && assignedToId !== null)
-            url_ += "AssignedToId=" + encodeURIComponent("" + assignedToId) + "&";
-        if (attachments !== undefined && attachments !== null)
-            attachments && attachments.forEach(item => { url_ += "Attachments=" + encodeURIComponent("" + item) + "&"; });
-        if (creationTime === null)
-            throw new Error("The parameter 'creationTime' cannot be null.");
-        else if (creationTime !== undefined)
-            url_ += "CreationTime=" + encodeURIComponent(creationTime ? "" + creationTime.toJSON() : "") + "&";
-        if (descripton !== undefined && descripton !== null)
-            url_ += "Descripton=" + encodeURIComponent("" + descripton) + "&";
-        if (issueTypeId === null)
-            throw new Error("The parameter 'issueTypeId' cannot be null.");
-        else if (issueTypeId !== undefined)
-            url_ += "IssueTypeId=" + encodeURIComponent("" + issueTypeId) + "&";
-        if (title !== undefined && title !== null)
-            url_ += "Title=" + encodeURIComponent("" + title) + "&";
+    createIssue(item: IssueCreateItem): Observable<void> {
+        let url_ = this.baseUrl + "/api/issue";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(item);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json",
             })
         };
 
@@ -963,11 +947,21 @@ export class IssueServiceClient {
         return _observableOf<IssueCreateData>(null as any);
     }
 
-    getIssues(projectId: string): Observable<IssueListItem[]> {
-        let url_ = this.baseUrl + "/api/issue/{projectId}/list";
+    getIssues(projectId: string, offset: number | undefined, count: number | undefined, totalCount: number | null | undefined): Observable<PagedListOfIssueListItem> {
+        let url_ = this.baseUrl + "/api/issue/{projectId}/list?";
         if (projectId === undefined || projectId === null)
             throw new Error("The parameter 'projectId' must be defined.");
         url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        if (offset === null)
+            throw new Error("The parameter 'offset' cannot be null.");
+        else if (offset !== undefined)
+            url_ += "offset=" + encodeURIComponent("" + offset) + "&";
+        if (count === null)
+            throw new Error("The parameter 'count' cannot be null.");
+        else if (count !== undefined)
+            url_ += "count=" + encodeURIComponent("" + count) + "&";
+        if (totalCount !== undefined && totalCount !== null)
+            url_ += "totalCount=" + encodeURIComponent("" + totalCount) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -985,14 +979,14 @@ export class IssueServiceClient {
                 try {
                     return this.processGetIssues(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<IssueListItem[]>;
+                    return _observableThrow(e) as any as Observable<PagedListOfIssueListItem>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<IssueListItem[]>;
+                return _observableThrow(response_) as any as Observable<PagedListOfIssueListItem>;
         }));
     }
 
-    protected processGetIssues(response: HttpResponseBase): Observable<IssueListItem[]> {
+    protected processGetIssues(response: HttpResponseBase): Observable<PagedListOfIssueListItem> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1003,14 +997,7 @@ export class IssueServiceClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(IssueListItem.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = PagedListOfIssueListItem.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1018,7 +1005,7 @@ export class IssueServiceClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<IssueListItem[]>(null as any);
+        return _observableOf<PagedListOfIssueListItem>(null as any);
     }
 
     getIssueType(id: string): Observable<IssueTypeListItem> {
@@ -1613,6 +1600,74 @@ export interface IEmployeeListItem {
     lastName?: string | undefined;
 }
 
+export class IssueCreateItem implements IIssueCreateItem {
+    areaId?: string;
+    assignedToId?: string | undefined;
+    attachments?: string[] | undefined;
+    creationTime?: Date;
+    descripton?: string | undefined;
+    issueTypeId?: string;
+    title?: string | undefined;
+
+    constructor(data?: IIssueCreateItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.areaId = _data["areaId"];
+            this.assignedToId = _data["assignedToId"];
+            if (Array.isArray(_data["attachments"])) {
+                this.attachments = [] as any;
+                for (let item of _data["attachments"])
+                    this.attachments!.push(item);
+            }
+            this.creationTime = _data["creationTime"] ? new Date(_data["creationTime"].toString()) : <any>undefined;
+            this.descripton = _data["descripton"];
+            this.issueTypeId = _data["issueTypeId"];
+            this.title = _data["title"];
+        }
+    }
+
+    static fromJS(data: any): IssueCreateItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new IssueCreateItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["areaId"] = this.areaId;
+        data["assignedToId"] = this.assignedToId;
+        if (Array.isArray(this.attachments)) {
+            data["attachments"] = [];
+            for (let item of this.attachments)
+                data["attachments"].push(item);
+        }
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["descripton"] = this.descripton;
+        data["issueTypeId"] = this.issueTypeId;
+        data["title"] = this.title;
+        return data;
+    }
+}
+
+export interface IIssueCreateItem {
+    areaId?: string;
+    assignedToId?: string | undefined;
+    attachments?: string[] | undefined;
+    creationTime?: Date;
+    descripton?: string | undefined;
+    issueTypeId?: string;
+    title?: string | undefined;
+}
+
 export class IssueCreateData implements IIssueCreateData {
     employees?: EmployeeInfo[] | undefined;
     issueTypes?: IssueTypeInfo[] | undefined;
@@ -1707,6 +1762,54 @@ export class IssueTypeInfo implements IIssueTypeInfo {
 export interface IIssueTypeInfo {
     displayString?: string | undefined;
     id?: string;
+}
+
+export class PagedListOfIssueListItem implements IPagedListOfIssueListItem {
+    items?: IssueListItem[] | undefined;
+    totalCount?: number;
+
+    constructor(data?: IPagedListOfIssueListItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(IssueListItem.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedListOfIssueListItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedListOfIssueListItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedListOfIssueListItem {
+    items?: IssueListItem[] | undefined;
+    totalCount?: number;
 }
 
 export class IssueListItem implements IIssueListItem {

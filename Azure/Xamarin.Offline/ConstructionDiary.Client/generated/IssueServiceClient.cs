@@ -23,9 +23,9 @@ namespace ConstructionDiary.Client.Generated
             return CallAsync(c => c.GetIssueCreateAsync(projectId));
         }
 
-        public global::System.Threading.Tasks.Task<global::System.Collections.Generic.IEnumerable<global::ConstructionDiary.Model.IssueListItem>> GetIssuesAsync(global::System.Guid projectId)
+        public global::System.Threading.Tasks.Task<global::ConstructionDiary.Model.PagedList<global::ConstructionDiary.Model.IssueListItem>> GetIssuesAsync(global::System.Guid projectId, int offset, int count, int? totalCount)
         {
-            return CallAsync(c => c.GetIssuesAsync(projectId));
+            return CallAsync(c => c.GetIssuesAsync(projectId, offset, count, totalCount));
         }
 
         public global::System.Threading.Tasks.Task<global::ConstructionDiary.Model.IssueTypeListItem> GetIssueTypeAsync(global::System.Guid id)

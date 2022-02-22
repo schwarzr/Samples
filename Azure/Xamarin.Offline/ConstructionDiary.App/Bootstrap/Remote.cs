@@ -1,5 +1,6 @@
 ﻿using System;
 using ConstructionDiary.App.ViewModels;
+using ConstructionDiary.Client.Generated;
 using ConstructionDiary.Contract;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;

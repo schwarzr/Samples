@@ -20,4 +20,8 @@
             </tr>
         </tbody>
     </table>
+    <pagination [totalItems]="totalCount"
+        [maxSize]="8"
+         [itemsPerPage]="10"
+         (pageChanged)="pageChanged($event)"></pagination>
 </div>

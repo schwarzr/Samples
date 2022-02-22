@@ -334,14 +334,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "AppModule": () => (/* binding */ AppModule)
 /* harmony export */ });
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/platform-browser */ 318);
-/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/platform-browser/animations */ 598);
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/platform-browser/animations */ 3598);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app-routing.module */ 158);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component */ 5041);
+/* harmony import */ var ngx_bootstrap_pagination__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-bootstrap/pagination */ 7977);
 /* harmony import */ var ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ngx-bootstrap/accordion */ 819);
 /* harmony import */ var ngx_bootstrap_dropdown__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ngx-bootstrap/dropdown */ 7281);
-/* harmony import */ var ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-bootstrap/modal */ 4712);
-/* harmony import */ var ngx_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ngx-bootstrap/tabs */ 2916);
-/* harmony import */ var ngx_bootstrap_collapse__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ngx-bootstrap/collapse */ 3179);
+/* harmony import */ var ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ngx-bootstrap/modal */ 4712);
+/* harmony import */ var ngx_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ngx-bootstrap/tabs */ 2916);
+/* harmony import */ var ngx_bootstrap_collapse__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ngx-bootstrap/collapse */ 3179);
 /* harmony import */ var _dashboard_dasbhoard_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard/dasbhoard.component */ 4590);
 /* harmony import */ var _countries_countries_list_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./countries/countries-list.component */ 8619);
 /* harmony import */ var _service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../service/service */ 6323);
@@ -360,6 +361,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _employees_employee_edit_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./employees/employee-edit.component */ 6966);
 /* harmony import */ var _employees_employees_list_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./employees/employees-list.component */ 2459);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/core */ 3184);
+
+
 
 
 
@@ -413,9 +416,10 @@ AppModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_16__["ɵ�
             _angular_forms__WEBPACK_IMPORTED_MODULE_20__.ReactiveFormsModule,
             ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_22__.AccordionModule.forRoot(),
             ngx_bootstrap_dropdown__WEBPACK_IMPORTED_MODULE_23__.BsDropdownModule.forRoot(),
-            ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_24__.ModalModule.forRoot(),
-            ngx_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_25__.TabsModule.forRoot(),
-            ngx_bootstrap_collapse__WEBPACK_IMPORTED_MODULE_26__.CollapseModule.forRoot()
+            ngx_bootstrap_pagination__WEBPACK_IMPORTED_MODULE_24__.PaginationModule.forRoot(),
+            ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_25__.ModalModule.forRoot(),
+            ngx_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_26__.TabsModule.forRoot(),
+            ngx_bootstrap_collapse__WEBPACK_IMPORTED_MODULE_27__.CollapseModule.forRoot()
         ]] });
 (function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_16__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent,
         _dashboard_dasbhoard_component__WEBPACK_IMPORTED_MODULE_2__.DashboardComponent,
@@ -434,7 +438,7 @@ AppModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_16__["ɵ�
         _angular_common_http__WEBPACK_IMPORTED_MODULE_19__.HttpClientModule,
         _angular_forms__WEBPACK_IMPORTED_MODULE_20__.FormsModule,
         _angular_common__WEBPACK_IMPORTED_MODULE_21__.CommonModule,
-        _angular_forms__WEBPACK_IMPORTED_MODULE_20__.ReactiveFormsModule, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_22__.AccordionModule, ngx_bootstrap_dropdown__WEBPACK_IMPORTED_MODULE_23__.BsDropdownModule, ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_24__.ModalModule, ngx_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_25__.TabsModule, ngx_bootstrap_collapse__WEBPACK_IMPORTED_MODULE_26__.CollapseModule] }); })();
+        _angular_forms__WEBPACK_IMPORTED_MODULE_20__.ReactiveFormsModule, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_22__.AccordionModule, ngx_bootstrap_dropdown__WEBPACK_IMPORTED_MODULE_23__.BsDropdownModule, ngx_bootstrap_pagination__WEBPACK_IMPORTED_MODULE_24__.PaginationModule, ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_25__.ModalModule, ngx_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_26__.TabsModule, ngx_bootstrap_collapse__WEBPACK_IMPORTED_MODULE_27__.CollapseModule] }); })();
 
 
 /***/ }),
@@ -1858,6 +1862,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_service_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../src/service/service */ 6323);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 2816);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ 6362);
+/* harmony import */ var ngx_bootstrap_pagination__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-bootstrap/pagination */ 7977);
+
 
 
 
@@ -1869,7 +1875,7 @@ function IssueListComponent_div_2_tr_15_Template(rf, ctx) {
   if (rf & 1) {
     const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
 
-    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "tr", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "tr", 6);
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function IssueListComponent_div_2_tr_15_Template_tr_click_0_listener() {
       const restoredCtx = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵrestoreView"](_r4);
       const item_r2 = restoredCtx.$implicit;
@@ -1912,6 +1918,8 @@ function IssueListComponent_div_2_tr_15_Template(rf, ctx) {
 
 function IssueListComponent_div_2_Template(rf, ctx) {
   if (rf & 1) {
+    const _r6 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
+
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "div", 1)(1, "table", 2)(2, "thead")(3, "tr")(4, "th", 3);
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](5, "Title");
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
@@ -1929,37 +1937,73 @@ function IssueListComponent_div_2_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]()()();
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](14, "tbody");
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](15, IssueListComponent_div_2_tr_15_Template, 11, 7, "tr", 4);
-    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]()()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](16, "pagination", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("pageChanged", function IssueListComponent_div_2_Template_pagination_pageChanged_16_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵrestoreView"](_r6);
+      const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
+      return ctx_r5.pageChanged($event);
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]()();
   }
 
   if (rf & 2) {
     const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](15);
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngForOf", ctx_r0.items);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("totalItems", ctx_r0.totalCount)("maxSize", 8)("itemsPerPage", 10);
   }
 }
 
 class IssueListComponent {
   constructor(service, currentRoute) {
+    var _this = this;
+
     this.service = service;
     this.currentRoute = currentRoute;
     this.items = [];
-    currentRoute.data.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(p => p['project'])).subscribe(p => this.loadData(p));
+    this.totalCount = 0;
+    this.currentPage = 0;
+    currentRoute.data.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(p => p['project'])).subscribe( /*#__PURE__*/function () {
+      var _ref = (0,C_Projects_ghschwarzr_Samples_Azure_Xamarin_Offline_ConstructionDiary_Web_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (p) {
+        _this.project = p;
+        _this.totalCount = 0;
+        yield _this.loadData();
+      });
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }());
   }
 
   select(item) {
     this.selectedItem = item;
   }
 
-  loadData(project) {
-    var _this = this;
+  pageChanged(event) {
+    this.currentPage = event.page;
+    this.loadData();
+  }
+
+  loadData() {
+    var _this2 = this;
 
     return (0,C_Projects_ghschwarzr_Samples_Azure_Xamarin_Offline_ConstructionDiary_Web_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      if (project.id) {
-        let data = yield _this.service.getIssues(project.id).toPromise();
+      var _a;
 
-        if (data) {
-          _this.items = data;
+      if ((_a = _this2.project) === null || _a === void 0 ? void 0 : _a.id) {
+        let data = yield _this2.service.getIssues(_this2.project.id, _this2.currentPage * 10, 10, _this2.totalCount == 0 ? undefined : _this2.totalCount).toPromise();
+
+        if (data.items) {
+          _this2.items = data.items;
+        } else {
+          _this2.items = [];
+        }
+
+        if (data.totalCount) {
+          _this2.totalCount = data.totalCount;
         }
       }
     })();
@@ -1976,13 +2020,13 @@ IssueListComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2
   selectors: [["issue-list"]],
   decls: 3,
   vars: 1,
-  consts: [["class", "table-responsive", 4, "ngIf"], [1, "table-responsive"], [1, "table", "table-striped", "table-hover"], ["scope", "col"], [3, "table-primary", "click", 4, "ngFor", "ngForOf"], [3, "click"]],
+  consts: [["class", "table-responsive", 4, "ngIf"], [1, "table-responsive"], [1, "table", "table-striped", "table-hover"], ["scope", "col"], [3, "table-primary", "click", 4, "ngFor", "ngForOf"], [3, "totalItems", "maxSize", "itemsPerPage", "pageChanged"], [3, "click"]],
   template: function IssueListComponent_Template(rf, ctx) {
     if (rf & 1) {
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "h1");
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](1, "Issues List");
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](2, IssueListComponent_div_2_Template, 16, 1, "div", 0);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](2, IssueListComponent_div_2_Template, 17, 4, "div", 0);
     }
 
     if (rf & 2) {
@@ -1990,7 +2034,7 @@ IssueListComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", ctx.items);
     }
   },
-  directives: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_5__.NgForOf],
+  directives: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_5__.NgForOf, ngx_bootstrap_pagination__WEBPACK_IMPORTED_MODULE_6__.PaginationComponent],
   encapsulation: 2
 });
 
@@ -2196,8 +2240,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "CountryInfo": () => (/* binding */ CountryInfo),
 /* harmony export */   "EmployeeInfo": () => (/* binding */ EmployeeInfo),
 /* harmony export */   "EmployeeListItem": () => (/* binding */ EmployeeListItem),
+/* harmony export */   "IssueCreateItem": () => (/* binding */ IssueCreateItem),
 /* harmony export */   "IssueCreateData": () => (/* binding */ IssueCreateData),
 /* harmony export */   "IssueTypeInfo": () => (/* binding */ IssueTypeInfo),
+/* harmony export */   "PagedListOfIssueListItem": () => (/* binding */ PagedListOfIssueListItem),
 /* harmony export */   "IssueListItem": () => (/* binding */ IssueListItem),
 /* harmony export */   "IssueTypeListItem": () => (/* binding */ IssueTypeListItem),
 /* harmony export */   "ProjectInfo": () => (/* binding */ ProjectInfo),
@@ -3016,33 +3062,17 @@ class IssueServiceClient {
         this.http = http;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://localhost:5001";
     }
-    createIssue(areaId, assignedToId, attachments, creationTime, descripton, issueTypeId, title) {
-        let url_ = this.baseUrl + "/api/issue?";
-        if (areaId === null)
-            throw new Error("The parameter 'areaId' cannot be null.");
-        else if (areaId !== undefined)
-            url_ += "AreaId=" + encodeURIComponent("" + areaId) + "&";
-        if (assignedToId !== undefined && assignedToId !== null)
-            url_ += "AssignedToId=" + encodeURIComponent("" + assignedToId) + "&";
-        if (attachments !== undefined && attachments !== null)
-            attachments && attachments.forEach(item => { url_ += "Attachments=" + encodeURIComponent("" + item) + "&"; });
-        if (creationTime === null)
-            throw new Error("The parameter 'creationTime' cannot be null.");
-        else if (creationTime !== undefined)
-            url_ += "CreationTime=" + encodeURIComponent(creationTime ? "" + creationTime.toJSON() : "") + "&";
-        if (descripton !== undefined && descripton !== null)
-            url_ += "Descripton=" + encodeURIComponent("" + descripton) + "&";
-        if (issueTypeId === null)
-            throw new Error("The parameter 'issueTypeId' cannot be null.");
-        else if (issueTypeId !== undefined)
-            url_ += "IssueTypeId=" + encodeURIComponent("" + issueTypeId) + "&";
-        if (title !== undefined && title !== null)
-            url_ += "Title=" + encodeURIComponent("" + title) + "&";
+    createIssue(item) {
+        let url_ = this.baseUrl + "/api/issue";
         url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(item);
         let options_ = {
+            body: content_,
             observe: "response",
             responseType: "blob",
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({})
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
+                "Content-Type": "application/json",
+            })
         };
         return this.http.request("post", url_, options_).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.mergeMap)((response_) => {
             return this.processCreateIssue(response_);
@@ -3182,11 +3212,21 @@ class IssueServiceClient {
         }
         return (0,rxjs__WEBPACK_IMPORTED_MODULE_5__.of)(null);
     }
-    getIssues(projectId) {
-        let url_ = this.baseUrl + "/api/issue/{projectId}/list";
+    getIssues(projectId, offset, count, totalCount) {
+        let url_ = this.baseUrl + "/api/issue/{projectId}/list?";
         if (projectId === undefined || projectId === null)
             throw new Error("The parameter 'projectId' must be defined.");
         url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        if (offset === null)
+            throw new Error("The parameter 'offset' cannot be null.");
+        else if (offset !== undefined)
+            url_ += "offset=" + encodeURIComponent("" + offset) + "&";
+        if (count === null)
+            throw new Error("The parameter 'count' cannot be null.");
+        else if (count !== undefined)
+            url_ += "count=" + encodeURIComponent("" + count) + "&";
+        if (totalCount !== undefined && totalCount !== null)
+            url_ += "totalCount=" + encodeURIComponent("" + totalCount) + "&";
         url_ = url_.replace(/[?&]$/, "");
         let options_ = {
             observe: "response",
@@ -3224,14 +3264,7 @@ class IssueServiceClient {
             return blobToText(responseBlob).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.mergeMap)(_responseText => {
                 let result200 = null;
                 let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [];
-                    for (let item of resultData200)
-                        result200.push(IssueListItem.fromJS(item));
-                }
-                else {
-                    result200 = null;
-                }
+                result200 = PagedListOfIssueListItem.fromJS(resultData200);
                 return (0,rxjs__WEBPACK_IMPORTED_MODULE_5__.of)(result200);
             }));
         }
@@ -3777,6 +3810,52 @@ class EmployeeListItem {
         return data;
     }
 }
+class IssueCreateItem {
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data) {
+        if (_data) {
+            this.areaId = _data["areaId"];
+            this.assignedToId = _data["assignedToId"];
+            if (Array.isArray(_data["attachments"])) {
+                this.attachments = [];
+                for (let item of _data["attachments"])
+                    this.attachments.push(item);
+            }
+            this.creationTime = _data["creationTime"] ? new Date(_data["creationTime"].toString()) : undefined;
+            this.descripton = _data["descripton"];
+            this.issueTypeId = _data["issueTypeId"];
+            this.title = _data["title"];
+        }
+    }
+    static fromJS(data) {
+        data = typeof data === 'object' ? data : {};
+        let result = new IssueCreateItem();
+        result.init(data);
+        return result;
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["areaId"] = this.areaId;
+        data["assignedToId"] = this.assignedToId;
+        if (Array.isArray(this.attachments)) {
+            data["attachments"] = [];
+            for (let item of this.attachments)
+                data["attachments"].push(item);
+        }
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : undefined;
+        data["descripton"] = this.descripton;
+        data["issueTypeId"] = this.issueTypeId;
+        data["title"] = this.title;
+        return data;
+    }
+}
 class IssueCreateData {
     constructor(data) {
         if (data) {
@@ -3846,6 +3925,42 @@ class IssueTypeInfo {
         data = typeof data === 'object' ? data : {};
         data["displayString"] = this.displayString;
         data["id"] = this.id;
+        return data;
+    }
+}
+class PagedListOfIssueListItem {
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [];
+                for (let item of _data["items"])
+                    this.items.push(IssueListItem.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+    static fromJS(data) {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedListOfIssueListItem();
+        result.init(data);
+        return result;
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
         return data;
     }
 }

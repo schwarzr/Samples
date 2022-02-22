@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -167,6 +168,12 @@ namespace ConstructionDiary.App.ViewModels
             };
 
             await _service.CreateIssueAsync(issueData);
+
+            var dashboard = _navigation.Stack.OfType<DashboardViewModel>().FirstOrDefault();
+            if (dashboard != null)
+            {
+                await dashboard.ReloadAsync();
+            }
 
             await _navigation.CloseAsync(this);
         }

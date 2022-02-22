@@ -11,7 +11,7 @@ namespace ConstructionDiary.Contract
     public interface IIssueService
     {
         [RestPost]
-        Task CreateIssueAsync(IssueCreateItem item);
+        Task CreateIssueAsync([BodyMember] IssueCreateItem item);
 
         [RestDelete("type/{id}")]
         Task DeleteIssueTypeAsync(Guid id);
@@ -20,7 +20,7 @@ namespace ConstructionDiary.Contract
         Task<IssueCreateData> GetIssueCreateAsync(Guid projectId);
 
         [RestGet("{projectId}/list")]
-        Task<IEnumerable<IssueListItem>> GetIssuesAsync(Guid projectId);
+        Task<PagedList<IssueListItem>> GetIssuesAsync(Guid projectId, int offset = 0, int count = 10, int? totalCount = null);
 
         [RestGet("types/{id}")]
         Task<IssueTypeListItem> GetIssueTypeAsync(Guid id);
