@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "dotnet-ef": {
+      "version": "6.0.4",
+      "commands": [
+        "dotnet-ef"
+      ]
+    },
+    "codeworx.rest.tool.cli": {
+      "version": "1.0.1",
+      "commands": [
+        "dotnet-restcontract"
+      ]
+    }
+  }
+}
