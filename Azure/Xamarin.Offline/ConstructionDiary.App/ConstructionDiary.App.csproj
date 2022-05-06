@@ -11,22 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lucile.Dynamic.DependencyInjection" Version="1.0.0-beta2-00052" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.4" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
-    <PackageReference Include="Xamarin.Forms" Version="3.6.0.264807" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
-    <PackageReference Include="Codeworx.Synchronization.EntityFrameworkCore.Sqlite" Version="2.0.0-beta1-00012" />
-    <PackageReference Include="Codeworx.Synchronization.Rest" Version="2.0.0-beta1-00012" />
+    <PackageReference Include="Codeworx.Synchronization.EntityFrameworkCore.Sqlite" Version="3.1.0-beta-31022" />
+    <PackageReference Include="Codeworx.Synchronization.Rest" Version="3.1.0-beta-31022" />
+    <PackageReference Include="Lucile.Dynamic.DependencyInjection" Version="2.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.22" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.22" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
+
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConstructionDiary.Api.Client\ConstructionDiary.Api.Client.csproj" />
-    <ProjectReference Include="..\ConstructionDiary.Api.Contract\ConstructionDiary.Api.Contract.csproj" />
-    <ProjectReference Include="..\ConstructionDiary.Api\ConstructionDiary.Api.csproj" />
-    <ProjectReference Include="..\ConstructionDiary.AspNetCore.Client\ConstructionDiary.AspNetCore.Client.csproj" />
+    <ProjectReference Include="..\ConstructionDiary.Client\ConstructionDiary.Client.csproj" />
     <ProjectReference Include="..\ConstructionDiary.Service\ConstructionDiary.Service.csproj" />
   </ItemGroup>
 
@@ -35,6 +31,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\CreateIssueView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DashboardView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MenuView.xaml">

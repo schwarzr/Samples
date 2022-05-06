@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using ConstructionDiary.Api.Contract;
+using System.Text.Json;
 using ConstructionDiary.App.Attached;
-using ConstructionDiary.Model;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 namespace ConstructionDiary.App.ViewModels
 {
@@ -72,16 +64,12 @@ namespace ConstructionDiary.App.ViewModels
 
         private async void Save()
         {
-            var serializer = JsonSerializer.Create();
-
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "appsettings.json");
 
-            using (var sw = new StreamWriter(path))
-            using (var jw = new JsonTextWriter(sw))
+            using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
                 var app = new AppSettings { AppOptions = _options };
-
-                serializer.Serialize(jw, app);
+                await System.Text.Json.JsonSerializer.SerializeAsync(stream, app);
             }
 
             await _controller.CloseAsync(this);

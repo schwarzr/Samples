@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __decorate, __generator, __metadata } from "tslib";
 import { Injectable } from "@angular/core";
 import { ProjectClient } from '../../src/service/service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
@@ -24,13 +24,13 @@ var ProjectService = /** @class */ (function () {
             var url = this.getNavUrl(value.displayString);
             this.router.navigateByUrl('/' + url);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     ProjectService.prototype.initialize = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var _a;
-            return tslib_1.__generator(this, function (_b) {
+            return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _a = this;
@@ -51,9 +51,9 @@ var ProjectService = /** @class */ (function () {
         var items = root.pathFromRoot;
         return items.map(function (p) { return (p.routeConfig && p.routeConfig.path == ':project') ? newProject : p.url.join('/'); }).filter(function (p) { return p; }).join('/');
     };
-    ProjectService = tslib_1.__decorate([
+    ProjectService = __decorate([
         Injectable(),
-        tslib_1.__metadata("design:paramtypes", [ProjectClient, ActivatedRoute, Router])
+        __metadata("design:paramtypes", [ProjectClient, ActivatedRoute, Router])
     ], ProjectService);
     return ProjectService;
 }());

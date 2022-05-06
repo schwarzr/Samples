@@ -6,7 +6,7 @@
 // </auto-generated>
 //----------------------
 // ReSharper disable InconsistentNaming
-import * as tslib_1 from "tslib";
+import { __decorate, __extends, __metadata, __param } from "tslib";
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { Observable, throwError as _observableThrow, of as _observableOf } from 'rxjs';
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
@@ -75,10 +75,12 @@ var OfflineClient = /** @class */ (function () {
         }
         return _observableOf(null);
     };
-    OfflineClient = tslib_1.__decorate([
+    OfflineClient = __decorate([
         Injectable(),
-        tslib_1.__param(0, Inject(HttpClient)), tslib_1.__param(1, Optional()), tslib_1.__param(1, Inject(API_BASE_URL)),
-        tslib_1.__metadata("design:paramtypes", [HttpClient, String])
+        __param(0, Inject(HttpClient)),
+        __param(1, Optional()),
+        __param(1, Inject(API_BASE_URL)),
+        __metadata("design:paramtypes", [HttpClient, String])
     ], OfflineClient);
     return OfflineClient;
 }());
@@ -152,10 +154,12 @@ var AreaClient = /** @class */ (function () {
         }
         return _observableOf(null);
     };
-    AreaClient = tslib_1.__decorate([
+    AreaClient = __decorate([
         Injectable(),
-        tslib_1.__param(0, Inject(HttpClient)), tslib_1.__param(1, Optional()), tslib_1.__param(1, Inject(API_BASE_URL)),
-        tslib_1.__metadata("design:paramtypes", [HttpClient, String])
+        __param(0, Inject(HttpClient)),
+        __param(1, Optional()),
+        __param(1, Inject(API_BASE_URL)),
+        __metadata("design:paramtypes", [HttpClient, String])
     ], AreaClient);
     return AreaClient;
 }());
@@ -498,10 +502,12 @@ var CountryClient = /** @class */ (function () {
         }
         return _observableOf(null);
     };
-    CountryClient = tslib_1.__decorate([
+    CountryClient = __decorate([
         Injectable(),
-        tslib_1.__param(0, Inject(HttpClient)), tslib_1.__param(1, Optional()), tslib_1.__param(1, Inject(API_BASE_URL)),
-        tslib_1.__metadata("design:paramtypes", [HttpClient, String])
+        __param(0, Inject(HttpClient)),
+        __param(1, Optional()),
+        __param(1, Inject(API_BASE_URL)),
+        __metadata("design:paramtypes", [HttpClient, String])
     ], CountryClient);
     return CountryClient;
 }());
@@ -853,10 +859,12 @@ var EmployeeClient = /** @class */ (function () {
         }
         return _observableOf(null);
     };
-    EmployeeClient = tslib_1.__decorate([
+    EmployeeClient = __decorate([
         Injectable(),
-        tslib_1.__param(0, Inject(HttpClient)), tslib_1.__param(1, Optional()), tslib_1.__param(1, Inject(API_BASE_URL)),
-        tslib_1.__metadata("design:paramtypes", [HttpClient, String])
+        __param(0, Inject(HttpClient)),
+        __param(1, Optional()),
+        __param(1, Inject(API_BASE_URL)),
+        __metadata("design:paramtypes", [HttpClient, String])
     ], EmployeeClient);
     return EmployeeClient;
 }());
@@ -1371,10 +1379,12 @@ var IssueClient = /** @class */ (function () {
         }
         return _observableOf(null);
     };
-    IssueClient = tslib_1.__decorate([
+    IssueClient = __decorate([
         Injectable(),
-        tslib_1.__param(0, Inject(HttpClient)), tslib_1.__param(1, Optional()), tslib_1.__param(1, Inject(API_BASE_URL)),
-        tslib_1.__metadata("design:paramtypes", [HttpClient, String])
+        __param(0, Inject(HttpClient)),
+        __param(1, Optional()),
+        __param(1, Inject(API_BASE_URL)),
+        __metadata("design:paramtypes", [HttpClient, String])
     ], IssueClient);
     return IssueClient;
 }());
@@ -1502,10 +1512,12 @@ var ProjectClient = /** @class */ (function () {
         }
         return _observableOf(null);
     };
-    ProjectClient = tslib_1.__decorate([
+    ProjectClient = __decorate([
         Injectable(),
-        tslib_1.__param(0, Inject(HttpClient)), tslib_1.__param(1, Optional()), tslib_1.__param(1, Inject(API_BASE_URL)),
-        tslib_1.__metadata("design:paramtypes", [HttpClient, String])
+        __param(0, Inject(HttpClient)),
+        __param(1, Optional()),
+        __param(1, Inject(API_BASE_URL)),
+        __metadata("design:paramtypes", [HttpClient, String])
     ], ProjectClient);
     return ProjectClient;
 }());
@@ -1905,7 +1917,7 @@ var ProjectInfo = /** @class */ (function () {
 }());
 export { ProjectInfo };
 var SwaggerException = /** @class */ (function (_super) {
-    tslib_1.__extends(SwaggerException, _super);
+    __extends(SwaggerException, _super);
     function SwaggerException(message, status, response, headers, result) {
         var _this = _super.call(this) || this;
         _this.isSwaggerException = true;

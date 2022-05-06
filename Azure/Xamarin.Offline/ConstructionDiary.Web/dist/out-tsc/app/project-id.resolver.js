@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __decorate, __generator, __metadata } from "tslib";
 import { ProjectClient } from '../../src/service/service';
 import { ProjectService } from './project.service';
 import { Injectable } from '@angular/core';
@@ -8,9 +8,9 @@ var ProjectIdResolver = /** @class */ (function () {
         this.projectService = projectService;
     }
     ProjectIdResolver.prototype.resolve = function (route, state) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var projectName, project;
-            return tslib_1.__generator(this, function (_a) {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         projectName = route.params.project;
@@ -25,9 +25,9 @@ var ProjectIdResolver = /** @class */ (function () {
             });
         });
     };
-    ProjectIdResolver = tslib_1.__decorate([
+    ProjectIdResolver = __decorate([
         Injectable(),
-        tslib_1.__metadata("design:paramtypes", [ProjectClient, ProjectService])
+        __metadata("design:paramtypes", [ProjectClient, ProjectService])
     ], ProjectIdResolver);
     return ProjectIdResolver;
 }());

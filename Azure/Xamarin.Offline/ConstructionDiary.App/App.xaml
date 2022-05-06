@@ -26,9 +26,7 @@
             </DataTemplate>
 
             <DataTemplate x:Key="Dashboard">
-                <ContentPage Title="Dashboard">
-                    <Label Text="Dashboard"></Label>
-                </ContentPage>
+                <v:DashboardView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __decorate, __generator, __metadata } from "tslib";
 import { Component } from "@angular/core";
 import { CountryClient, CountryListItem } from '../../service/service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,9 +10,9 @@ var CountryCreateComponent = /** @class */ (function () {
         this.item = new CountryListItem();
     }
     CountryCreateComponent.prototype.save = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var url;
-            return tslib_1.__generator(this, function (_a) {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.service.insertCountry(this.item).toPromise()];
                     case 1:
@@ -30,12 +30,12 @@ var CountryCreateComponent = /** @class */ (function () {
         var items = route.parent.snapshot.pathFromRoot;
         return items.map(function (p) { return p.url.join('/'); }).join('/');
     };
-    CountryCreateComponent = tslib_1.__decorate([
+    CountryCreateComponent = __decorate([
         Component({
             selector: 'country-create',
             templateUrl: './country-edit.component.html'
         }),
-        tslib_1.__metadata("design:paramtypes", [CountryClient, ActivatedRoute, Router])
+        __metadata("design:paramtypes", [CountryClient, ActivatedRoute, Router])
     ], CountryCreateComponent);
     return CountryCreateComponent;
 }());

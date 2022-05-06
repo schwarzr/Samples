@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { IssueTypeInfo, IssueClient, IssueTypeListItem } from '../../service/service';
+import { IssueTypeInfo, IssueServiceClient, IssueTypeListItem } from '../../service/service';
 import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -9,8 +9,7 @@ import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router'
 export class IssueTypeCreateComponent {
     public item: IssueTypeListItem;
 
-
-    constructor(private service: IssueClient, private route: ActivatedRoute, private router: Router) {
+    constructor(private service: IssueServiceClient, private route: ActivatedRoute, private router: Router) {
         this.item = new IssueTypeListItem();
     }
 
@@ -21,8 +20,11 @@ export class IssueTypeCreateComponent {
     }
 
     public getNavUrl(route: ActivatedRoute): string {
-        var items = route.parent.snapshot.pathFromRoot;
+        if (route.parent) {
+            var items = route.parent.snapshot.pathFromRoot;
 
-        return items.map(p => p.url.join('/')).join('/');
+            return items.map(p => p.url.join('/')).join('/');
+        }
+        return "";
     }
 }

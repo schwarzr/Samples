@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using ConstructionDiary.Api;
-using ConstructionDiary.AspNetCore.Mvc;
 using ConstructionDiary.Contract;
 using ConstructionDiary.Database;
 using ConstructionDiary.Service;
@@ -16,6 +14,7 @@ using Newtonsoft.Json.Serialization;
 using Codeworx.Synchronization.Configuration;
 using Codeworx.Synchronization;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace ConstructionDiary.Web
 {
@@ -39,11 +38,11 @@ namespace ConstructionDiary.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseRouting();
+
             app.UseSync();
 
-            app.UseMvc();
-
-            app.UseSwagger();
+            app.UseOpenApi();
             app.UseSwaggerUi3();
 
             app.Use(next => async (ctx) =>
@@ -57,34 +56,34 @@ namespace ConstructionDiary.Web
             });
 
             app.UseStaticFiles();
+
+            app.UseEndpoints(map =>
+            {
+                map.MapControllers();
+            });
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(Configuration);
 
-            services.AddMvcCore()
-                .AddApiExplorer()
-                .AddApplicationPart(typeof(EmployeeController).Assembly)
-                .AddJsonFormatters(options => options.ContractResolver = new CamelCasePropertyNamesContractResolver());
+            services
+                .AddControllers()
+                .AddRestContract()
+                .AddApplicationPart(Assembly.Load(new AssemblyName("ConstructionDiary.Service")));
 
-            //var toRemove = services.Where(p => p.ServiceType == typeof(IActionDescriptorProvider)).ToList();
-            //toRemove.ForEach(p => services.Remove(p));
-            services.AddSingleton<IApplicationModelProvider, ContractModelProvider>();
+            services.AddOpenApiDocument();
 
-            //services.AddSingleton<IActionDescriptorProvider, ContractDescriptorProvider>();
-
-            services.AddSwaggerDocument();
-
-            services.AddSyncEndpoint((builder, sp) => builder.AddEntityFrameworkCore<SqlDiaryContext>().UseSqlServer(Configuration.GetConnectionString("DiaryContext")));
+            services.AddSyncEndpoint(builder => builder.AddEntityFrameworkCore<SqlDiaryContext>().UseSqlServer(Configuration.GetConnectionString("DiaryContext")));
             services.AddSyncScenario<ProjectFilterScenario>(Constants.ScenarioId, "Project Filter");
 
-            services.AddScoped<IEmployeeService, EmployeeService>();
-            services.AddScoped<IProjectService, ProjectService>();
-            services.AddScoped<ICountryService, CountryService>();
-            services.AddScoped<IAreaService, AreaService>();
-            services.AddScoped<IIssueService, IssueService>();
-            services.AddScoped<IOfflineService, OfflineService>();
+            services.AddPlugins(
+                new Lucile.Configuration.Plugin.PluginOptions
+                {
+                    Assemblies = {
+                        "ConstructionDiary.Service"
+                    }
+                });
 
             services.AddDbContext<DiaryContext>(builder => builder.UseSqlServer(Configuration.GetConnectionString("DiaryContext")));
             //services.AddDbContext<DiaryContext>(builder => builder.UseSqlite("Filename=c:\\Temp\\whatever.sqlite"));

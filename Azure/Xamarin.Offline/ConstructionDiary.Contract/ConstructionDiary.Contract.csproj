@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Codeworx.Rest.Primitives" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ConstructionDiary.Model\ConstructionDiary.Model.csproj" />
   </ItemGroup>
 

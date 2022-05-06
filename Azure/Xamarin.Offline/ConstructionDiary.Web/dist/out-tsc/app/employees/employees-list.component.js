@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __decorate, __generator, __metadata } from "tslib";
 import { Component } from "@angular/core";
 import { EmployeeClient } from '../../service/service';
 import { ActivatedRoute } from '@angular/router';
@@ -11,9 +11,9 @@ var EmployeesListComponent = /** @class */ (function () {
             .subscribe(function (p) { _this.project = p; _this.loadData(); });
     }
     EmployeesListComponent.prototype.loadData = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var data;
-            return tslib_1.__generator(this, function (_a) {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.service.getEmployeeListItems(this.project.id).toPromise()];
                     case 1:
@@ -28,8 +28,8 @@ var EmployeesListComponent = /** @class */ (function () {
         this.selectedItem = item;
     };
     EmployeesListComponent.prototype.delete = function (item) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
-            return tslib_1.__generator(this, function (_a) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.service.delete(item.id).toPromise()];
                     case 1:
@@ -42,12 +42,12 @@ var EmployeesListComponent = /** @class */ (function () {
             });
         });
     };
-    EmployeesListComponent = tslib_1.__decorate([
+    EmployeesListComponent = __decorate([
         Component({
             selector: 'employees-list',
             templateUrl: './employees-list.component.html'
         }),
-        tslib_1.__metadata("design:paramtypes", [EmployeeClient, ActivatedRoute])
+        __metadata("design:paramtypes", [EmployeeClient, ActivatedRoute])
     ], EmployeesListComponent);
     return EmployeesListComponent;
 }());

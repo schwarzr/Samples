@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { PaginationModule } from 'ngx-bootstrap/pagination'
 import { AccordionModule } from 'ngx-bootstrap/accordion'
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -11,7 +13,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { DashboardComponent } from './dashboard/dasbhoard.component';
 import { CountriesListComponent } from './countries/countries-list.component';
-import { CountryClient, ProjectClient, IssueClient, IssueTypeListItem, EmployeeClient } from '../service/service';
+import { CountryServiceClient, ProjectServiceClient, IssueServiceClient, IssueTypeListItem, EmployeeServiceClient } from '../service/service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -43,6 +45,7 @@ import { EmployeesListComponent } from './employees/employees-list.component';
     EmployeesListComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -51,15 +54,16 @@ import { EmployeesListComponent } from './employees/employees-list.component';
     ReactiveFormsModule,
     AccordionModule.forRoot(),
     BsDropdownModule.forRoot(),
+    PaginationModule.forRoot(),
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     CollapseModule.forRoot()
   ],
   providers: [
-    CountryClient,
-    ProjectClient,
-    IssueClient,
-    EmployeeClient,
+    CountryServiceClient,
+    ProjectServiceClient,
+    IssueServiceClient,
+    EmployeeServiceClient,
     ProjectService,
     ProjectIdResolver
   ],

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Text;
 using Codeworx.Synchronization.Configuration;
-using ConstructionDiary.Api;
-using ConstructionDiary.Api.Client;
-using ConstructionDiary.Api.Contract;
 using ConstructionDiary.App.ViewModels;
 using ConstructionDiary.Contract;
 using ConstructionDiary.Database;
@@ -25,16 +23,17 @@ namespace ConstructionDiary.App.Bootstrap
             var connectionString = $"Filename={path}";
 
             services = Common.Register(services)
-                .AddConnectedLocal<ICountryController, CountryController>()
-                .AddScoped<ICountryService, CountryService>()
-                .AddConnectedLocal<IProjectController, ProjectController>()
-                .AddScoped<IProjectService, ProjectService>()
-                .AddConnectedLocal<IAreaController, AreaController>()
-                .AddScoped<IAreaService, AreaService>()
-                .AddConnectedLocal<IIssueController, IssueController>()
-                .AddScoped<IIssueService, IssueService>()
-                .AddConnectedLocal<IEmployeeController, EmployeeController>()
-                .AddScoped<IEmployeeService, EmployeeService>()
+                .AddConnectedService<ICountryService>()
+                .AddConnectedService<IProjectService>()
+                .AddConnectedService<IAreaService>()
+                .AddConnectedService<IIssueService>()
+                .AddConnectedService<IEmployeeService>()
+                .AddConnectedLocal<ICountryService, CountryService>()
+                .AddConnectedLocal<IProjectService, ProjectService>()
+                .AddConnectedLocal<IAreaService, AreaService>()
+                .AddConnectedLocal<IIssueService, IssueService>()
+                .AddConnectedLocal<IEmployeeService, EmployeeService>()
+                .AddScopeProxy()
                 .AddTransient<OfflineStateViewModel>()
                 .AddTransient<IStateViewModel>(p => p.GetRequiredService<OfflineStateViewModel>())
                 .AddDbContext<DiaryContext>(p => p.UseSqlite(connectionString, options => options.AddChangeTracking()))
@@ -43,7 +42,7 @@ namespace ConstructionDiary.App.Bootstrap
             services
                 .AddSync()
                 .Source(p => p.AddEntityFrameworkCore<DiaryContext>().UseSqlite(connectionString, options => options.AddChangeTracking()))
-                .Target((p, sp) => p.AddRest(sp.GetRequiredService<IOptions<AppOptions>>().Value.ServerUrl + "sync"));
+                .Target(p => p.AddRest(sp => new HttpClient { BaseAddress = new Uri(sp.GetRequiredService<IOptions<AppOptions>>().Value.ServerUrl + "sync") }));
 
             return services;
         }

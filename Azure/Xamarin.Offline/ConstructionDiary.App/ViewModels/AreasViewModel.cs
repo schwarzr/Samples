@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ConstructionDiary.Api.Contract;
 using ConstructionDiary.App.Attached;
+using ConstructionDiary.Contract;
 using ConstructionDiary.Model;
 
 namespace ConstructionDiary.App.ViewModels
@@ -14,7 +14,7 @@ namespace ConstructionDiary.App.ViewModels
     [TemplateKey("Areas")]
     public class AreasViewModel : ViewModelBase, IDisposable
     {
-        private readonly IAreaController _areaController;
+        private readonly IAreaService _areaController;
 
         private readonly ICurrentProjectService _currentProjectService;
 
@@ -24,7 +24,7 @@ namespace ConstructionDiary.App.ViewModels
 
         private ObservableCollection<CommandWrapper> _areas;
 
-        public AreasViewModel(ICurrentProjectService currentProjectService, IAreaController areaController, INavigationController navigation)
+        public AreasViewModel(ICurrentProjectService currentProjectService, IAreaService areaController, INavigationController navigation)
         {
             this._currentProjectService = currentProjectService;
             this._areaController = areaController;

@@ -270,6 +270,10 @@ __pycache__/
 
 # Cake - Uncomment if you are using it
 # tools/
+<<<<<<< HEAD
 /Azure/AppGateway/AppGateway.Api/Properties/ServiceDependencies/codeworx-demo-api - Web Deploy
 /Azure/AppGateway/AppGateway.Identity/Properties/ServiceDependencies/codeworx-demo-identity - Web Deploy
 /Azure/AppGateway/AppGateway.View/Properties/ServiceDependencies/codeworx-demo-view - Web Deploy
+=======
+.angular/
+>>>>>>> 0f1d7f8e154b208c4b88ff2705a26d96085c5d07

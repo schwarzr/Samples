@@ -46,14 +46,7 @@ namespace ConstructionDiary.Service
 
             using (var sync = builder.Build(_provider))
             {
-                var modelProvider = sync.TargetSyncProvider as ModelSyncProvider;
-
-                //var infra = sync.SourceSyncProvider as IInfrastructure<IServiceProvider>;
-                //using (var scope = infra.Instance.CreateScope())
-                //{
-                //    var ctx = scope.ServiceProvider.GetRequiredService<DiaryContext>();
-                //    await ctx.Database.EnsureCreatedAsync();
-                //}
+                var modelProvider = sync.TargetSyncProvider as ISyncConfigurationProvider;
 
                 var sourceId = await sync.SourceSyncProvider.GetPeerIdAsync();
 

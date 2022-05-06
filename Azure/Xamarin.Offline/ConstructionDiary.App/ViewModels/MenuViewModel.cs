@@ -2,9 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using ConstructionDiary.Api.Contract;
 using ConstructionDiary.App.Attached;
 using ConstructionDiary.App.Models;
+using ConstructionDiary.Contract;
 using ConstructionDiary.Model;
 using Microsoft.Extensions.Options;
 
@@ -17,7 +17,7 @@ namespace ConstructionDiary.App.ViewModels
 
         private readonly INavigationController _navigationController;
 
-        private readonly IProjectController _projectController;
+        private readonly IProjectService _projectService;
 
         private readonly IDisposable _subscription;
 
@@ -28,7 +28,7 @@ namespace ConstructionDiary.App.ViewModels
         private ProjectInfo _selectedProject;
 
         public MenuViewModel(INavigationController controller,
-            IProjectController projectController,
+            IProjectService projectController,
             ICurrentProjectService currentProjectService,
             IStateViewModel stateViewModel,
             IOptionsMonitor<AppOptions> monitor)
@@ -40,7 +40,7 @@ namespace ConstructionDiary.App.ViewModels
             MenuItems.Add(new MenuItem("Settings", new DelegateCommand(() => controller.ShowAsync<SettingsViewModel>())));
 
             this._navigationController = controller;
-            this._projectController = projectController;
+            this._projectService = projectController;
             this._currentProjectService = currentProjectService;
             this.StateViewModel = stateViewModel;
         }
@@ -81,7 +81,7 @@ namespace ConstructionDiary.App.ViewModels
             Dispose(true);
         }
 
-        public async override Task InitializeAsync()
+        public override async Task InitializeAsync()
         {
             await base.InitializeAsync();
 
@@ -90,7 +90,7 @@ namespace ConstructionDiary.App.ViewModels
 
             try
             {
-                var data = await _projectController.GetProjectsAsync();
+                var data = await _projectService.GetProjectsAsync();
                 Projects = new ObservableCollection<ProjectInfo>(data);
                 SelectedProject = data.FirstOrDefault();
             }

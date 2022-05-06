@@ -15,9 +15,12 @@ namespace ConstructionDiary.Service
     {
         private readonly DiaryContext _context;
 
-        public IssueService(DiaryContext context)
+        private readonly IEmployeeService _employeeService;
+
+        public IssueService(DiaryContext context, IEmployeeService employeeService)
         {
             this._context = context;
+            _employeeService = employeeService;
         }
 
         public async Task CreateIssueAsync(IssueCreateItem item)
@@ -27,7 +30,7 @@ namespace ConstructionDiary.Service
                 Id = Guid.NewGuid(),
                 AssignedToId = item.AssignedToId,
                 AreaId = item.AreaId,
-                CreationTime = new DateTime(),
+                CreationTime = DateTime.Now,
                 IssueDescripton = item.Descripton,
                 Title = item.Title,
                 IssueTypeId = item.IssueTypeId,
@@ -52,7 +55,16 @@ namespace ConstructionDiary.Service
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<IssueListItem>> GetIssuesAsync(Guid projectId)
+        public async Task<IssueCreateData> GetIssueCreateAsync(Guid projectId)
+        {
+            return new IssueCreateData
+            {
+                Employees = await _employeeService.GetEmployeeInfos(projectId),
+                IssueTypes = await GetIssueTypesAsync(),
+            };
+        }
+
+        public async Task<PagedList<IssueListItem>> GetIssuesAsync(Guid projectId, int offset = 0, int count = 10, int? totalCount = null)
         {
             var query = _context.Issues
                             .Where(p => p.Area.ProjectId == projectId)
@@ -66,9 +78,16 @@ namespace ConstructionDiary.Service
                                 CreateTime = p.CreationTime
                             });
 
-            var data = await query.ToListAsync();
+            query = query.OrderByDescending(p => p.CreateTime);
 
-            return data;
+            var data = await query.Skip(offset).Take(count).ToListAsync();
+
+            if (totalCount == null)
+            {
+                totalCount = await query.CountAsync();
+            }
+
+            return new PagedList<IssueListItem>(data, totalCount.Value);
         }
 
         public async Task<IssueTypeListItem> GetIssueTypeAsync(Guid id)
